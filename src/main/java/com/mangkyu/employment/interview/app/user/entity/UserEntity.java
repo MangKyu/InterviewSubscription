@@ -2,18 +2,18 @@ package com.mangkyu.employment.interview.app.user.entity;
 
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuizEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table
+@Table(name = "user")
 @Getter
 @Builder
 @NoArgsConstructor(force = true)
@@ -24,5 +24,8 @@ public class UserEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private QuizLevel quizLevel;
+
+    @OneToMany(mappedBy = "user")
+    private List<SolvedQuizEntity> solvedQuizList = new ArrayList<>();
 
 }
