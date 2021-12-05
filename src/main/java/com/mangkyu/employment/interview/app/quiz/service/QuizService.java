@@ -16,7 +16,6 @@ public class QuizService {
 
     public void addQuiz(final AddQuizRequest addQuizRequest) {
         final QuizEntity quizEntity = modelMapper.map(addQuizRequest, QuizEntity.class);
-        System.out.println(quizEntity);
         quizRepository.save(quizEntity);
     }
 
