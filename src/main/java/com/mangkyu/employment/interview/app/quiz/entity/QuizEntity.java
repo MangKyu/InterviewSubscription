@@ -3,10 +3,7 @@ package com.mangkyu.employment.interview.app.quiz.entity;
 import com.mangkyu.employment.interview.app.common.entity.CommonEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,8 +12,9 @@ import java.util.List;
 @Table
 @Getter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
+@ToString
 public class QuizEntity extends CommonEntity {
 
     private String title;
