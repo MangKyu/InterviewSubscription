@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.entity;
 
-import com.mangkyu.employment.interview.app.common.entity.CommonEntity;
+import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import lombok.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @ToString
-public class QuizEntity extends CommonEntity {
+public class QuizEntity extends BaseEntity {
 
     private String title;
 

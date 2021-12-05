@@ -19,7 +19,7 @@ import lombok.Setter;
 @MappedSuperclass
 @Getter
 @NoArgsConstructor
-public abstract class CommonEntity implements Serializable {
+public abstract class BaseEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
