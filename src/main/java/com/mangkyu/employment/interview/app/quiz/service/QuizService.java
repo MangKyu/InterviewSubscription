@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,12 +26,14 @@ public class QuizService {
     }
 
     public List<QuizEntity> getUnsolvedQuizList(final Long userId) {
-        final List<Long> solvedQuizIdList = solvedQuizRepository.findAllByUser_Id(userId)
+        final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByUser_Id(userId)
                 .stream()
                 .map(v -> v.getQuiz().getId())
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
-        return quizRepository.findByIdNotIn(solvedQuizIdList);
+        return solvedQuizIdList.isEmpty()
+                ? quizRepository.findAll()
+                : quizRepository.findByIdNotIn(solvedQuizIdList);
     }
 
 }

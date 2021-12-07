@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,7 +66,7 @@ class QuizRepositoryTest {
         quizRepository.save(quiz4);
 
         // when
-        final List<QuizEntity> unsolvedQuizList = quizRepository.findByIdNotIn(Arrays.asList(1L, 2L));
+        final List<QuizEntity> unsolvedQuizList = quizRepository.findByIdNotIn(new HashSet<>(Arrays.asList(1L, 2L)));
 
         // then
         assertThat(unsolvedQuizList.size()).isEqualTo(2);

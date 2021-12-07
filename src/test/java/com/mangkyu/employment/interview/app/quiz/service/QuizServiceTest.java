@@ -21,6 +21,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,16 +69,32 @@ class QuizServiceTest {
     }
 
     @Test
-    public void getUnsolvedQuiz_Success() {
+    public void getUnsolvedQuizSuccess_SolvedQuizEmpty() {
         // given
         final List<SolvedQuizEntity> solvedQuizEntityList = solvedQuizEntityList();
-        final List<Long> solvedQuizIdList = solvedQuizEntityList.stream()
+        final Set<Long> solvedQuizIdList = solvedQuizEntityList.stream()
                 .map(v -> v.getQuiz().getId())
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
 
         doReturn(solvedQuizEntityList).when(solvedQuizRepository).findAllByUser_Id(userId);
         doReturn(unsolvedQuizEntityList).when(quizRepository).findByIdNotIn(solvedQuizIdList);
+
+        // when
+        final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId);
+
+        // then
+        assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());
+    }
+
+    @Test
+    public void getUnsolvedQuizSuccess_SolvedQuizNotEmpty() {
+        // given
+        final List<SolvedQuizEntity> solvedQuizEntityList = Collections.emptyList();
+        final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
+
+        doReturn(solvedQuizEntityList).when(solvedQuizRepository).findAllByUser_Id(userId);
+        doReturn(unsolvedQuizEntityList).when(quizRepository).findAll();
 
         // when
         final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId);
