@@ -2,7 +2,7 @@ package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.entity.QuizEntity;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
@@ -28,11 +28,11 @@ public class QuizService {
 
     @Transactional
     public void addQuiz(final AddQuizRequest addQuizRequest) {
-        final QuizEntity quizEntity = modelMapper.map(addQuizRequest, QuizEntity.class);
-        quizRepository.save(quizEntity);
+        final Quiz quiz = modelMapper.map(addQuizRequest, Quiz.class);
+        quizRepository.save(quiz);
     }
 
-    public List<QuizEntity> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel) {
+    public List<Quiz> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel) {
         final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByUser_Id(userId)
                 .stream()
                 .map(v -> v.getQuiz().getId())
@@ -43,25 +43,25 @@ public class QuizService {
                 : quizRepository.findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
     }
 
-    public List<QuizEntity> getRandomQuizListUnderLimit(final List<QuizEntity> quizEntityList) {
-        return quizEntityList.size() < QuizConstants.MAXIMUM_QUIZ_SIZE
-                ? quizEntityList
-                : createRandomQuizListUnderLimit(quizEntityList);
+    public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList) {
+        return quizList.size() < QuizConstants.MAXIMUM_QUIZ_SIZE
+                ? quizList
+                : createRandomQuizListUnderLimit(quizList);
     }
 
-    private List<QuizEntity> createRandomQuizListUnderLimit(final List<QuizEntity> quizEntityList) {
+    private List<Quiz> createRandomQuizListUnderLimit(final List<Quiz> quizList) {
         final Random rand = new Random();
-        final List<QuizEntity> randomQuizEntityList = new ArrayList<>();
+        final List<Quiz> randomQuizList = new ArrayList<>();
 
         for (int i = 0; i < QuizConstants.MAXIMUM_QUIZ_SIZE; i++) {
-            final int randomIndex = rand.nextInt(quizEntityList.size());
-            final QuizEntity quizEntity = quizEntityList.get(randomIndex);
+            final int randomIndex = rand.nextInt(quizList.size());
+            final Quiz quiz = quizList.get(randomIndex);
 
-            quizEntityList.remove(randomIndex);
-            randomQuizEntityList.add(quizEntity);
+            quizList.remove(randomIndex);
+            randomQuizList.add(quiz);
         }
 
-        return randomQuizEntityList;
+        return randomQuizList;
     }
 
 }

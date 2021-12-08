@@ -2,11 +2,11 @@ package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.entity.QuizEntity;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
-import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuizEntity;
+import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,92 +64,92 @@ class QuizServiceTest {
         // then
 
         // verify
-        verify(quizRepository, times(1)).save(any(QuizEntity.class));
+        verify(quizRepository, times(1)).save(any(Quiz.class));
     }
 
     @Test
     public void getUnsolvedQuizSuccess_SolvedQuizEmpty() {
         // given
-        final List<SolvedQuizEntity> solvedQuizEntityList = solvedQuizEntityList();
-        final Set<Long> solvedQuizIdList = solvedQuizEntityList.stream()
+        final List<SolvedQuiz> solvedQuizList = solvedQuizList();
+        final Set<Long> solvedQuizIdList = solvedQuizList.stream()
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
-        final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
+        final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
-        doReturn(solvedQuizEntityList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizEntityList).when(quizRepository).findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
+        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
+        doReturn(unsolvedQuizList).when(quizRepository).findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
 
         // when
-        final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId, quizLevel);
+        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel);
 
         // then
-        assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());
+        assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
     }
 
     @Test
     public void getUnsolvedQuizSuccess_SolvedQuizNotEmpty() {
         // given
-        final List<SolvedQuizEntity> solvedQuizEntityList = Collections.emptyList();
-        final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
+        final List<SolvedQuiz> solvedQuizList = Collections.emptyList();
+        final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
-        doReturn(solvedQuizEntityList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizEntityList).when(quizRepository).findByQuizLevel(quizLevel);
+        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
+        doReturn(unsolvedQuizList).when(quizRepository).findByQuizLevel(quizLevel);
 
         // when
-        final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId, quizLevel);
+        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel);
 
         // then
-        assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());
+        assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
     }
 
     @Test
     public void getRandomQuizListUnderLimitSuccess_Under3() {
         // given
-        final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
+        final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
         // when
-        final List<QuizEntity> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizEntityList);
+        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList);
 
         // then
-        assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());
+        assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
     }
 
     @Test
     public void getRandomQuizListUnderLimitSuccess_Over3() {
         // given
-        final List<QuizEntity> unsolvedQuizEntityList = new ArrayList<>();
-        unsolvedQuizEntityList.add(quizEntity(1L));
-        unsolvedQuizEntityList.add(quizEntity(2L));
-        unsolvedQuizEntityList.add(quizEntity(3L));
-        unsolvedQuizEntityList.add(quizEntity(4L));
+        final List<Quiz> unsolvedQuizList = new ArrayList<>();
+        unsolvedQuizList.add(quiz(1L));
+        unsolvedQuizList.add(quiz(2L));
+        unsolvedQuizList.add(quiz(3L));
+        unsolvedQuizList.add(quiz(4L));
 
         // when
-        final List<QuizEntity> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizEntityList);
+        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList);
 
         // then
         assertThat(result.size()).isEqualTo(QuizConstants.MAXIMUM_QUIZ_SIZE);
     }
 
-    private List<SolvedQuizEntity> solvedQuizEntityList() {
+    private List<SolvedQuiz> solvedQuizList() {
         return Arrays.asList(
-                solvedQuizEntity(1L),
-                solvedQuizEntity(2L),
-                solvedQuizEntity(3L)
+                solvedQuiz(1L),
+                solvedQuiz(2L),
+                solvedQuiz(3L)
         );
     }
 
-    private SolvedQuizEntity solvedQuizEntity(final long id) {
-        final QuizEntity quizEntity = quizEntity(id);
+    private SolvedQuiz solvedQuiz(final long id) {
+        final Quiz quiz = quiz(id);
 
-        return SolvedQuizEntity.builder()
-                .quiz(quizEntity)
+        return SolvedQuiz.builder()
+                .quiz(quiz)
                 .build();
     }
 
-    private QuizEntity quizEntity(final long id) {
-        final QuizEntity quizEntity = QuizEntity.builder().build();
-        ReflectionTestUtils.setField(quizEntity, "id", id);
-        return quizEntity;
+    private Quiz quiz(final long id) {
+        final Quiz quiz = Quiz.builder().build();
+        ReflectionTestUtils.setField(quiz, "id", id);
+        return quiz;
     }
 
 }

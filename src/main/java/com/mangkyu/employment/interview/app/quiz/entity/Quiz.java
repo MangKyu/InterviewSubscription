@@ -3,7 +3,7 @@ package com.mangkyu.employment.interview.app.quiz.entity;
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
-import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuizEntity;
+import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +19,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class QuizEntity extends BaseEntity {
+public class Quiz extends BaseEntity {
 
     private String title;
 
@@ -32,6 +32,6 @@ public class QuizEntity extends BaseEntity {
     private List<QuizLevel> quizLevel;
 
     @OneToMany(mappedBy = "quiz")
-    private List<SolvedQuizEntity> solvedQuizList = new ArrayList<>();
+    private List<SolvedQuiz> solvedQuizList = new ArrayList<>();
 
 }

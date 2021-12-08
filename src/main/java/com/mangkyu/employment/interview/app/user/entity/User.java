@@ -2,7 +2,7 @@ package com.mangkyu.employment.interview.app.user.entity;
 
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
-import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuizEntity;
+import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class UserEntity extends BaseEntity {
+public class User extends BaseEntity {
 
     private String email;
 
@@ -26,6 +26,6 @@ public class UserEntity extends BaseEntity {
     private QuizLevel quizLevel;
 
     @OneToMany(mappedBy = "user")
-    private List<SolvedQuizEntity> solvedQuizList = new ArrayList<>();
+    private List<SolvedQuiz> solvedQuizList = new ArrayList<>();
 
 }

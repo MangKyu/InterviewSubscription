@@ -1,8 +1,8 @@
 package com.mangkyu.employment.interview.app.solvedquiz.entity;
 
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
-import com.mangkyu.employment.interview.app.quiz.entity.QuizEntity;
-import com.mangkyu.employment.interview.app.user.entity.UserEntity;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,14 +16,14 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class SolvedQuizEntity extends BaseEntity {
+public class SolvedQuiz extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
-    private QuizEntity quiz;
+    private Quiz quiz;
 
 }

@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.user.repository;
 
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
-import com.mangkyu.employment.interview.app.user.entity.UserEntity;
+import com.mangkyu.employment.interview.app.user.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -19,33 +19,33 @@ class UserRepositoryTest {
     @Test
     public void insertUser() {
         // given
-        final UserEntity userEntity = UserEntity.builder()
+        final User user = User.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .build();
 
         // when
-        final UserEntity result = userRepository.save(userEntity);
+        final User result = userRepository.save(user);
 
         // then
-        assertThat(result.getEmail()).isEqualTo(userEntity.getEmail());
-        assertThat(result.getQuizLevel()).isEqualTo(userEntity.getQuizLevel());
+        assertThat(result.getEmail()).isEqualTo(user.getEmail());
+        assertThat(result.getQuizLevel()).isEqualTo(user.getQuizLevel());
     }
 
     @Test
     public void updateUserDisabled() {
         // given
-        final UserEntity userEntity = UserEntity.builder()
+        final User user = User.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .build();
 
-        final UserEntity savedUserEntity = userRepository.save(userEntity);
-        savedUserEntity.setIsEnable(false);
-        userRepository.save(savedUserEntity);
+        final User savedUser = userRepository.save(user);
+        savedUser.setIsEnable(false);
+        userRepository.save(savedUser);
 
         // when
-        final List<UserEntity> result = userRepository.findAllByIsEnableTrue();
+        final List<User> result = userRepository.findAllByIsEnableTrue();
 
         // then
         assertThat(result.size()).isZero();

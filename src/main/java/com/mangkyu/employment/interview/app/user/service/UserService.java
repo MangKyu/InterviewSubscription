@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.user.service;
 
-import com.mangkyu.employment.interview.app.user.entity.UserEntity;
+import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void disableUser(final UserEntity userEntity) {
-        userEntity.setIsEnable(false);
-        userRepository.save(userEntity);
+    public void disableUser(final User user) {
+        user.setIsEnable(false);
+        userRepository.save(user);
     }
 
-    public List<UserEntity> getEnabledUserList() {
+    public List<User> getEnabledUserList() {
         return userRepository.findAllByIsEnableTrue();
     }
 }

@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.user.service;
 
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
-import com.mangkyu.employment.interview.app.user.entity.UserEntity;
+import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,25 +27,25 @@ class UserServiceTest {
     @Test
     public void disableUserSuccess() {
         // given
-        final UserEntity userEntity = userEntity(true);
+        final User user = user(true);
 
         // when
-        target.disableUser(userEntity);
+        target.disableUser(user);
 
         // then
 
         // verify
-        verify(userRepository, times(1)).save(userEntity);
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
     public void getEnabledUserListSuccess() {
         // given
-        final List<UserEntity> enabledUserList = Arrays.asList(userEntity(true), userEntity(true));
+        final List<User> enabledUserList = Arrays.asList(user(true), user(true));
         doReturn(enabledUserList).when(userRepository).findAllByIsEnableTrue();
 
         // when
-        final List<UserEntity> result = target.getEnabledUserList();
+        final List<User> result = target.getEnabledUserList();
 
         // then
         assertThat(result.size()).isEqualTo(enabledUserList.size());
@@ -54,13 +54,13 @@ class UserServiceTest {
         verify(userRepository, times(1)).findAllByIsEnableTrue();
     }
 
-    private UserEntity userEntity(final boolean isEnable) {
-        final UserEntity userEntity = UserEntity.builder()
+    private User user(final boolean isEnable) {
+        final User user = User.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .build();
-        userEntity.setIsEnable(isEnable);
-        return userEntity;
+        user.setIsEnable(isEnable);
+        return user;
     }
 
 
