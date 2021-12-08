@@ -8,6 +8,7 @@ import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepo
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -15,12 +16,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class QuizService {
 
     private final ModelMapper modelMapper;
     private final QuizRepository quizRepository;
     private final SolvedQuizRepository solvedQuizRepository;
 
+    @Transactional
     public void addQuiz(final AddQuizRequest addQuizRequest) {
         final QuizEntity quizEntity = modelMapper.map(addQuizRequest, QuizEntity.class);
         quizRepository.save(quizEntity);
