@@ -1,5 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
+import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.app.quiz.entity.QuizEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
@@ -18,10 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -102,6 +100,34 @@ class QuizServiceTest {
 
         // then
         assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());
+    }
+
+    @Test
+    public void getRandomQuizListUnderLimitSuccess_Under3() {
+        // given
+        final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
+
+        // when
+        final List<QuizEntity> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizEntityList);
+
+        // then
+        assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());
+    }
+
+    @Test
+    public void getRandomQuizListUnderLimitSuccess_Over3() {
+        // given
+        final List<QuizEntity> unsolvedQuizEntityList = new ArrayList<>();
+        unsolvedQuizEntityList.add(quizEntity(1L));
+        unsolvedQuizEntityList.add(quizEntity(2L));
+        unsolvedQuizEntityList.add(quizEntity(3L));
+        unsolvedQuizEntityList.add(quizEntity(4L));
+
+        // when
+        final List<QuizEntity> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizEntityList);
+
+        // then
+        assertThat(result.size()).isEqualTo(QuizConstants.MAXIMUM_QUIZ_SIZE);
     }
 
     private List<SolvedQuizEntity> solvedQuizEntityList() {

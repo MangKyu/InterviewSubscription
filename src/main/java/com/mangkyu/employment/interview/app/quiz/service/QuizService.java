@@ -1,5 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
+import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.app.quiz.entity.QuizEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
@@ -10,7 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,27 @@ public class QuizService {
         return solvedQuizIdList.isEmpty()
                 ? quizRepository.findByQuizLevel(quizLevel)
                 : quizRepository.findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
+    }
+
+    public List<QuizEntity> getRandomQuizListUnderLimit(final List<QuizEntity> quizEntityList) {
+        return quizEntityList.size() < QuizConstants.MAXIMUM_QUIZ_SIZE
+                ? quizEntityList
+                : createRandomQuizListUnderLimit(quizEntityList);
+    }
+
+    private List<QuizEntity> createRandomQuizListUnderLimit(final List<QuizEntity> quizEntityList) {
+        final Random rand = new Random();
+        final List<QuizEntity> randomQuizEntityList = new ArrayList<>();
+
+        for (int i = 0; i < QuizConstants.MAXIMUM_QUIZ_SIZE; i++) {
+            final int randomIndex = rand.nextInt(quizEntityList.size());
+            final QuizEntity quizEntity = quizEntityList.get(randomIndex);
+
+            quizEntityList.remove(randomIndex);
+            randomQuizEntityList.add(quizEntity);
+        }
+
+        return randomQuizEntityList;
     }
 
 }
