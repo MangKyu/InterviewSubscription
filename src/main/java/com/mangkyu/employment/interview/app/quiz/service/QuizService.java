@@ -44,7 +44,7 @@ public class QuizService {
     }
 
     public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList) {
-        return quizList.size() < QuizConstants.MAXIMUM_QUIZ_SIZE
+        return quizList.size() <= QuizConstants.MAXIMUM_QUIZ_SIZE
                 ? quizList
                 : createRandomQuizListUnderLimit(quizList);
     }
@@ -56,8 +56,6 @@ public class QuizService {
         for (int i = 0; i < QuizConstants.MAXIMUM_QUIZ_SIZE; i++) {
             final int randomIndex = rand.nextInt(quizList.size());
             final Quiz quiz = quizList.get(randomIndex);
-
-            quizList.remove(randomIndex);
             randomQuizList.add(quiz);
         }
 
