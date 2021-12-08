@@ -42,6 +42,7 @@ class QuizServiceTest {
     private ModelMapper modelMapper;
 
     private final Long userId = -1L;
+    private final QuizLevel quizLevel = QuizLevel.NEW;
 
     @BeforeEach
     public void init() {
@@ -78,10 +79,10 @@ class QuizServiceTest {
         final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
 
         doReturn(solvedQuizEntityList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizEntityList).when(quizRepository).findByIdNotIn(solvedQuizIdList);
+        doReturn(unsolvedQuizEntityList).when(quizRepository).findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
 
         // when
-        final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId);
+        final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId, quizLevel);
 
         // then
         assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());
@@ -94,10 +95,10 @@ class QuizServiceTest {
         final List<QuizEntity> unsolvedQuizEntityList = Collections.singletonList(quizEntity(4L));
 
         doReturn(solvedQuizEntityList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizEntityList).when(quizRepository).findAll();
+        doReturn(unsolvedQuizEntityList).when(quizRepository).findByQuizLevel(quizLevel);
 
         // when
-        final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId);
+        final List<QuizEntity> result = quizService.getUnsolvedQuizList(userId, quizLevel);
 
         // then
         assertThat(result.size()).isEqualTo(unsolvedQuizEntityList.size());

@@ -2,6 +2,7 @@ package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.app.quiz.entity.QuizEntity;
+import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,15 +26,15 @@ public class QuizService {
         quizRepository.save(quizEntity);
     }
 
-    public List<QuizEntity> getUnsolvedQuizList(final Long userId) {
+    public List<QuizEntity> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel) {
         final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByUser_Id(userId)
                 .stream()
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
 
         return solvedQuizIdList.isEmpty()
-                ? quizRepository.findAll()
-                : quizRepository.findByIdNotIn(solvedQuizIdList);
+                ? quizRepository.findByQuizLevel(quizLevel)
+                : quizRepository.findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
     }
 
 }
