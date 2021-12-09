@@ -25,12 +25,11 @@ public class SendQuizCronJob {
     private final MailService mailService;
     private final SolvedQuizService solvedQuizService;
 
-    @Scheduled(cron = "*/30 * * * * *") // every 30 seconds
-//    @Scheduled(cron = "0 0 1 * * SUN") // every Sunday at 1am
+//    @Scheduled(cron = "*/30 * * * * *") // every 30 seconds
+    @Scheduled(cron = "0 0 1 * * SUN") // every Sunday at 1am
     @Transactional
     public void sendQuizMailEveryWeek() {
         final List<User> userList = userService.getEnabledUserList();
-//            User user = userList.get(0);
         for (final User user : userList) {
             final List<Quiz> unsolvedQuizList = quizService.getUnsolvedQuizList(user.getId(), user.getQuizLevel());
             final boolean isLastMail = isLastMail(unsolvedQuizList);
