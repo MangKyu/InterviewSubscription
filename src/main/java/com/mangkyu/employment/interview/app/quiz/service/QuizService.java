@@ -43,7 +43,7 @@ public class QuizService {
     public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList) {
         return quizList.size() <= QuizConstants.MAXIMUM_QUIZ_SIZE
                 ? quizList
-                : createRandomQuizListUnderLimit(new ArrayList<>(quizList));
+                : createRandomQuizListUnderLimit(quizList);
     }
 
     private List<Quiz> createRandomQuizListUnderLimit(final List<Quiz> quizList) {
