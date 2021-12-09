@@ -11,10 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +43,7 @@ public class QuizService {
     public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList) {
         return quizList.size() <= QuizConstants.MAXIMUM_QUIZ_SIZE
                 ? quizList
-                : createRandomQuizListUnderLimit(quizList);
+                : createRandomQuizListUnderLimit(new ArrayList<>(quizList));
     }
 
     private List<Quiz> createRandomQuizListUnderLimit(final List<Quiz> quizList) {
@@ -57,6 +54,7 @@ public class QuizService {
             final int randomIndex = rand.nextInt(quizList.size());
             final Quiz quiz = quizList.get(randomIndex);
             randomQuizList.add(quiz);
+            quizList.remove(quiz);
         }
 
         return randomQuizList;
