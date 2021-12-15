@@ -7,6 +7,7 @@ build/
 
 ### CUSTOM ###
 src/main/resources/quiz
+src/main/resources/application.properties
 
 ### STS ###
 .apt_generated
