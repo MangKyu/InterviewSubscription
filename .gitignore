@@ -5,6 +5,9 @@ build/
 !**/src/main/**
 !**/src/test/**
 
+### CUSTOM ###
+src/main/resources/quiz
+
 ### STS ###
 .apt_generated
 .classpath
