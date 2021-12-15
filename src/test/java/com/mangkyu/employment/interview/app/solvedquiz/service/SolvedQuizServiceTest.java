@@ -48,7 +48,7 @@ class SolvedQuizServiceTest {
     private List<Quiz> quizList() {
         return Arrays.asList(
                 quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR)),
-                quiz(QuizCategory.TDD, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)),
+                quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)),
                 quiz(QuizCategory.SPRING, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR, QuizLevel.NEW))
         );
     }

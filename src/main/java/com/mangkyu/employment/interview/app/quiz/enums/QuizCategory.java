@@ -9,10 +9,17 @@ public enum QuizCategory {
 
 	JAVA("Java"),
 	SPRING("Spring Framework"),
-	TDD("Test Driven Development"),
-	DDD("Domain Driven Design"),
-	INFRA("Infrastructure"),
+	SERVER("Server Side Programming"),
 	NETWORK("Network"),
+	OPERATING_SYSTEM("Operating System"),
+	DATABASE("Database"),
+	PROGRAMMING("Overall Programming"),
+	DATA_STRUCTURE("Data Structure"),
+	ALGORITHM("Database"),
+	PROBLEM_SOLVING("Problem Solving"),
+	CULTURE("Culture Fit"),
+	EXPERIENCE("Personal Experience"),
+	PERSONALITY("About Interviewee"),
 	;
 
 	private final String desc;
