@@ -1,13 +1,18 @@
 package com.mangkyu.employment.interview.app.user.service;
 
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +28,29 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+    @Spy
+    private ModelMapper modelMapper;
+
+    @BeforeEach
+    public void init() {
+        modelMapper.getConfiguration()
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
+                .setFieldMatchingEnabled(true);
+    }
+
+    @Test
+    public void addUserSuccess() {
+        // given
+        final AddUserRequest addUserRequest = AddUserRequest.builder()
+                .email("whalsrb1226@gmail.com")
+                .quizLevel(QuizLevel.JUNIOR)
+                .build();
+
+        // when
+        target.addUser(addUserRequest);
+
+        // then
+    }
 
     @Test
     public void disableUserSuccess() {
