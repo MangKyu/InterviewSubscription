@@ -25,8 +25,13 @@ public class SendQuizCronJob {
     private final MailService mailService;
     private final SolvedQuizService solvedQuizService;
 
+    /**
+     * https://crontab.guru/#0_01_*_*_1,4
+     * https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/scheduling/support/CronExpression.html
+     */
+
 //    @Scheduled(cron = "*/30 * * * * *") // every 30 seconds
-    @Scheduled(cron = "0 0 1 * * SUN") // every Sunday at 1am
+    @Scheduled(cron = "0 0 01 * * 1,4") // every Monday, Thursday at 1am
     @Transactional
     public void sendQuizMailEveryWeek() {
         final List<User> userList = userService.getEnabledUserList();
