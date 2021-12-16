@@ -12,6 +12,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.DEFAULT_QUIZ_SIZE;
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -24,6 +26,8 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private QuizLevel quizLevel;
+
+    private Integer quizSize = DEFAULT_QUIZ_SIZE;
 
     @OneToMany(mappedBy = "user")
     private List<SolvedQuiz> solvedQuizList = new ArrayList<>();

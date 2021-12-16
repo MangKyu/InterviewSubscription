@@ -22,6 +22,7 @@ class UserRepositoryTest {
         final User user = User.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
+                .quizSize(5)
                 .build();
 
         // when
@@ -30,6 +31,7 @@ class UserRepositoryTest {
         // then
         assertThat(result.getEmail()).isEqualTo(user.getEmail());
         assertThat(result.getQuizLevel()).isEqualTo(user.getQuizLevel());
+        assertThat(result.getQuizSize()).isEqualTo(user.getQuizSize());
     }
 
     @Test
