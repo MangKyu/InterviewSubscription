@@ -40,17 +40,17 @@ public class QuizService {
                 : quizRepository.findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
     }
 
-    public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList) {
-        return quizList.size() <= QuizConstants.MAXIMUM_QUIZ_SIZE
+    public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList, final Integer quizSize) {
+        return quizList.size() <= quizSize
                 ? quizList
-                : createRandomQuizListUnderLimit(quizList);
+                : createRandomQuizListUnderLimit(quizList, quizSize);
     }
 
-    private List<Quiz> createRandomQuizListUnderLimit(final List<Quiz> quizList) {
+    private List<Quiz> createRandomQuizListUnderLimit(final List<Quiz> quizList, final Integer quizSize) {
         final Random rand = new Random();
         final List<Quiz> randomQuizList = new ArrayList<>();
 
-        for (int i = 0; i < QuizConstants.MAXIMUM_QUIZ_SIZE; i++) {
+        for (int i = 0; i < quizSize; i++) {
             final int randomIndex = rand.nextInt(quizList.size());
             final Quiz quiz = quizList.get(randomIndex);
             randomQuizList.add(quiz);

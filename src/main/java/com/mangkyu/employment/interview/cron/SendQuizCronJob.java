@@ -39,7 +39,7 @@ public class SendQuizCronJob {
             final List<Quiz> unsolvedQuizList = quizService.getUnsolvedQuizList(user.getId(), user.getQuizLevel());
             final boolean isLastMail = isLastMail(unsolvedQuizList, user.getQuizSize());
 
-            final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList);
+            final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
             if (isLastMail) {
                 userService.disableUser(user);
             }

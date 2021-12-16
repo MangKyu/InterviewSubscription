@@ -41,6 +41,7 @@ class QuizServiceTest {
 
     private final Long userId = -1L;
     private final QuizLevel quizLevel = QuizLevel.NEW;
+    private final int quizSize = 3;
 
     @BeforeEach
     public void init() {
@@ -103,19 +104,19 @@ class QuizServiceTest {
     }
 
     @Test
-    public void getRandomQuizListUnderLimitSuccess_Under3() {
+    public void getRandomQuizListUnderLimitSuccess_UnderLimit() {
         // given
         final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
         // when
-        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList);
+        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, quizSize);
 
         // then
         assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
     }
 
     @Test
-    public void getRandomQuizListUnderLimitSuccess_Over3() {
+    public void getRandomQuizListUnderLimitSuccess_OverLimit() {
         // given
         final List<Quiz> unsolvedQuizList = new ArrayList<>();
         unsolvedQuizList.add(quiz(1L));
@@ -124,7 +125,7 @@ class QuizServiceTest {
         unsolvedQuizList.add(quiz(4L));
 
         // when
-        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList);
+        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, quizSize);
 
         // then
         assertThat(result.size()).isEqualTo(QuizConstants.MAXIMUM_QUIZ_SIZE);

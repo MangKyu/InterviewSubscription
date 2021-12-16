@@ -63,7 +63,7 @@ class SendQuizCronJobTest {
 
         // verify
         verify(quizService, times(0)).getUnsolvedQuizList(user.getId(), user.getQuizLevel());
-        verify(quizService, times(0)).getRandomQuizListUnderLimit(anyList());
+        verify(quizService, times(0)).getRandomQuizListUnderLimit(anyList(), user.getQuizSize());
         verify(userService, times(0)).disableUser(user);
         verify(mailService, times(0)).sendMail(anyString(), anyList(), anyBoolean());
         verify(solvedQuizService, times(0)).addSolvedQuizList(any(User.class), anyList());
@@ -83,7 +83,7 @@ class SendQuizCronJobTest {
                 .getUnsolvedQuizList(user.getId(), user.getQuizLevel());
         doReturn(randomQuizList)
                 .when(quizService)
-                .getRandomQuizListUnderLimit(unsolvedQuizList);
+                .getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
 
         // when
         target.sendQuizMailEveryWeek();
@@ -92,7 +92,7 @@ class SendQuizCronJobTest {
 
         // verify
         verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel());
-        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList);
+        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
         verify(userService, times(0)).disableUser(user);
         verify(mailService, times(1)).sendMail(user.getEmail(), randomQuizList, false);
         verify(solvedQuizService, times(1)).addSolvedQuizList(user, randomQuizList);
@@ -112,7 +112,7 @@ class SendQuizCronJobTest {
                 .getUnsolvedQuizList(user.getId(), user.getQuizLevel());
         doReturn(randomQuizList)
                 .when(quizService)
-                .getRandomQuizListUnderLimit(unsolvedQuizList);
+                .getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
 
         // when
         target.sendQuizMailEveryWeek();
@@ -121,7 +121,7 @@ class SendQuizCronJobTest {
 
         // verify
         verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel());
-        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList);
+        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
         verify(userService, times(1)).disableUser(user);
         verify(mailService, times(1)).sendMail(user.getEmail(), randomQuizList, true);
         verify(solvedQuizService, times(1)).addSolvedQuizList(user, randomQuizList);
