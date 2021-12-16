@@ -27,8 +27,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private QuizLevel quizLevel;
 
+    @Builder.Default
     private Integer quizSize = DEFAULT_QUIZ_SIZE;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<SolvedQuiz> solvedQuizList = new ArrayList<>();
 

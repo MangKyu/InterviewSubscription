@@ -37,7 +37,7 @@ public class SendQuizCronJob {
         final List<User> userList = userService.getEnabledUserList();
         for (final User user : userList) {
             final List<Quiz> unsolvedQuizList = quizService.getUnsolvedQuizList(user.getId(), user.getQuizLevel());
-            final boolean isLastMail = isLastMail(unsolvedQuizList);
+            final boolean isLastMail = isLastMail(unsolvedQuizList, user.getQuizSize());
 
             final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList);
             if (isLastMail) {
@@ -49,8 +49,8 @@ public class SendQuizCronJob {
         }
     }
 
-    private boolean isLastMail(final List<Quiz> quizList) {
-        return quizList.size() <= QuizConstants.MAXIMUM_QUIZ_SIZE;
+    private boolean isLastMail(final List<Quiz> quizList, final Integer quizSize) {
+        return quizList.size() <= quizSize;
     }
 
 }

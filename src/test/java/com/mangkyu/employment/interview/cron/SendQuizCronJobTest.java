@@ -43,6 +43,7 @@ class SendQuizCronJobTest {
         user = User.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
+                .quizSize(3)
                 .build();
 
         userList = Collections.singletonList(user);
