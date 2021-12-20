@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +19,7 @@ import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.
 @NoArgsConstructor(force = true)
 public class AddUserRequest {
 
+    @Email
     @NotBlank
     private final String email;
 

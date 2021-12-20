@@ -54,6 +54,25 @@ class UserControllerTest {
     }
 
     @Test
+    public void addUserFail_NotEmailFormat() throws Exception {
+        // given
+        final AddUserRequest addUserRequest = AddUserRequest.builder()
+                .email("asdas")
+                .quizLevel(QuizLevel.JUNIOR)
+                .build();
+
+        // when
+        final ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post("/user")
+                        .content(new Gson().toJson(addUserRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void addUserFail_QuizLevelIsNull() throws Exception {
         // given
         final AddUserRequest addUserRequest = AddUserRequest.builder()
