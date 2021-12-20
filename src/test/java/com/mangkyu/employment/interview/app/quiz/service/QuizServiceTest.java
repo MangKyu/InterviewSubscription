@@ -128,7 +128,7 @@ class QuizServiceTest {
         final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, quizSize);
 
         // then
-        assertThat(result.size()).isEqualTo(QuizConstants.MAXIMUM_QUIZ_SIZE);
+        assertThat(result.size()).isEqualTo(quizSize);
     }
 
     private List<SolvedQuiz> solvedQuizList() {
