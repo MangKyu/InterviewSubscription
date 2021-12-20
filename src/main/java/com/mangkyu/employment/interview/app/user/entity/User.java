@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.user.entity;
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
+import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +27,10 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private QuizLevel quizLevel;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private UserQuizCycle userQuizCycle = UserQuizCycle.REGULAR_INTERVALS;
 
     @Builder.Default
     private Integer quizSize = DEFAULT_QUIZ_SIZE;

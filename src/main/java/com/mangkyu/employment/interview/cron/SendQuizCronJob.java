@@ -6,6 +6,7 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
 import com.mangkyu.employment.interview.app.user.entity.User;
+import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import com.mangkyu.employment.interview.app.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,20 +34,33 @@ public class SendQuizCronJob {
 //    @Scheduled(cron = "*/30 * * * * *") // every 30 seconds
     @Scheduled(cron = "0 0 01 * * 1,4") // every Monday, Thursday at 1am
     @Transactional
-    public void sendQuizMailEveryWeek() {
-        final List<User> userList = userService.getEnabledUserList();
+    public void sendQuizMailEveryMondayAndThursday1AM() {
+        final List<User> userList = userService.getEnabledUserList(UserQuizCycle.REGULAR_INTERVALS);
         for (final User user : userList) {
-            final List<Quiz> unsolvedQuizList = quizService.getUnsolvedQuizList(user.getId(), user.getQuizLevel());
-            final boolean isLastMail = isLastMail(unsolvedQuizList, user.getQuizSize());
-
-            final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
-            if (isLastMail) {
-                userService.disableUser(user);
-            }
-
-            mailService.sendMail(user.getEmail(), randomQuizList, isLastMail);
-            solvedQuizService.addSolvedQuizList(user, randomQuizList);
+            sendUnsolvedQuizForUser(user);
         }
+    }
+
+    @Scheduled(cron = "0 0 01 * * *") // everyday at 1am
+    @Transactional
+    public void sendQuizMailEveryDay1AM() {
+        final List<User> userList = userService.getEnabledUserList(UserQuizCycle.DAILY);
+        for (final User user : userList) {
+            sendUnsolvedQuizForUser(user);
+        }
+    }
+
+    private void sendUnsolvedQuizForUser(final User user) {
+        final List<Quiz> unsolvedQuizList = quizService.getUnsolvedQuizList(user.getId(), user.getQuizLevel());
+        final boolean isLastMail = isLastMail(unsolvedQuizList, user.getQuizSize());
+
+        final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
+        if (isLastMail) {
+            userService.disableUser(user);
+        }
+
+        mailService.sendMail(user.getEmail(), randomQuizList, isLastMail);
+        solvedQuizService.addSolvedQuizList(user, randomQuizList);
     }
 
     private boolean isLastMail(final List<Quiz> quizList, final Integer quizSize) {

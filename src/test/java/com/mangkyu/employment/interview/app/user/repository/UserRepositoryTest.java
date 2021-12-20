@@ -2,6 +2,7 @@ package com.mangkyu.employment.interview.app.user.repository;
 
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.user.entity.User;
+import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,6 +16,28 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+
+    @Test
+    public void selectUserListByCycle() {
+        // given
+        final User user = User.builder()
+                .email("minkyu@test.com")
+                .quizLevel(QuizLevel.JUNIOR)
+                .userQuizCycle(UserQuizCycle.DAILY)
+                .build();
+
+        final User savedUser = userRepository.save(user);
+        userRepository.save(savedUser);
+
+        // when
+        final List<User> dailyResult = userRepository.findAllByIsEnableTrueAndUserQuizCycleIs(UserQuizCycle.DAILY);
+        final List<User> regularResult = userRepository.findAllByIsEnableTrueAndUserQuizCycleIs(UserQuizCycle.REGULAR_INTERVALS);
+
+        // then
+        assertThat(dailyResult.size()).isOne();
+        assertThat(regularResult.size()).isZero();
+    }
 
     @Test
     public void insertUser() {
@@ -40,6 +63,7 @@ class UserRepositoryTest {
         final User user = User.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
+                .userQuizCycle(UserQuizCycle.REGULAR_INTERVALS)
                 .build();
 
         final User savedUser = userRepository.save(user);
@@ -47,7 +71,7 @@ class UserRepositoryTest {
         userRepository.save(savedUser);
 
         // when
-        final List<User> result = userRepository.findAllByIsEnableTrue();
+        final List<User> result = userRepository.findAllByIsEnableTrueAndUserQuizCycleIs(UserQuizCycle.REGULAR_INTERVALS);
 
         // then
         assertThat(result.size()).isZero();

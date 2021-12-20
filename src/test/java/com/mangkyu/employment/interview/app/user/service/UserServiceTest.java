@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.user.service;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.entity.User;
+import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,8 @@ class UserServiceTest {
     private UserRepository userRepository;
     @Spy
     private ModelMapper modelMapper;
+
+    private final UserQuizCycle userQuizCycle = UserQuizCycle.DAILY;
 
     @BeforeEach
     public void init() {
@@ -70,16 +73,16 @@ class UserServiceTest {
     public void getEnabledUserListSuccess() {
         // given
         final List<User> enabledUserList = Arrays.asList(user(true), user(true));
-        doReturn(enabledUserList).when(userRepository).findAllByIsEnableTrue();
+        doReturn(enabledUserList).when(userRepository).findAllByIsEnableTrueAndUserQuizCycleIs(userQuizCycle);
 
         // when
-        final List<User> result = target.getEnabledUserList();
+        final List<User> result = target.getEnabledUserList(userQuizCycle);
 
         // then
         assertThat(result.size()).isEqualTo(enabledUserList.size());
 
         // verify
-        verify(userRepository, times(1)).findAllByIsEnableTrue();
+        verify(userRepository, times(1)).findAllByIsEnableTrueAndUserQuizCycleIs(userQuizCycle);
     }
 
     private User user(final boolean isEnable) {

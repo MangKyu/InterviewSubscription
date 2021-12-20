@@ -2,6 +2,7 @@ package com.mangkyu.employment.interview.app.user.service;
 
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.entity.User;
+import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -30,7 +31,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getEnabledUserList() {
-        return userRepository.findAllByIsEnableTrue();
+    public List<User> getEnabledUserList(final UserQuizCycle userQuizCycle) {
+        return userRepository.findAllByIsEnableTrueAndUserQuizCycleIs(userQuizCycle);
     }
 }
