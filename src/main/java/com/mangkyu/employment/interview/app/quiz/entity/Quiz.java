@@ -31,6 +31,7 @@ public class Quiz extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private List<QuizLevel> quizLevel;
 
+    @Builder.Default
     @OneToMany(mappedBy = "quiz")
     private List<SolvedQuiz> solvedQuizList = new ArrayList<>();
 

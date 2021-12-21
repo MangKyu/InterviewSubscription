@@ -23,6 +23,7 @@ import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.
 @AllArgsConstructor
 public class User extends BaseEntity {
 
+    @Column(unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
