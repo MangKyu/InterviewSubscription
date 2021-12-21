@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.user.controller;
 import com.google.gson.Gson;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
+import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import com.mangkyu.employment.interview.app.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,6 +99,7 @@ class UserControllerTest {
         final AddUserRequest addUserRequest = AddUserRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.JUNIOR)
+                .userQuizCycle(UserQuizCycle.DAILY)
                 .build();
 
         // when

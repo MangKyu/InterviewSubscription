@@ -1,6 +1,7 @@
 package com.mangkyu.employment.interview.app.user.dto;
 
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,6 @@ public class AddUserRequest {
     @Range(min = MINIMUM_QUIZ_SIZE, max = MAXIMUM_QUIZ_SIZE)
     private final Integer quizSize = DEFAULT_QUIZ_SIZE;
 
+    @NotNull
+    private final UserQuizCycle userQuizCycle;
 }
