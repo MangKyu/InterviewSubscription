@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.enums.factory;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

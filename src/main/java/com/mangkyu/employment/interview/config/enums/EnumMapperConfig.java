@@ -16,6 +16,7 @@ public class EnumMapperConfig {
 
         enumMapperFactory.put(EnumMapperKey.QUIZ_LEVEL);
         enumMapperFactory.put(EnumMapperKey.QUIZ_CATEGORY);
+        enumMapperFactory.put(EnumMapperKey.QUIZ_DAY);
 
         return enumMapperFactory;
     }
