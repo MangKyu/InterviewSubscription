@@ -2,13 +2,13 @@ package com.mangkyu.employment.interview.app.user.service;
 
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.entity.User;
-import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Service
@@ -31,7 +31,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getEnabledUserList(final UserQuizCycle userQuizCycle) {
-        return userRepository.findAllByIsEnableTrueAndUserQuizCycleIs(userQuizCycle);
+    public List<User> getEnabledUserList(final DayOfWeek dayOfWeek) {
+        return userRepository.findAllByIsEnableTrueAndQuizDaySetIs(dayOfWeek);
     }
 }

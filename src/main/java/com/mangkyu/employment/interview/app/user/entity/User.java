@@ -3,15 +3,16 @@ package com.mangkyu.employment.interview.app.user.entity;
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
-import com.mangkyu.employment.interview.app.user.enums.UserQuizCycle;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.DEFAULT_QUIZ_SIZE;
 
@@ -29,9 +30,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private QuizLevel quizLevel;
 
-    @Builder.Default
+    @ElementCollection(targetClass = DayOfWeek.class)
+    @CollectionTable
     @Enumerated(EnumType.STRING)
-    private UserQuizCycle userQuizCycle = UserQuizCycle.REGULAR_INTERVALS;
+    private Set<DayOfWeek> quizDaySet;
 
     @Builder.Default
     private Integer quizSize = DEFAULT_QUIZ_SIZE;
