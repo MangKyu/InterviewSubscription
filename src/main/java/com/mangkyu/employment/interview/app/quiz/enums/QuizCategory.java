@@ -1,11 +1,12 @@
 package com.mangkyu.employment.interview.app.quiz.enums;
 
+import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum QuizCategory {
+public enum QuizCategory implements EnumMapperType {
 
 	JAVA("Java"),
 	SPRING("Spring Framework"),
@@ -24,4 +25,8 @@ public enum QuizCategory {
 
 	private final String desc;
 
+	@Override
+	public String getCode() {
+		return name();
+	}
 }

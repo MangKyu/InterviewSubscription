@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.quiz.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequestHolder;
+import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,6 +44,14 @@ public class QuizController {
         quizService.addQuiz(addQuizRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();
+    }
+
+    @GetMapping("/quiz/category")
+    public ResponseEntity<List<QuizCategory>> getQuizCategoryList() {
+        List<QuizCategory> quizCategoryList = Arrays.stream(QuizCategory.values())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(quizCategoryList);
     }
 
 }
