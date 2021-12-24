@@ -1,8 +1,8 @@
 package com.mangkyu.employment.interview.app.quiz.entity;
 
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.enums.value.QuizCategory;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

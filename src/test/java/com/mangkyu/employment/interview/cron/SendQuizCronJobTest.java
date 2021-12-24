@@ -2,11 +2,12 @@ package com.mangkyu.employment.interview.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.MailService;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
 import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.app.user.service.UserService;
+import com.mangkyu.employment.interview.enums.value.QuizDay;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +39,7 @@ class SendQuizCronJobTest {
 
     private User user;
     private List<User> userList;
-    private DayOfWeek dayOfWeek;
+    private QuizDay quizDay;
 
     @BeforeEach
     public void init() {
@@ -50,7 +50,7 @@ class SendQuizCronJobTest {
                 .build();
 
         userList = Collections.singletonList(user);
-        dayOfWeek = LocalDate.now().getDayOfWeek();
+        quizDay = QuizDay.findQuizDay(LocalDate.now().getDayOfWeek());
     }
 
     @Test
@@ -58,7 +58,7 @@ class SendQuizCronJobTest {
         // given
         doReturn(Collections.emptyList())
                 .when(userService)
-                .getEnabledUserList(dayOfWeek);
+                .getEnabledUserList(quizDay);
 
         // when
         target.sendQuizMail();
@@ -81,7 +81,7 @@ class SendQuizCronJobTest {
 
         doReturn(userList)
                 .when(userService)
-                .getEnabledUserList(dayOfWeek);
+                .getEnabledUserList(quizDay);
         doReturn(unsolvedQuizList)
                 .when(quizService)
                 .getUnsolvedQuizList(user.getId(), user.getQuizLevel());
@@ -110,7 +110,7 @@ class SendQuizCronJobTest {
 
         doReturn(userList)
                 .when(userService)
-                .getEnabledUserList(dayOfWeek);
+                .getEnabledUserList(quizDay);
         doReturn(unsolvedQuizList)
                 .when(quizService)
                 .getUnsolvedQuizList(user.getId(), user.getQuizLevel());

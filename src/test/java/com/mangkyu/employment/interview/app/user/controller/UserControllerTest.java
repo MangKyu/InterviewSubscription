@@ -1,9 +1,10 @@
 package com.mangkyu.employment.interview.app.user.controller;
 
 import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.service.UserService;
+import com.mangkyu.employment.interview.enums.value.QuizDay;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +17,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.DayOfWeek;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -119,10 +119,10 @@ class UserControllerTest {
     @Test
     public void addUserSuccess() throws Exception {
         // given
-        final Set<DayOfWeek> quizDaySet = new HashSet<>();
-        quizDaySet.add(DayOfWeek.MONDAY);
-        quizDaySet.add(DayOfWeek.WEDNESDAY);
-        quizDaySet.add(DayOfWeek.FRIDAY);
+        final Set<QuizDay> quizDaySet = new HashSet<>();
+        quizDaySet.add(QuizDay.MONDAY);
+        quizDaySet.add(QuizDay.WEDNESDAY);
+        quizDaySet.add(QuizDay.FRIDAY);
 
         final AddUserRequest addUserRequest = AddUserRequest.builder()
                 .email("whalsrb1226@gmail.com")

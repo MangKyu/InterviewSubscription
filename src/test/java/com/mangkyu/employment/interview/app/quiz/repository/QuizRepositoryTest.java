@@ -1,8 +1,8 @@
 package com.mangkyu.employment.interview.app.quiz.repository;
 
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.enums.value.QuizCategory;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

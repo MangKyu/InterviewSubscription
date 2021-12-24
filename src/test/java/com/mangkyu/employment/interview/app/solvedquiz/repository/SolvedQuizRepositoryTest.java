@@ -1,8 +1,8 @@
 package com.mangkyu.employment.interview.app.solvedquiz.repository;
 
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.enums.value.QuizCategory;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.user.entity.User;

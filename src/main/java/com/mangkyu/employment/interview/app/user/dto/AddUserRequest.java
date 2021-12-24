@@ -1,6 +1,7 @@
 package com.mangkyu.employment.interview.app.user.dto;
 
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.enums.value.QuizDay;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.DayOfWeek;
 import java.util.Set;
 
 import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.*;
@@ -33,5 +33,5 @@ public class AddUserRequest {
     private final Integer quizSize = DEFAULT_QUIZ_SIZE;
 
     @NotEmpty
-    private final Set<DayOfWeek> quizDaySet;
+    private final Set<QuizDay> quizDaySet;
 }

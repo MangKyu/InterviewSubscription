@@ -1,9 +1,10 @@
 package com.mangkyu.employment.interview.app.user.service;
 
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
+import com.mangkyu.employment.interview.enums.value.QuizDay;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 
-import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -34,7 +34,7 @@ class UserServiceTest {
     @Spy
     private ModelMapper modelMapper;
 
-    private final DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
+    private final QuizDay quizDay = QuizDay.MONDAY;
 
     @BeforeEach
     public void init() {
@@ -46,10 +46,10 @@ class UserServiceTest {
     @Test
     public void addUserSuccess() {
         // given
-        final Set<DayOfWeek> quizDaySet = new HashSet<>();
-        quizDaySet.add(DayOfWeek.MONDAY);
-        quizDaySet.add(DayOfWeek.WEDNESDAY);
-        quizDaySet.add(DayOfWeek.SATURDAY);
+        final Set<QuizDay> quizDaySet = new HashSet<>();
+        quizDaySet.add(QuizDay.MONDAY);
+        quizDaySet.add(QuizDay.WEDNESDAY);
+        quizDaySet.add(QuizDay.SATURDAY);
 
         final AddUserRequest addUserRequest = AddUserRequest.builder()
                 .email("whalsrb1226@gmail.com")
@@ -81,16 +81,16 @@ class UserServiceTest {
     public void getEnabledUserListSuccess() {
         // given
         final List<User> enabledUserList = Arrays.asList(user(true), user(true));
-        doReturn(enabledUserList).when(userRepository).findAllByIsEnableTrueAndQuizDaySetIs(dayOfWeek);
+        doReturn(enabledUserList).when(userRepository).findAllByIsEnableTrueAndQuizDaySetIs(quizDay);
 
         // when
-        final List<User> result = target.getEnabledUserList(dayOfWeek);
+        final List<User> result = target.getEnabledUserList(quizDay);
 
         // then
         assertThat(result.size()).isEqualTo(enabledUserList.size());
 
         // verify
-        verify(userRepository, times(1)).findAllByIsEnableTrueAndQuizDaySetIs(dayOfWeek);
+        verify(userRepository, times(1)).findAllByIsEnableTrueAndQuizDaySetIs(quizDay);
     }
 
     private User user(final boolean isEnable) {

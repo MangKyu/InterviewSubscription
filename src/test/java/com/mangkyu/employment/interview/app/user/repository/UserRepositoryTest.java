@@ -1,13 +1,15 @@
 package com.mangkyu.employment.interview.app.user.repository;
 
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
 import com.mangkyu.employment.interview.app.user.entity.User;
+import com.mangkyu.employment.interview.enums.value.QuizDay;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.DayOfWeek;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,10 +23,10 @@ class UserRepositoryTest {
     @Test
     public void selectUserListByCycle() {
         // given
-        final Set<DayOfWeek> quizDaySet = new HashSet<>();
-        quizDaySet.add(DayOfWeek.MONDAY);
-        quizDaySet.add(DayOfWeek.WEDNESDAY);
-        quizDaySet.add(DayOfWeek.FRIDAY);
+        final Set<QuizDay> quizDaySet = new HashSet<>();
+        quizDaySet.add(QuizDay.MONDAY);
+        quizDaySet.add(QuizDay.WEDNESDAY);
+        quizDaySet.add(QuizDay.FRIDAY);
 
         final User user = User.builder()
                 .email("minkyu@test.com")
@@ -37,8 +39,8 @@ class UserRepositoryTest {
         userRepository.save(savedUser);
 
         // when
-        final List<User> dailyResult = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(DayOfWeek.MONDAY);
-        final List<User> regularResult = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(DayOfWeek.THURSDAY);
+        final List<User> dailyResult = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.MONDAY);
+        final List<User> regularResult = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.THURSDAY);
 
         // then
         assertThat(dailyResult.size()).isOne();
@@ -66,10 +68,10 @@ class UserRepositoryTest {
     @Test
     public void updateUserDisabled() {
         // given
-        final Set<DayOfWeek> quizDaySet = new HashSet<>();
-        quizDaySet.add(DayOfWeek.MONDAY);
-        quizDaySet.add(DayOfWeek.WEDNESDAY);
-        quizDaySet.add(DayOfWeek.FRIDAY);
+        final Set<QuizDay> quizDaySet = new HashSet<>();
+        quizDaySet.add(QuizDay.MONDAY);
+        quizDaySet.add(QuizDay.WEDNESDAY);
+        quizDaySet.add(QuizDay.FRIDAY);
 
         final User user = User.builder()
                 .email("minkyu@test.com")
@@ -82,7 +84,7 @@ class UserRepositoryTest {
         userRepository.save(savedUser);
 
         // when
-        final List<User> result = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(DayOfWeek.MONDAY);
+        final List<User> result = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.MONDAY);
 
         // then
         assertThat(result.size()).isZero();

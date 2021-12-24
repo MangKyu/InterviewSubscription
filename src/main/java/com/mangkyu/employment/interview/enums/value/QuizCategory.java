@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.quiz.enums;
+package com.mangkyu.employment.interview.enums.value;
 
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.dto;
 
-import com.mangkyu.employment.interview.app.quiz.enums.QuizCategory;
-import com.mangkyu.employment.interview.app.quiz.enums.QuizLevel;
+import com.mangkyu.employment.interview.enums.value.QuizCategory;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

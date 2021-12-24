@@ -6,12 +6,14 @@ import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
 import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.app.user.service.UserService;
+import com.mangkyu.employment.interview.enums.value.QuizDay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,7 +35,8 @@ public class SendQuizCronJob {
     @Scheduled(cron = "0 0 1 * * ?")
     @Transactional
     public void sendQuizMail() {
-        final List<User> userList = userService.getEnabledUserList(LocalDate.now().getDayOfWeek());
+        final DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
+        final List<User> userList = userService.getEnabledUserList(QuizDay.findQuizDay(dayOfWeek));
         for (final User user : userList) {
             sendUnsolvedQuizForUser(user);
         }
