@@ -2,11 +2,11 @@ package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.enums.value.QuizCategory;
-import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
+import com.mangkyu.employment.interview.enums.value.QuizCategory;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,11 +76,16 @@ class QuizServiceTest {
                 .collect(Collectors.toSet());
         final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
+        final Set<QuizCategory> quizCategorySet = new HashSet<>();
+        quizCategorySet.add(QuizCategory.CULTURE);
+        quizCategorySet.add(QuizCategory.DATABASE);
+        quizCategorySet.add(QuizCategory.EXPERIENCE);
+
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
 
         // when
-        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel);
+        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
 
         // then
         assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
@@ -92,11 +97,16 @@ class QuizServiceTest {
         final List<SolvedQuiz> solvedQuizList = Collections.emptyList();
         final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
+        final Set<QuizCategory> quizCategorySet = new HashSet<>();
+        quizCategorySet.add(QuizCategory.CULTURE);
+        quizCategorySet.add(QuizCategory.DATABASE);
+        quizCategorySet.add(QuizCategory.EXPERIENCE);
+
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizLevel(Collections.emptySet(), quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
 
         // when
-        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel);
+        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
 
         // then
         assertThat(result.size()).isEqualTo(unsolvedQuizList.size());

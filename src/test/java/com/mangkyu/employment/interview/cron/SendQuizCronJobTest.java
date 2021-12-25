@@ -66,7 +66,7 @@ class SendQuizCronJobTest {
         // then
 
         // verify
-        verify(quizService, times(0)).getUnsolvedQuizList(user.getId(), user.getQuizLevel());
+        verify(quizService, times(0)).getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
         verify(quizService, times(0)).getRandomQuizListUnderLimit(anyList(), anyInt());
         verify(userService, times(0)).disableUser(user);
         verify(mailService, times(0)).sendMail(anyString(), anyList(), anyBoolean());
@@ -84,7 +84,7 @@ class SendQuizCronJobTest {
                 .getEnabledUserList(quizDay);
         doReturn(unsolvedQuizList)
                 .when(quizService)
-                .getUnsolvedQuizList(user.getId(), user.getQuizLevel());
+                .getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
         doReturn(randomQuizList)
                 .when(quizService)
                 .getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
@@ -95,7 +95,7 @@ class SendQuizCronJobTest {
         // then
 
         // verify
-        verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel());
+        verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
         verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
         verify(userService, times(0)).disableUser(user);
         verify(mailService, times(1)).sendMail(user.getEmail(), randomQuizList, false);
@@ -113,7 +113,7 @@ class SendQuizCronJobTest {
                 .getEnabledUserList(quizDay);
         doReturn(unsolvedQuizList)
                 .when(quizService)
-                .getUnsolvedQuizList(user.getId(), user.getQuizLevel());
+                .getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
         doReturn(randomQuizList)
                 .when(quizService)
                 .getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
@@ -124,7 +124,7 @@ class SendQuizCronJobTest {
         // then
 
         // verify
-        verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel());
+        verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
         verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
         verify(userService, times(1)).disableUser(user);
         verify(mailService, times(1)).sendMail(user.getEmail(), randomQuizList, true);
