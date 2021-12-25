@@ -2,15 +2,18 @@ package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
+import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +37,7 @@ public class QuizService {
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
 
-        return solvedQuizIdList.isEmpty()
-                ? quizRepository.findByQuizLevel(quizLevel)
-                : quizRepository.findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
+        return quizRepository.customFindByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
     }
 
     public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList, final Integer quizSize) {

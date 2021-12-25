@@ -77,7 +77,7 @@ class QuizServiceTest {
         final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).findByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizLevel(solvedQuizIdList, quizLevel);
 
         // when
         final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel);
@@ -93,7 +93,7 @@ class QuizServiceTest {
         final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).findByQuizLevel(quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizLevel(Collections.emptySet(), quizLevel);
 
         // when
         final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel);

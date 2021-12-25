@@ -10,6 +10,14 @@ import java.util.Set;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
+    default List<Quiz> customFindByIdNotInAndQuizLevel(final Set<Long> quizIdSet, final QuizLevel quizLevel) {
+        return quizIdSet.isEmpty()
+                ? findByQuizLevel(quizLevel)
+                : findByIdNotInAndQuizLevel(quizIdSet, quizLevel);
+    }
+
+    List<Quiz> findByQuizLevel(final QuizLevel quizLevel);
+
     List<Quiz> findByIdNotInAndQuizLevel(final Set<Long> quizIdSet, final QuizLevel quizLevel);
 
     default List<Quiz> customFindByIdNotInAndQuizCategoryInAndQuizLevel(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel) {
@@ -21,7 +29,5 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findByQuizCategoryInAndQuizLevel(final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
 
     List<Quiz> findByIdNotInAndQuizCategoryInAndQuizLevel(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
-
-    List<Quiz> findByQuizLevel(final QuizLevel quizLevel);
 
 }

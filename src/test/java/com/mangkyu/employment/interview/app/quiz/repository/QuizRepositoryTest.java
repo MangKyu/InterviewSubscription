@@ -108,10 +108,12 @@ class QuizRepositoryTest {
         final Quiz savedQuiz4 = quizRepository.save(quiz4);
 
         // when
-        final List<Quiz> unsolvedQuizList = quizRepository.findByIdNotInAndQuizLevel(new HashSet<>(Arrays.asList(savedQuiz1.getId(), savedQuiz2.getId())), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList1 = quizRepository.customFindByIdNotInAndQuizLevel(new HashSet<>(Arrays.asList(savedQuiz1.getId(), savedQuiz2.getId())), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList2 = quizRepository.customFindByIdNotInAndQuizLevel(Collections.emptySet(), QuizLevel.NEW);
 
         // then
-        assertThat(unsolvedQuizList.size()).isEqualTo(1);
+        assertThat(unsolvedQuizList1.size()).isEqualTo(1);
+        assertThat(unsolvedQuizList2.size()).isEqualTo(3);
     }
 
     @Test
