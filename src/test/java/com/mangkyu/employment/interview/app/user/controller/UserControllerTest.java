@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.user.controller;
 import com.google.gson.Gson;
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.service.UserService;
+import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -117,7 +118,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void addUserSuccess() throws Exception {
+    public void addUserFail_QuizCategorySetIsEmpty() throws Exception {
         // given
         final Set<QuizDay> quizDaySet = new HashSet<>();
         quizDaySet.add(QuizDay.MONDAY);
@@ -138,10 +139,38 @@ class UserControllerTest {
         );
 
         // then
-        result.andExpect(status().isCreated());
+        result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void addUserSuccess() throws Exception {
+        // given
+        final Set<QuizDay> quizDaySet = new HashSet<>();
+        quizDaySet.add(QuizDay.MONDAY);
+        quizDaySet.add(QuizDay.WEDNESDAY);
+        quizDaySet.add(QuizDay.FRIDAY);
+
+        final Set<QuizCategory> quizCategorySet = new HashSet<>();
+        quizCategorySet.add(QuizCategory.CULTURE);
+        quizCategorySet.add(QuizCategory.DATABASE);
+        quizCategorySet.add(QuizCategory.EXPERIENCE);
+
+        final AddUserRequest addUserRequest = AddUserRequest.builder()
+                .email("whalsrb1226@gmail.com")
+                .quizLevel(QuizLevel.JUNIOR)
+                .quizDaySet(quizDaySet)
+                .quizCategorySet(quizCategorySet)
+                .build();
+
+        // when
+        final ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post("/user")
+                        .content(new Gson().toJson(addUserRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
 
         // then
-
+        result.andExpect(status().isCreated());
     }
 
 }

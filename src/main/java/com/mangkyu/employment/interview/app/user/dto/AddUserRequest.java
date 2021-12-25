@@ -1,5 +1,6 @@
 package com.mangkyu.employment.interview.app.user.dto;
 
+import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.Builder;
@@ -34,4 +35,8 @@ public class AddUserRequest {
 
     @NotEmpty
     private final Set<QuizDay> quizDaySet;
+
+    @NotEmpty
+    private final Set<QuizCategory> quizCategorySet;
+
 }
