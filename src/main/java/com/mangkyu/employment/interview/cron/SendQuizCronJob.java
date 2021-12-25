@@ -32,12 +32,14 @@ public class SendQuizCronJob {
      * https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/scheduling/support/CronExpression.html
      */
 
+//    @Scheduled(cron = "*/30 * * * * *") // every 30 seconds
     @Scheduled(cron = "0 0 1 * * ?")
     @Transactional
     public void sendQuizMail() {
         final DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
         final List<User> userList = userService.getEnabledUserList(QuizDay.findQuizDay(dayOfWeek));
         for (final User user : userList) {
+            System.out.println(userList.size());
             sendUnsolvedQuizForUser(user);
         }
     }
