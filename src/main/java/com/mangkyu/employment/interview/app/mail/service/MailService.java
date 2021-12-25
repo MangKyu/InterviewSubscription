@@ -4,6 +4,7 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.utils.DateUtils;
 import com.mangkyu.employment.interview.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MailService {
 
     private final JavaMailSender mailSender;
@@ -44,8 +46,8 @@ public class MailService {
             final String mailText = createMailText(quizList);
             messageHelper.setText(mailText, true);
             mailSender.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (final MessagingException e) {
+            log.error("send mail fail: ", e);
         }
 
     }
