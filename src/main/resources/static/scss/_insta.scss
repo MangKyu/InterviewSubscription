@@ -1,0 +1,147 @@
+.instagram_area{
+    padding-top: 180px;
+    padding-bottom: 150px;
+    @media #{$mobile_device} {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+    @media #{$tablet_device} {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+    .single_insta{
+        margin-bottom: 30px;
+        img{
+            width: 100%;
+        }
+    }
+}
+
+.creative_mind_area{
+    background: #F5FBFF;
+    .creativ_thumb{
+        img{
+            width: 100%;
+        }
+    }
+    .creative_info{
+        padding-top: 100px;
+        padding-bottom: 100px;
+        padding-left: 96px;
+        @media #{$mobile_device} {
+            padding-top: 30px;
+            padding-bottom: 30px;
+            padding-left: 10px;
+            padding-right: 15px;
+        }
+        @media #{$tablet_device} {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            padding-left: 35px;
+            padding-right: 15px;
+        }
+        @media #{$mid_device} {
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 30px;
+            padding-right: 15px;
+        }
+        @media #{$large_device} {
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 96px;
+            
+        }
+        .section_title{
+            h3{
+                @media #{$large_device} {
+                    font-size: 40px;
+                }
+                @media #{$mid_device} {
+                    font-size: 30px;
+                }
+            }
+            p{
+                font-size: 16px;
+                br{
+                    @media #{$mid_device} {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .progressBars{
+            margin-top: 28px;
+            margin-bottom: 60px;
+            @media #{$mid_device} {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            .single_bar{
+                margin-bottom: 25px;
+                @media #{$mid_device} {
+                    margin-bottom: 10px;
+                }
+                h4{
+                    font-size: 16px;
+                    color: #001D38;
+                    font-weight: 500;
+                    margin-bottom: 10px;
+                }
+                .progress{
+                    height: 3px;
+                    overflow: visible;
+                    font-size: .75rem;
+                    background-color: transparent;
+                    border-radius: 7px;
+                    
+                    .progress-bar{
+                        position: relative;
+                        background: #001D38;
+                        span{
+                            color: #001D38;
+                            position: absolute;
+                            font-size: 16px;
+                            font-weight: 500;
+                            right: 0;
+                            top: -31px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// mission_area 
+.mission_area{
+    padding-top: 180px;
+    padding-bottom: 150px;
+    @media #{$mobile_device} {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+    @media #{$tablet_device} {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+    .mission_info{
+        margin-bottom: 30px;
+        h3{
+            font-size: 50px;
+            font-weight: 500;
+            color: #001D38;
+            margin-bottom: 10px;
+        }
+        p{
+            font-size: 16px;
+        }
+    }
+    .thumb{
+        margin-bottom: 30px;
+        img{
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,110 @@
+.accordion_area{
+    padding-top: 100px;
+    padding-bottom: 100px;
+    @media #{$mobile_device} {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    @media #{$tablet_device} {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    .accordion_thumb{
+        @include border-radius(10px);
+        overflow: hidden;
+        padding-left: 68px;
+        @media #{$mobile_device} {
+            padding-left: 0;
+        }
+        @media #{$tablet_device} {
+            padding-left: 0;
+        }
+        img{
+            width: 100%;
+            @include border-radius(10px);
+        }
+    }
+    .faq_ask{
+        h3{
+            font-size: 46px;
+            font-weight: 300;
+            color: #001D38;
+            margin-bottom: 57px;
+            @media #{$mobile_device} {
+                font-size: 38px;
+                margin-bottom: 30px;
+                margin-top: 20px;
+            }
+            @media #{$tablet_device} {
+                font-size: 38px;
+                margin-bottom: 50px;
+                margin-top: 20px;
+            }
+        }
+        #accordion{
+            .card {
+                position: relative;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: none;
+                border-radius: .25rem;
+                border-bottom: 1px solid #E8E8E8;
+            }
+           .card .card-header {
+                background-color: transparent;
+                padding: 4px 14px;
+                border: none;
+            }
+            button {
+                font-size: 15px;
+                color: #001D38 !important;
+                font-weight: 300 !important;
+                span{
+                    @media #{$mobile_device} {
+                        display: none;
+                    }
+                }
+            }
+            .card .card-header {
+                background-color: transparent;
+                padding: 4px 30px;
+            }
+            // h5 button.btn.btn-link::after {
+            //     position: absolute;
+            //     content: "\e648";
+            //     top: 9px;
+            //     left: -24px;
+            //     height: auto;
+            //     font-family: 'themify';
+            //     color: #0f2137;
+            //     font-size: 14px;
+            // }
+            .card .card-body {
+
+                font-size: 15px;
+                line-height: 28px;
+                color: #727272;
+                padding: 10px 30px 32px;
+                font-weight: 400;
+                line-height: 28px;
+            
+            }
+            .btn-link.focus, .btn-link:focus {
+                text-decoration: none;
+                border-color: transparent;
+                box-shadow: none;
+            }
+        }
+    }
+
+
+}

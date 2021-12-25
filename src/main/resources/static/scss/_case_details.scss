@@ -1,0 +1,87 @@
+.case_details_area{
+    padding-top: 100px;
+    margin-top: 138px;
+    @media #{$mobile_device} {
+        padding-top: 100px;
+        margin-top: 0px;
+    }
+    .border_bottom{
+        border-bottom: 1px solid #E8E8E8;
+        padding-bottom: 10px;
+    }
+    .case_thumb img {
+        width: 100%;
+    }
+    .details_title{
+        margin-bottom: 60px;
+        span{
+            font-size: 15px;
+            color: #919191;
+            font-weight: 400;
+        }
+        h3{
+            font-size: 46px;
+            font-weight: 300;
+            color: #001D38;
+            @media #{$mobile_device} {
+                font-size: 28px;
+            }
+        }
+    }
+    .details_main_wrap{
+        .details_info {
+            color: #001D38;
+            font-weight: 400;
+            font-size: 20px;
+            margin-top: 54px;
+            margin-bottom: 35px;
+        }
+        .single_details{
+            margin-bottom: 30px;
+            span{
+                font-weight: 500;
+                font-size: 22px;
+                color: #001D38;
+            }
+            p{
+                color: #727272;
+                font-size: 15px;
+                font-weight: 400;
+                margin-bottom: 0;
+            }
+            ul{
+                li{
+                    display: inline-block;
+                    margin-right: 4px;
+                    @media #{$mobile_device} {
+                        display: block;
+                        margin-right: 4px;
+                        margin: 0;
+                        margin: 10px 0;
+                        text-align: center;
+                    }
+                    a{
+                        background: #3B5997;
+                        @include border-radius(4px);
+                        font-size: 14px;
+                        font-weight: 400;
+                        display: inline-block;
+                        color: #fff;
+                        padding: 15px 28px;
+                        font-size: 16px;
+                        @media #{$mobile_device}{
+                            display: block;
+                        }
+                    }
+                    &:nth-child(2) a{
+                        background: #1DA1F2 !important;
+                    }
+                    &:nth-child(3) a{
+                        background: #B21D23 !important;
+                    }
+                }
+            }
+        }
+    }
+
+}

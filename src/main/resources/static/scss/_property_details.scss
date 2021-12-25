@@ -1,0 +1,184 @@
+.property_details{
+    position: relative;
+    margin-top: -151px;
+    padding-bottom: 90px;
+    @media #{$mobile_device} {
+        padding-bottom: 40px;
+    }
+    .contact-section {
+        padding: 41px 0 55px 0;
+    }
+    .property_banner{
+        margin-bottom: 60px;
+        .owl-carousel .owl-nav div {
+            height: 40px;
+            width: 40px;
+            color: #707070;
+            left: 50px;
+            font-size: 13px;
+            line-height: 40px;
+            left: 50px;
+            color: #001D38;
+            background: #fff;
+            border: none;
+            &.owl-next {
+                left: auto;
+                right: 50px;
+            }
+            &:hover{
+                background: #FDAE5C;
+                color: #fff;
+            }
+        }
+        .owl-carousel .owl-nav div.owl-prev i {
+            position: relative;
+            top: 0px;
+            right: 1px;
+        }
+    }
+
+    // details_info 
+    .details_info{
+        h4{
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            color: #001D38;
+        }
+        p{
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 28px;
+            margin-bottom: 13px;
+            color: #727272;
+        }
+    }
+    .contact_field{
+        h3{
+            font-size: 22px;
+            font-weight: 500;
+            color: #001D38;
+            margin-bottom: 26px;
+            
+        }
+        form{
+            margin-bottom: 30px;
+            input{
+                height: 50px;
+                background:#F5FBFF;
+                border: none;
+                @include border-radius(5px);
+                font-size: 15px;
+                width: 100%;
+                padding-left: 15px;
+                margin-bottom: 20px;
+                &::placeholder{
+                    color: #919191;
+                    font-size: 15px;
+                    font-weight: 400;
+                }
+                &:focus{
+                    outline: none;
+                }
+            }
+            textarea{
+                height: 100px;
+                background:#F5FBFF;
+                border: none;
+                @include border-radius(5px);
+                padding: 15px;
+                width: 100%;
+                resize: none;
+                margin-bottom: 20px;
+                &::placeholder{
+                    color: #919191;
+                    font-size: 15px;
+                    font-weight: 400;
+                }
+                &:focus{
+                    outline: none;
+                }
+            }
+            .send_btn {
+                background: #FDAE5C;
+                color: #fff;
+                text-align: center;
+                padding: 6px;
+                font-weight: 500;
+                font-size: 15px;
+                border-radius: 5px;
+                border: none;
+                display: block;
+                cursor: pointer;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.property_details_banner{
+    background: #10273C;
+    padding: 250px 0 210px 0;
+
+    @media #{$mobile_device} {
+        padding: 200px 0 210px 0;
+    }
+    .comfortable_apartment{
+        h4{
+            font-size: 30px;
+            font-weight: 500;
+            color: #fff;
+        }
+        p{
+            font-size: 13px;
+            color: #C7C7C7;
+            img{
+                margin-right: 7px;
+            }
+        }
+        .quality_quantity{
+            margin-top: 31px;
+            .single_quantity{
+                margin-right: 55px;
+                img{
+
+                }
+                span{
+                    display: block;
+                    font-size: 15px;
+                    font-weight: 400;
+                    color: #fff;
+                    margin-top: 13px;
+                }
+            }
+        }
+    }   
+    .prise_quantity{
+        text-align: right;
+        @media #{$mobile_device} {
+            text-align: left;
+            margin-top: 30px;
+        }
+        h4{
+            font-size: 24px;
+            font-weight: 500;
+            color: #FF5748;
+            margin-bottom: 20px;
+        }
+        a{
+            color: #FDAE5C;
+            border: 1px solid #FDAE5C;
+            padding: 8px 34px;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 15px;
+            &:hover{
+                background: #FDAE5C;
+                color: #fff;
+            }
+        }
+    }
+}

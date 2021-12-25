@@ -1,0 +1,49 @@
+.contact_form_quote{
+    padding-top: 0px;
+    padding-bottom: 100px;
+    .form_wrap{
+        margin-bottom: 30px;
+        h3{
+            font-size: 46px;
+            font-weight: 300;;
+            color: #001D38;
+            margin-bottom: 51px;
+            @media #{$mobile_device} {
+                font-size: 38px;
+            }
+        }
+        form{
+            input, textarea{
+                height: 36px;
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid #E8E8E8;
+                font-size: 15px;
+                margin-bottom: 30px;
+                padding-bottom: 15px;
+                &::placeholder{
+                    color: #727272;
+                    font-weight: 300;
+                    font-size: 15px;
+                }
+            }
+            textarea{
+                height: 40px !important;
+                resize: none;
+                margin-top: 70px;
+            }
+            button{
+                width: 100%;
+                text-align: center;
+                padding: 13px;
+            }
+        }
+    }
+    .contact_thumb{
+        @include border-radius(10px);
+        overflow: hidden;
+        img{
+            width: 100%;
+        }
+    }
+}

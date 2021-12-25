@@ -1,0 +1,133 @@
+.counter_area{
+    padding-bottom: 85px;
+    padding-top: 12px;
+    .single_counter{
+        margin-bottom: 30px;
+        @media #{$mobile_device} {
+            text-align: center;
+        }
+        h3{
+            color: #FDAE5C;
+            font-weight: 500;
+            font-size: 42px;
+            margin-bottom: 0;
+            span{
+                span{
+
+                }
+            }
+        }
+        p{
+            color: #919191;
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.home_details{
+    background-image: url(../img/banner/home_details.png);
+    background-size: cover;
+    background-position: center center;
+    padding: 140px 0;
+    @media #{$mobile_device} {
+        padding: 80px 0;
+    }
+    .owl-carousel .owl-item img {
+        display: inline-block;
+        width: auto;
+    }
+    .owl-carousel .owl-nav div{
+        left: -147px;
+        background: #DDDBD0;
+        color: #001D38;
+        border-color: transparent;
+        &.owl-next{
+            left: auto;
+            right: -147px;
+        }
+    }
+    .modern_home_info{
+        background: #fff;
+        margin-top: 20px;
+        padding: 50px 30px 30px 30px;
+        @include border-radius(10px);
+        position: relative;
+        .modern_home_info_inner{
+
+            span.for_sale{
+                @include border-radius(5px);
+                background: #FDAE5C;
+                padding: 9px 21px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                font-size: 15px;
+                color: #fff;
+                font-weight: 500;
+                top: -20px;
+                left: 34px;
+            }
+            .info_header{
+                border-bottom: 1px solid #E8E8E8;
+                margin-bottom: 13px;
+                padding-bottom: 29px;
+                h3{
+                    color: #001D38;
+                    font-size: 24px;
+                    font-weight: 500;
+                }
+                .popular_pro{
+                    img{
+
+                    }
+                    span{   
+                        color: #919191;
+                        font-size: 13px;
+                        font-weight: 400;
+                        display: inline-block;
+                        position: relative;
+                        top: 1px;
+                        margin-left: 5px;
+                    }
+                }
+            }
+            .info_content{
+                ul{
+                    margin-bottom: 20px;
+                    li{
+                        display: inline-block;
+                        margin-right: 41px;
+                        @media #{$mobile_device} {
+                            margin-right: 7px;
+                        }
+                        span{
+                            color: #001D38;
+                            font-size: 13px;
+                            font-weight: 400;
+                        }
+                    }
+                }
+                p{
+                    font-size: 15px;
+                    line-height: 28px;
+                    color: #727272;
+                    margin-bottom: 0;
+                    margin-bottom: 13px;
+                }
+                .prise_view_details{
+                    span{
+                        color: #FF5748;
+                        font-size: 24px;
+                        font-weight: 500;
+
+                    }
+                    a{
+                        padding: 7px 23px;
+                    }
+                }
+            }
+        }
+    }
+}

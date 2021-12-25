@@ -1,0 +1,37 @@
+
+
+.testmonial_area{
+    padding-top: 0px;
+    padding-bottom: 150px;
+    @media #{$mobile_device} {
+        padding-bottom: 50px;
+    }
+    .slider-nav{
+        div{
+            
+            img{
+                width: 100%;
+            }
+        }
+    }
+    .single_slider{
+        p{
+            font-size: 20px;
+            line-height: 32px;
+            color: #727272;
+            font-weight: 400;
+            text-decoration: underline;
+            margin-bottom: 24px;
+        }
+        h4{
+            font-size: 16px;
+            color:#2C2C2C;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+        span{
+            color: #727272;
+            font-size: 14px;
+        }
+    }
+}

@@ -1,0 +1,405 @@
+.header-area{
+    // position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    z-index: 9;
+    position: absolute;
+    // border-bottom: 1px solid rgba(255,255,255,.20);
+    // padding-top: 28px;
+    @media #{$mobile_device} {
+        padding-top: 0;
+    }
+    @media #{$tablet_device} {
+        padding-top: 0;
+    }
+    .main-header-area{
+        // padding: 18px 0;
+        background: #fff;
+        background: transparent;
+        &.details_nav_bg{
+            background: #727272;
+            padding-bottom: 0;
+            @media #{$mobile_device} {
+                padding-bottom: 10px;
+            }
+        }
+        &.details_nav{
+            background: #001D38;
+        }
+        padding: 30px 150px;
+        @media #{$mobile_device} {
+            padding: 10px 10px;
+        }
+        @media #{$tablet_device} {
+            padding: 10px 10px;
+        }
+        @media #{$mid_device} {
+            padding: 30px 20px;
+        }
+        @media #{$large_device} {
+            padding: 30px 20px;
+        }
+
+        .logo-img{
+            text-align: center;
+            @media #{$mobile_device} {
+                // padding-left: 20px;
+                text-align: left;
+            }
+            @media #{$tablet_device} {
+                // padding-left: 20px;
+                text-align: left;
+            }
+            @media #{$mid_device} {
+                // padding-left: 20px;
+                text-align: left;
+            }
+            img{
+                @media #{$mobile_device} {
+                    // padding-left: 20px;
+                    width: 70px;
+                }
+                @media #{$tablet_device} {
+                    // padding-left: 20px;
+                    width: 70px;
+                }
+               
+            }
+        }
+        .say_hello{
+            text-align: right;
+            a{
+                font-size: 16px;
+                font-weight: 500;
+                color: #FFFFFF;
+                position: relative;
+                padding-bottom: 5px;
+                &::before{
+                    position: absolute;
+                    background: #FFE8C3;
+                    width: 100%;
+                    height: 3px;
+                    left: 0;
+                    bottom: 0;
+                    content: '';
+                }
+            }
+        }
+        .Appointment{
+            @include flexbox();
+            @include align-items(center);
+            @include justify-content(flex-end);
+            .search_button{
+                @media #{$mid_device} {
+                    margin-right: 15px;
+                }
+                @media #{$large_device} {
+                    margin-right: 15px;
+                }
+                a{
+                    
+                    i{
+                        color: #E8E8E8;
+                    }
+                }
+            }
+           .socail_links{
+               ul{
+                   li{
+                       display: inline-block;
+
+                       a{
+                        color: #A8A7A0;
+                        margin: 0 10px;
+                        font-size: 15px;
+                        &:hover{
+                            color: #fff;
+                        }
+                       }
+                   }
+               }
+           }
+           .book_btn{
+               margin-left: 30px;
+               @media #{$mid_device} {
+                   margin-left: 0;
+               }
+               @media #{$large_device} {
+                   margin-left: 0;
+               }
+               a{
+                /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fdae5c+0,fd8e5e+100 */
+                background: rgb(253,174,92); /* Old browsers */
+                background: -moz-linear-gradient(top,  rgba(253,174,92,1) 0%, rgba(253,142,94,1) 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top,  rgba(253,174,92,1) 0%,rgba(253,142,94,1) 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom,  rgba(253,174,92,1) 0%,rgba(253,142,94,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdae5c', endColorstr='#fd8e5e',GradientType=0 ); /* IE6-9 */
+
+
+                padding: 13px 26px;
+                font-size: 14px;
+                font-weight: 400;
+                border: 1px solid transparent;
+                color: #fff;
+                @include border-radius(30px);
+                @media #{$mid_device} {
+                    padding: 12px 20px;
+                }
+                &:hover{
+                /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fdae5c+0,fd8e5e+100 */
+                background: rgb(253,174,92); /* Old browsers */
+                background: -moz-linear-gradient(top,  rgba(253,174,92,1) 0%, rgba(253,142,94,1) 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top,  rgba(253,174,92,1) 0%,rgba(253,142,94,1) 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom,  rgba(253,174,92,1) 0%,rgba(253,142,94,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdae5c', endColorstr='#fd8e5e',GradientType=0 ); /* IE6-9 */
+
+                }
+               }
+           }
+        }
+        .main-menu{
+            text-align: center;
+            padding: 12px 0;
+            ul{
+                li{
+                    display: inline-block;
+                    position: relative;
+                    margin: 0 20px;
+                    // @media #{$mid_device} {
+                    //     margin-right: 20px;
+                    // }
+                    // @media #{$large_device} {
+                    //     margin-right: 15px;
+                    // }
+                    a{
+                        color: #fff;
+                        font-size: 15px;
+                        text-transform: capitalize;
+                        font-weight: 500;
+                        display: inline-block;
+                        padding: 0px 0px 0px 0px;
+                        font-family: $font1;
+                        position: relative;
+
+                        @media #{$mid_device} {
+                            // padding: 41px 0px 10px 0px;
+                            font-size: 15px;
+                        }
+                        @media #{$large_device} {
+                            // padding: 41px 0px 10px 0px;
+                            font-size: 15px;
+                        }
+                        i{
+                            font-size: 9px;
+                            @media #{$mobile_device}{
+                                display: none !important;
+                            }
+                            @media #{$tablet_device}{
+                                display: none !important;;
+                            }
+                        }
+                        // &::before {
+                        //     position: absolute;
+                        //     content: "";
+                        //     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fdae5c+0,fd8e5e+100 */
+                        //     background: rgb(253,174,92); /* Old browsers */
+                        //     background: -moz-linear-gradient(top,  rgba(253,174,92,1) 0%, rgba(253,142,94,1) 100%); /* FF3.6-15 */
+                        //     background: -webkit-linear-gradient(top,  rgba(253,174,92,1) 0%,rgba(253,142,94,1) 100%); /* Chrome10-25,Safari5.1-6 */
+                        //     background: linear-gradient(to bottom,  rgba(253,174,92,1) 0%,rgba(253,142,94,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                        //     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdae5c', endColorstr='#fd8e5e',GradientType=0 ); /* IE6-9 */
+
+                        //     width: 100%;
+                        //     height: 3px;
+                        //     bottom: -33px;
+                        //     left: 0;
+                        //     opacity: 0;
+                        //     transform: scaleX(0);
+                        //     @include transition(.3s);
+                        // }
+                        // &:hover::before{
+                        //     opacity: 1;
+                        //     transform: scaleX(1);
+                        // }
+                        // &.active{
+                        //     &::before{
+                        //         opacity: 1;
+                        //         transform: scaleX(1);
+                        //     }
+                        // }
+                        &:hover{
+                            // color: #FDAE5C;
+                        }
+                    }
+                    .submenu {
+                        position: absolute;
+                        left: 0;
+                        top: 160%;
+                        background: #fff;
+                        width: 200px;
+                        z-index: 2;
+                        box-shadow: 0 0  10px rgba(0,0,0,.02);
+                        opacity: 0;
+                        visibility: hidden;
+                        text-align: left;
+                        @include transition(.6s);
+                        li{
+                            display: block;
+                            a{
+                                padding: 10px 15px;
+                                position: inherit;
+                                @include transition(.3s);
+                                display: block;
+                                color: #000;
+                                &::before{
+                                    display: none;
+                                }
+                            }
+                            &:hover a{
+                                color: #000;
+                            }
+                        }
+                    }
+                    &:hover > .submenu{
+                        opacity: 1;
+                        visibility: visible;
+                        top: 150%;
+                    }
+                    &:hover > a::before{
+                        opacity: 1;
+                        transform: scaleX(1);
+                    }
+                    &:first-child a {
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+        &.sticky {
+            box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: -70px;
+            left: 0;
+            right: 0;
+            z-index: 990;
+            transform: translateY(70px);
+            transition: transform 500ms ease, background 500ms ease;
+            -webkit-transition: transform 500ms ease, background 500ms ease;
+            box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
+            // padding: 10px 150px;
+            background: rgba(255, 255, 255,.96);
+            background: #2C2C2C;
+            // padding-bottom: 0;
+            @media #{$mobile_device} {
+                padding: 10px 10px;
+            }
+            @media #{$tablet_device} {
+                // padding: 10px 10px;
+            }
+            @media #{$mid_device} {
+                padding: 10px 10px;
+            }
+            @media #{$large_device} {
+                padding: 10px 10px;
+            }
+            .main-menu{
+                padding: 0;
+            }
+            .header_bottom_border{
+                border-bottom: none;
+            }
+            .header_bottom_border.white_border {
+                border-bottom: none !important;
+            }
+            // ul{
+            //     li{
+            //         a{
+            //             &::before {
+            //                 position: absolute;
+            //                 content: "";
+            //                 background: #FDAE5C;
+            //                 width: 100%;
+            //                 height: 3px;
+            //                 bottom: -27px;
+            //                 left: 0;
+            //                 opacity: 0;
+            //                 transform: scaleX(0);
+            //                 @include transition(.3s);
+            //             }
+            //         }
+            //     }
+            // }
+        }
+        
+    }
+    .header-top_area{
+        padding: 12px 0;
+        background: #001D38;
+      .social_media_links{
+          @media #{$mobile_device} {
+              text-align: center;
+          }
+          a{
+            font-size: 15px;
+            color: #C7C7C7;
+            margin-right: 12px;
+            &:hover{
+                color: #FDAE5C;
+            }
+          }
+      }  
+      .header_left{
+          p{
+              color:#727272 ;
+              font-weight: 400;
+              font-size: 13px;;
+              margin-bottom: 0;
+          }
+      }
+      .short_contact_list{
+          text-align: right;
+          @media #{$mobile_device} {
+            text-align: center;
+        }
+          ul{
+              li{
+                  display: inline-block;
+                  a{
+                    font-size: 13px;
+                    color: #919191;
+                    margin-right: 50px;
+                    @media #{$mobile_device} 
+                    {
+                        margin-left: 0;
+                        margin: 0 5px;
+                    }
+                    i{
+                        color: #FDAE5C;
+                        margin-right: 7px;
+                    }
+                  }
+              }
+          }
+      }
+      .header_right.d-flex {
+        display: flex;
+        justify-content: flex-end;
+    }
+    }
+    .search_btn i {
+        color: #fff;
+        font-size: 15px;
+    }
+    .search_btn{
+        @media #{$mid_device} {
+          position: relative;
+          right: 10px;  
+        }
+        @media #{$large_device} {
+          position: relative;
+          right: 10px;  
+        }
+    }
+}

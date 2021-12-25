@@ -1,0 +1,56 @@
+.our_department_area{
+    background: #F5FBFF;
+    padding-top: 120px;
+    padding-bottom: 90px;
+    .single_department{
+        background: #fff;
+        margin-bottom: 30px;
+        @include box-shadow(0 6px 10px rgba(0, 0, 0, .04));
+        .department_thumb{
+            overflow: hidden;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            img{
+                width: 100%;
+                @include transform(scale(1));
+                @include transition(.3s);
+            }
+        }
+        .department_content{
+            padding: 22px 30px 24px 30px;
+            h3{
+                margin-bottom: 0;
+                a{
+                    font-size: 22px;
+                    color: #1F1F1F;
+                    line-height: 33px;
+                    font-weight: 500;
+                    &:hover{
+                        color: #5DB2FF;
+                    }
+                }
+            }
+            p{
+                font-size: 16px;
+                line-height: 28px;
+                color: #727272;
+                margin-top: 5px;
+                margin-bottom: 10px;
+            }
+            a.learn_more{
+                color: #5DB2FF;
+                font-size: 16px;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+        &:hover{
+            .department_thumb{
+                img{
+                    @include transform(scale(1.2));
+                }
+            }
+        }
+    }
+}
