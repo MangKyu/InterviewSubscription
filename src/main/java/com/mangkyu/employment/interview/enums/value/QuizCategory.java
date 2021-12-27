@@ -18,9 +18,9 @@ public enum QuizCategory implements EnumMapperType {
     DATA_STRUCTURE("Data Structure", "자료구조와 관련된 면접 질문을 살펴보세요"),
     ALGORITHM("Database", "알고리즘과 관련된 면접 질문을 살펴보세요"),
     PROBLEM_SOLVING("Problem Solving", "문제 해결과 관련된 면접 질문을 살펴보세요"),
-    CULTURE("Culture Fit", "문화 적합도와 관련된 면접 질문을 살펴보세요"),
-    EXPERIENCE("Personal Experience", "개인의 경험와 관련된 면접 질문을 살펴보세요"),
-    PERSONALITY("About Interviewee", "개인의 성향과 관련된 면접 질문을 살펴보세요"),
+    CULTURE("Culture", "문화 적합도와 관련된 면접 질문을 살펴보세요"),
+    EXPERIENCE("Experience", "개인의 경험와 관련된 면접 질문을 살펴보세요"),
+    PERSONALITY("Personality", "개인의 성향과 관련된 면접 질문을 살펴보세요"),
     ;
 
     private final String title;
