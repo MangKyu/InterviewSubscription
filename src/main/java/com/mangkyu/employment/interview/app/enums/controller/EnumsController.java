@@ -16,17 +16,17 @@ public class EnumsController {
 
     private final EnumMapperFactory enumMapperFactory;
 
-    @GetMapping("/enums/quiz/category")
+    @GetMapping("/enums/quiz-categories")
     public ResponseEntity<List<EnumMapperValue>> getQuizCategoryList() {
         return ResponseEntity.ok(enumMapperFactory.get(EnumMapperKey.QUIZ_CATEGORY));
     }
 
-    @GetMapping("/enums/quiz/level")
+    @GetMapping("/enums/quiz-levels")
     public ResponseEntity<List<EnumMapperValue>> getQuizLevelList() {
         return ResponseEntity.ok(enumMapperFactory.get(EnumMapperKey.QUIZ_LEVEL));
     }
 
-    @GetMapping("/enums/quiz/day")
+    @GetMapping("/enums/quiz-days")
     public ResponseEntity<List<EnumMapperValue>> getQuizDayList() {
         return ResponseEntity.ok(enumMapperFactory.get(EnumMapperKey.QUIZ_DAY));
     }

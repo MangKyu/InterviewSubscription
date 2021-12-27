@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.File;
@@ -49,7 +46,13 @@ public class QuizController {
                 .build();
     }
 
-    @GetMapping("/quiz/category")
+    @GetMapping("/quiz/{id}")
+    public ResponseEntity<Void> addQuiz(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .build();
+    }
+
+    @GetMapping("/quiz/categories")
     public ResponseEntity<QuizCategoryResponseHolder> getQuizCategoryList() {
         final QuizCategoryResponseHolder response = QuizCategoryResponseHolder.builder()
                 .categoryList(quizService.getQuizCategoryList())
