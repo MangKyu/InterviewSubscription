@@ -10,6 +10,8 @@ import java.util.Set;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
+    Long countByQuizCategory(final QuizCategory category);
+
     default List<Quiz> customFindByIdNotInAndQuizLevel(final Set<Long> quizIdSet, final QuizLevel quizLevel) {
         return quizIdSet.isEmpty()
                 ? findByQuizLevel(quizLevel)

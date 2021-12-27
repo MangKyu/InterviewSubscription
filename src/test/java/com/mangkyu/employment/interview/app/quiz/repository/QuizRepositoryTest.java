@@ -18,6 +18,44 @@ class QuizRepositoryTest {
     private QuizRepository quizRepository;
 
     @Test
+    public void selectQuizCountByCategory() {
+        // given
+        final Quiz quiz1 = Quiz.builder()
+                .title("quiz1")
+                .quizCategory(QuizCategory.JAVA)
+                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build();
+        final Quiz quiz2 = Quiz.builder()
+                .title("quiz2")
+                .quizCategory(QuizCategory.JAVA)
+                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build();
+        final Quiz quiz3 = Quiz.builder()
+                .title("quiz3")
+                .quizCategory(QuizCategory.DATABASE)
+                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build();
+        final Quiz quiz4 = Quiz.builder()
+                .title("quiz4")
+                .quizCategory(QuizCategory.JAVA)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build();
+
+        quizRepository.save(quiz1);
+        quizRepository.save(quiz2);
+        quizRepository.save(quiz3);
+        quizRepository.save(quiz4);
+
+        // when
+        final Long result1 = quizRepository.countByQuizCategory(QuizCategory.JAVA);
+        final Long result2 = quizRepository.countByQuizCategory(QuizCategory.DATABASE);
+
+        // then
+        assertThat(result1).isEqualTo(3);
+        assertThat(result2).isEqualTo(1);
+    }
+
+    @Test
     public void insertQuiz() {
         // given
         final Quiz quiz = Quiz.builder()
