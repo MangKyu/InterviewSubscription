@@ -39,7 +39,6 @@ public class SendQuizCronJob {
         final DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
         final List<User> userList = userService.getEnabledUserList(QuizDay.findQuizDay(dayOfWeek));
         for (final User user : userList) {
-            System.out.println(userList.size());
             sendUnsolvedQuizForUser(user);
         }
     }
