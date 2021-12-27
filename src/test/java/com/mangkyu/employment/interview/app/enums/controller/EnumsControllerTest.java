@@ -41,7 +41,7 @@ class EnumsControllerTest {
     @Test
     public void getEnumsQuizCategoryList() throws Exception {
         // given
-        final String url = "/enums/quiz/category";
+        final String url = "/enums/quiz-categories";
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -57,7 +57,7 @@ class EnumsControllerTest {
     @Test
     public void getEnumsQuizLevelList() throws Exception {
         // given
-        final String url = "/enums/quiz/level";
+        final String url = "/enums/quiz-levels";
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -73,7 +73,7 @@ class EnumsControllerTest {
     @Test
     public void getEnumsQuizDayList() throws Exception {
         // given
-        final String url = "/enums/quiz/day";
+        final String url = "/enums/quiz-days";
 
         // when
         final ResultActions result = mockMvc.perform(

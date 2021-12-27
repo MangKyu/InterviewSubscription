@@ -66,7 +66,7 @@ class QuizControllerTest {
     @Test
     public void getQuizCategory() throws Exception {
         // given
-        final String url = "/quiz/category";
+        final String url = "/quiz/categories";
         final long count = 15L;
 
         final QuizCategoryResponse quizCategoryResponse = QuizCategoryResponse.builder()
