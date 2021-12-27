@@ -25,8 +25,16 @@ public class EnumMapperFactory {
 
     private List<EnumMapperValue> createEnumMapperValueList(final Class<? extends EnumMapperType> e) {
         return Arrays.stream(e.getEnumConstants())
-                .map(v -> new EnumMapperValue(v.getCode(), v.getDesc()))
+                .map(this::convertToEnumMapperValue)
                 .collect(Collectors.toList());
+    }
+
+    private EnumMapperValue convertToEnumMapperValue(final EnumMapperType enumMapperType) {
+        return EnumMapperValue.builder()
+                .code(enumMapperType.name())
+                .title(enumMapperType.getTitle())
+                .desc(enumMapperType.getDesc())
+                .build();
     }
 
 }

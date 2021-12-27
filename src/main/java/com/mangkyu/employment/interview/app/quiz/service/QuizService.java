@@ -1,9 +1,13 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
+import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponse;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
+import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
+import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
+import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +26,10 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class QuizService {
 
-    private final ModelMapper modelMapper;
     private final QuizRepository quizRepository;
     private final SolvedQuizRepository solvedQuizRepository;
+    private final ModelMapper modelMapper;
+    private final EnumMapperFactory enumMapperFactory;
 
     @Transactional
     public void addQuiz(final AddQuizRequest addQuizRequest) {
@@ -61,4 +66,19 @@ public class QuizService {
         return randomQuizList;
     }
 
+    public List<QuizCategoryResponse> getQuizCategoryList() {
+        final List<EnumMapperValue> enumMapperValueList = enumMapperFactory.get(EnumMapperKey.QUIZ_CATEGORY);
+        return enumMapperValueList.stream()
+                .map(this::convertToQuizCategoryResponse)
+                .collect(Collectors.toList());
+    }
+
+    private QuizCategoryResponse convertToQuizCategoryResponse(final EnumMapperValue enumMapperValue) {
+        return QuizCategoryResponse.builder()
+                .count(quizRepository.countByQuizCategory(QuizCategory.valueOf(enumMapperValue.name())))
+                .code(enumMapperValue.getCode())
+                .title(enumMapperValue.getTitle())
+                .desc(enumMapperValue.getDesc())
+                .build();
+    }
 }

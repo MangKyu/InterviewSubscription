@@ -2,18 +2,16 @@ package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.google.gson.Gson;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
+import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponse;
+import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponseHolder;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
-import com.mangkyu.employment.interview.config.enums.EnumMapperConfig;
-import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
-import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,9 +20,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,8 +33,6 @@ class QuizControllerTest {
 
     @Mock
     private QuizService quizService;
-    @Spy
-    private EnumMapperFactory enumMapperFactory = new EnumMapperConfig().enumMapperFactory();
 
     private MockMvc mockMvc;
 
@@ -68,9 +64,19 @@ class QuizControllerTest {
     }
 
     @Test
-    public void getQuizCategoryListSuccess() throws Exception {
+    public void getQuizCategory() throws Exception {
         // given
         final String url = "/quiz/category";
+        final long count = 15L;
+
+        final QuizCategoryResponse quizCategoryResponse = QuizCategoryResponse.builder()
+                .count(count)
+                .code(QuizCategory.JAVA.name())
+                .title(QuizCategory.JAVA.getTitle())
+                .desc(QuizCategory.JAVA.getDesc())
+                .build();
+
+        doReturn(Collections.singletonList(quizCategoryResponse)).when(quizService).getQuizCategoryList();
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -80,39 +86,9 @@ class QuizControllerTest {
         // then
         final ResultActions resultActions = result.andExpect(status().isOk());
         final String stringResponse = resultActions.andReturn().getResponse().getContentAsString();
-        assertThat(new Gson().fromJson(stringResponse, List.class).size()).isEqualTo(QuizCategory.values().length);
-    }
-
-    @Test
-    public void getQuizLevelListSuccess() throws Exception {
-        // given
-        final String url = "/quiz/level";
-
-        // when
-        final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.get(url)
-        );
-
-        // then
-        final ResultActions resultActions = result.andExpect(status().isOk());
-        final String stringResponse = resultActions.andReturn().getResponse().getContentAsString();
-        assertThat(new Gson().fromJson(stringResponse, List.class).size()).isEqualTo(QuizLevel.values().length);
-    }
-
-    @Test
-    public void getQuizDaySuccess() throws Exception {
-        // given
-        final String url = "/quiz/day";
-
-        // when
-        final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.get(url)
-        );
-
-        // then
-        final ResultActions resultActions = result.andExpect(status().isOk());
-        final String stringResponse = resultActions.andReturn().getResponse().getContentAsString();
-        assertThat(new Gson().fromJson(stringResponse, List.class).size()).isEqualTo(QuizDay.values().length);
+        final QuizCategoryResponseHolder responseHolder = new Gson().fromJson(stringResponse, QuizCategoryResponseHolder.class);
+        assertThat(responseHolder.getCategoryList().size()).isEqualTo(1);
+        assertThat(responseHolder.getCategoryList().get(0).getCount()).isEqualTo(count);
     }
 
 }

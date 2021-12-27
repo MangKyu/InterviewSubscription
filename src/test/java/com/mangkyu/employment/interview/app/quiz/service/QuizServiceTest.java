@@ -1,10 +1,14 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
+import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponse;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
+import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
+import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
+import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +39,8 @@ class QuizServiceTest {
     private QuizRepository quizRepository;
     @Mock
     private SolvedQuizRepository solvedQuizRepository;
+    @Mock
+    private EnumMapperFactory enumMapperFactory;
     @Spy
     private ModelMapper modelMapper;
 
@@ -138,6 +144,35 @@ class QuizServiceTest {
 
         // then
         assertThat(result.size()).isEqualTo(quizSize);
+    }
+
+    @Test
+    public void getQuizCategoryResponseList() {
+        // given
+        final long count = 15;
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+
+        final List<Quiz> unsolvedQuizList = new ArrayList<>();
+        unsolvedQuizList.add(quiz(1L));
+        unsolvedQuizList.add(quiz(2L));
+        unsolvedQuizList.add(quiz(3L));
+        unsolvedQuizList.add(quiz(4L));
+
+        final EnumMapperValue enumMapperValue = EnumMapperValue.builder()
+                .code(quizCategory.name())
+                .title(quizCategory.getTitle())
+                .desc(quizCategory.getDesc())
+                .build();
+
+        doReturn(Collections.singletonList(enumMapperValue)).when(enumMapperFactory).get(EnumMapperKey.QUIZ_CATEGORY);
+        doReturn(count).when(quizRepository).countByQuizCategory(quizCategory);
+
+        // when
+        final List<QuizCategoryResponse> result = quizService.getQuizCategoryList();
+
+        // then
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getCount()).isEqualTo(count);
     }
 
     private List<SolvedQuiz> solvedQuizList() {

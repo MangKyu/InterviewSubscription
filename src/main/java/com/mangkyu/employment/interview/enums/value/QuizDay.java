@@ -11,22 +11,18 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum QuizDay implements EnumMapperType {
 
-    MONDAY("Monday", DayOfWeek.MONDAY),
-    TUESDAY("Tuesday", DayOfWeek.TUESDAY),
-    WEDNESDAY("Wednesday", DayOfWeek.WEDNESDAY),
-    THURSDAY("Thursday", DayOfWeek.THURSDAY),
-    FRIDAY("Friday", DayOfWeek.FRIDAY),
-    SATURDAY("Saturday", DayOfWeek.SATURDAY),
-    SUNDAY("Sunday", DayOfWeek.SUNDAY),
+    MONDAY("Monday", "월요일", DayOfWeek.MONDAY),
+    TUESDAY("Tuesday", "화요일", DayOfWeek.TUESDAY),
+    WEDNESDAY("Wednesday", "수요일", DayOfWeek.WEDNESDAY),
+    THURSDAY("Thursday", "목요일", DayOfWeek.THURSDAY),
+    FRIDAY("Friday", "금요일", DayOfWeek.FRIDAY),
+    SATURDAY("Saturday", "토요일", DayOfWeek.SATURDAY),
+    SUNDAY("Sunday", "일요일", DayOfWeek.SUNDAY),
     ;
 
+    private final String title;
     private final String desc;
     private final DayOfWeek dayOfWeek;
-
-    @Override
-    public String getCode() {
-        return name();
-    }
 
     public static QuizDay findQuizDay(final DayOfWeek dayOfWeek) {
         return Arrays.stream(QuizDay.values())
