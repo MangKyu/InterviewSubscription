@@ -1,7 +1,8 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponse;
+import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
+import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
+import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
@@ -12,6 +13,8 @@ import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +38,25 @@ public class QuizService {
     public void addQuiz(final AddQuizRequest addQuizRequest) {
         final Quiz quiz = modelMapper.map(addQuizRequest, Quiz.class);
         quizRepository.save(quiz);
+    }
+
+    public GetQuizResponse getQuiz(final long id) {
+        // TODO(MinKyu): Add Exception Handling
+        final Quiz quiz = quizRepository.findById(id).get();
+        return QuizDtoConverter.convert(quiz);
+    }
+
+    public CursorPageable<GetQuizResponseHolder> getQuizList(final GetQuizRequest getQuizRequest) {
+        final PageRequest pageRequest = PageRequest.of(getQuizRequest.getPage(), getQuizRequest.getSize());
+        final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIs(getQuizRequest.getCategory(), pageRequest);
+
+        final List<GetQuizResponse> quizResponseList = quizPage.getContent().stream()
+                .map(QuizDtoConverter::convert)
+                .collect(Collectors.toList());
+
+        final GetQuizResponseHolder responseHolder = new GetQuizResponseHolder(quizResponseList);
+
+        return CursorPageable.of(responseHolder, quizPage.hasNext(), quizPage.nextOrLastPageable().getPageNumber(), quizPage.nextOrLastPageable().getPageSize());
     }
 
     public List<Quiz> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {
@@ -81,4 +103,5 @@ public class QuizService {
                 .desc(enumMapperValue.getDesc())
                 .build();
     }
+
 }
