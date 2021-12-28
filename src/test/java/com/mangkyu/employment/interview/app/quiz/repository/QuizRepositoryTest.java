@@ -6,6 +6,8 @@ import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
 
@@ -16,6 +18,78 @@ class QuizRepositoryTest {
 
     @Autowired
     private QuizRepository quizRepository;
+
+    @Test
+    public void selectQuizListByCategoryWithPaging() {
+        // given
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(quizCategory)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(QuizCategory.ALGORITHM)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+        quizRepository.save(Quiz.builder()
+                .title("quiz4")
+                .quizCategory(QuizCategory.DATABASE)
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build());
+
+        // when
+        boolean hasNext = true;
+        int page = 0;
+        int size = 3;
+        long result = 0;
+        while (hasNext) {
+            final PageRequest pageRequest = PageRequest.of(page++, size);
+            final Page<Quiz> pageQuiz = quizRepository.findByQuizCategoryIs(quizCategory, pageRequest);
+
+            result += pageQuiz.getContent().size();
+            hasNext = pageQuiz.hasNext();
+        }
+
+        // then
+        assertThat(result).isEqualTo(quizRepository.countByQuizCategory(quizCategory));
+    }
 
     @Test
     public void selectQuizCountByCategory() {

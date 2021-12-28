@@ -1,14 +1,9 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequestHolder;
-import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponse;
-import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponseHolder;
+import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
+import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
-import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
-import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
-import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,9 +40,14 @@ public class QuizController {
     }
 
     @GetMapping("/quiz/{id}")
-    public ResponseEntity<Void> addQuiz(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .build();
+    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final long id) {
+        return ResponseEntity.ok(quizService.getQuiz(id));
+    }
+
+    @GetMapping("/quizzes")
+    public ResponseEntity<CursorPageable<GetQuizResponseHolder>> getQuizList(@Valid final GetQuizRequest getQuizRequest) {
+        final CursorPageable<GetQuizResponseHolder> response = quizService.getQuizList(getQuizRequest);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/quiz/categories")

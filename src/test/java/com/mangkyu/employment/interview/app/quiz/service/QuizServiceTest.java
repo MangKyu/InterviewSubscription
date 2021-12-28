@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponse;
+import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
+import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
@@ -20,8 +20,13 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,6 +58,51 @@ class QuizServiceTest {
         modelMapper.getConfiguration()
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
                 .setFieldMatchingEnabled(true);
+    }
+
+    @Test
+    public void getQuiz_Success() {
+        // given
+        final long id = -1L;
+        final Quiz quiz = quiz(id);
+
+        doReturn(Optional.of(quiz)).when(quizRepository).findById(id);
+
+        // when
+        final GetQuizResponse result = quizService.getQuiz(id);
+
+        // then
+        assertThat(result.getId()).isEqualTo(id);
+        assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
+        assertThat(result.getQuizCategory()).isEqualTo(quiz.getQuizCategory());
+        assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
+        assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
+    }
+
+    @Test
+    public void getCursorQuizList_Success() {
+        // given
+        final int page = 0;
+        final int size = 20;
+
+        final GetQuizRequest request = GetQuizRequest.builder()
+                .category(QuizCategory.JAVA)
+                .page(page)
+                .size(size)
+                .build();
+        final List<Quiz> quizList = quizList();
+        final Pageable pageable = PageRequest.of(page, size);
+
+        final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
+        doReturn(quizPage).when(quizRepository).findByQuizCategoryIs(any(QuizCategory.class), any(PageRequest.class));
+
+        // when
+        final CursorPageable<GetQuizResponseHolder> result = quizService.getQuizList(request);
+
+        // then
+        assertThat(result.getResponseMetaData().isHasNext()).isFalse();
+        assertThat(result.getResponseMetaData().getPage()).isEqualTo(page);
+        assertThat(result.getResponseMetaData().getSize()).isEqualTo(size);
     }
 
     @Test
@@ -133,11 +183,7 @@ class QuizServiceTest {
     @Test
     public void getRandomQuizListUnderLimitSuccess_OverLimit() {
         // given
-        final List<Quiz> unsolvedQuizList = new ArrayList<>();
-        unsolvedQuizList.add(quiz(1L));
-        unsolvedQuizList.add(quiz(2L));
-        unsolvedQuizList.add(quiz(3L));
-        unsolvedQuizList.add(quiz(4L));
+        final List<Quiz> unsolvedQuizList = quizList();
 
         // when
         final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, quizSize);
@@ -151,12 +197,6 @@ class QuizServiceTest {
         // given
         final long count = 15;
         final QuizCategory quizCategory = QuizCategory.JAVA;
-
-        final List<Quiz> unsolvedQuizList = new ArrayList<>();
-        unsolvedQuizList.add(quiz(1L));
-        unsolvedQuizList.add(quiz(2L));
-        unsolvedQuizList.add(quiz(3L));
-        unsolvedQuizList.add(quiz(4L));
 
         final EnumMapperValue enumMapperValue = EnumMapperValue.builder()
                 .code(quizCategory.name())
@@ -173,6 +213,17 @@ class QuizServiceTest {
         // then
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0).getCount()).isEqualTo(count);
+    }
+
+    private List<Quiz> quizList() {
+        final List<Quiz> unsolvedQuizList = new ArrayList<>();
+
+        unsolvedQuizList.add(quiz(1L));
+        unsolvedQuizList.add(quiz(2L));
+        unsolvedQuizList.add(quiz(3L));
+        unsolvedQuizList.add(quiz(4L));
+
+        return unsolvedQuizList;
     }
 
     private List<SolvedQuiz> solvedQuizList() {
@@ -192,8 +243,15 @@ class QuizServiceTest {
     }
 
     private Quiz quiz(final long id) {
-        final Quiz quiz = Quiz.builder().build();
+        final Quiz quiz = Quiz.builder()
+                .title("quiz")
+                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .quizCategory(QuizCategory.JAVA)
+                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .build();
+
         ReflectionTestUtils.setField(quiz, "id", id);
+        ReflectionTestUtils.setField(quiz, "createdAt", LocalDateTime.now());
         return quiz;
     }
 
