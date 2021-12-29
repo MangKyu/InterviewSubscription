@@ -56,7 +56,7 @@ public class QuizService {
 
         final GetQuizResponseHolder responseHolder = new GetQuizResponseHolder(quizResponseList);
 
-        return CursorPageable.of(responseHolder, quizPage.hasNext(), quizPage.nextOrLastPageable().getPageNumber(), quizPage.nextOrLastPageable().getPageSize());
+        return CursorPageable.of(responseHolder, quizPage);
     }
 
     public List<Quiz> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {

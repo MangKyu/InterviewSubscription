@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
 import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
@@ -16,6 +17,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -93,7 +97,6 @@ class QuizControllerTest {
         final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
                 .quizList(Collections.singletonList(quizResponse))
                 .build();
-        final CursorPageable<GetQuizResponseHolder> cursorPageable = CursorPageable.of(getQuizResponseHolder, false, page, size);
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -122,7 +125,10 @@ class QuizControllerTest {
         final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
                 .quizList(Collections.singletonList(quizResponse))
                 .build();
-        final CursorPageable<GetQuizResponseHolder> cursorPageable = CursorPageable.of(getQuizResponseHolder, false, page, size);
+
+        final Pageable pageable = PageRequest.of(page, size);
+        final PageImpl<Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
+        final CursorPageable<GetQuizResponseHolder> cursorPageable = CursorPageable.of(getQuizResponseHolder, quizPage);
 
         doReturn(cursorPageable).when(quizService).getQuizList(any(GetQuizRequest.class));
 
