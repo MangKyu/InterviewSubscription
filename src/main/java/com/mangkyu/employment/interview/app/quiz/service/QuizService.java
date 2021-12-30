@@ -55,6 +55,7 @@ public class QuizService {
 
         return GetQuizResponseHolder.builder()
                 .quizList(quizResponseList)
+                .category(enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, getQuizRequest.getCategory()))
                 .hasNext(quizPage.hasNext())
                 .page(quizPage.nextOrLastPageable().getPageNumber())
                 .size(quizPage.nextOrLastPageable().getPageSize())

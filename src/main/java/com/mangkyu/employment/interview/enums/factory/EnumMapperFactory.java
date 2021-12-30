@@ -19,6 +19,14 @@ public class EnumMapperFactory {
         return factory.get(key);
     }
 
+    public EnumMapperValue getElement(final EnumMapperKey key, final EnumMapperType enumMapperType) {
+        // TODO(MinKyu): Add Exception Handling
+        return factory.get(key).stream()
+                .filter(v -> v.getCode().equals(enumMapperType.name()))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
     public void put(final EnumMapperKey key) {
         factory.put(key, createEnumMapperValueList(key.getEnumClass()));
     }
