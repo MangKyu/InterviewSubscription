@@ -2,6 +2,8 @@ package com.mangkyu.employment.interview.app.quiz.converter;
 
 import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.enums.common.EnumMapperType;
+import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 class QuizDtoConverterTest {
 
     @Test
+    public void convertQuizToGetQuizResponseWithCategory() {
+        // given
+        final long id = -1L;
+        final Quiz quiz = quiz(id);
+
+        // when
+        final GetQuizResponse result = QuizDtoConverter.convert(quiz, enumMapperValue(quiz.getQuizCategory()));
+
+        // then
+        assertThat(result.getId()).isEqualTo(id);
+        assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
+        assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
+        assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
+        assertThat(result.getCategory().getCode()).isEqualTo(enumMapperValue(quiz.getQuizCategory()).getCode());
+    }
+
+    @Test
     public void convertQuizToGetQuizResponse() {
         // given
         final long id = -1L;
@@ -27,9 +46,9 @@ class QuizDtoConverterTest {
         // then
         assertThat(result.getId()).isEqualTo(id);
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
-        assertThat(result.getQuizCategory()).isEqualTo(quiz.getQuizCategory());
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
+        assertThat(result.getCategory()).isNull();
     }
 
     private Quiz quiz(final long id) {
@@ -45,4 +64,11 @@ class QuizDtoConverterTest {
         return quiz;
     }
 
+    private EnumMapperValue enumMapperValue(final EnumMapperType enumMapperType) {
+        return EnumMapperValue.builder()
+                .code(enumMapperType.name())
+                .title(enumMapperType.getTitle())
+                .desc(enumMapperType.getDesc())
+                .build();
+    }
 }
