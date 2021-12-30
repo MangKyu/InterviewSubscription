@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
 import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
@@ -122,15 +121,19 @@ class QuizControllerTest {
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
                 .quizCategory(QuizCategory.JAVA)
                 .build();
-        final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
-                .quizList(Collections.singletonList(quizResponse))
-                .build();
 
         final Pageable pageable = PageRequest.of(page, size);
         final PageImpl<Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
-        final CursorPageable<GetQuizResponseHolder> cursorPageable = CursorPageable.of(getQuizResponseHolder, quizPage);
 
-        doReturn(cursorPageable).when(quizService).getQuizList(any(GetQuizRequest.class));
+        final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
+                .quizList(Collections.singletonList(quizResponse))
+                .hasNext(quizPage.hasNext())
+                .page(quizPage.nextOrLastPageable().getPageNumber())
+                .size(quizPage.nextOrLastPageable().getPageSize())
+                .totalElements(quizPage.getTotalElements())
+                .build();
+
+        doReturn(getQuizResponseHolder).when(quizService).getQuizList(any(GetQuizRequest.class));
 
         // when
         final ResultActions result = mockMvc.perform(

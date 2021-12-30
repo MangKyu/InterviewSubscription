@@ -1,6 +1,5 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
@@ -46,7 +45,7 @@ public class QuizService {
         return QuizDtoConverter.convert(quiz);
     }
 
-    public CursorPageable<GetQuizResponseHolder> getQuizList(final GetQuizRequest getQuizRequest) {
+    public GetQuizResponseHolder getQuizList(final GetQuizRequest getQuizRequest) {
         final PageRequest pageRequest = PageRequest.of(getQuizRequest.getPage(), getQuizRequest.getSize());
         final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIs(getQuizRequest.getCategory(), pageRequest);
 
@@ -54,9 +53,13 @@ public class QuizService {
                 .map(QuizDtoConverter::convert)
                 .collect(Collectors.toList());
 
-        final GetQuizResponseHolder responseHolder = new GetQuizResponseHolder(quizResponseList);
-
-        return CursorPageable.of(responseHolder, quizPage);
+        return GetQuizResponseHolder.builder()
+                .quizList(quizResponseList)
+                .hasNext(quizPage.hasNext())
+                .page(quizPage.nextOrLastPageable().getPageNumber())
+                .size(quizPage.nextOrLastPageable().getPageSize())
+                .totalElements(quizPage.getTotalElements())
+                .build();
     }
 
     public List<Quiz> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {

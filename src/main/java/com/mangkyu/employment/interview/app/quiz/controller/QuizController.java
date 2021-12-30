@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
@@ -45,8 +44,8 @@ public class QuizController {
     }
 
     @GetMapping("/quizzes")
-    public ResponseEntity<CursorPageable<GetQuizResponseHolder>> getQuizList(@Valid final GetQuizRequest getQuizRequest) {
-        final CursorPageable<GetQuizResponseHolder> response = quizService.getQuizList(getQuizRequest);
+    public ResponseEntity<GetQuizResponseHolder> getQuizList(@Valid final GetQuizRequest getQuizRequest) {
+        final GetQuizResponseHolder response = quizService.getQuizList(getQuizRequest);
         return ResponseEntity.ok(response);
     }
 

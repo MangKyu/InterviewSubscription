@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 @Builder
 @RequiredArgsConstructor
 @ToString
+@Deprecated
 public class CursorPageable<T> {
 
     private final T response;

@@ -97,12 +97,12 @@ class QuizServiceTest {
         doReturn(quizPage).when(quizRepository).findByQuizCategoryIs(any(QuizCategory.class), any(PageRequest.class));
 
         // when
-        final CursorPageable<GetQuizResponseHolder> result = quizService.getQuizList(request);
+        final GetQuizResponseHolder result = quizService.getQuizList(request);
 
         // then
-        assertThat(result.getResponseMetaData().isHasNext()).isFalse();
-        assertThat(result.getResponseMetaData().getPage()).isEqualTo(page);
-        assertThat(result.getResponseMetaData().getSize()).isEqualTo(size);
+        assertThat(result.isHasNext()).isFalse();
+        assertThat(result.getPage()).isEqualTo(page);
+        assertThat(result.getSize()).isEqualTo(size);
     }
 
     @Test
