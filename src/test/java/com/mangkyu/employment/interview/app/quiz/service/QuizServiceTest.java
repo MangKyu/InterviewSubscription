@@ -74,7 +74,7 @@ class QuizServiceTest {
         // then
         assertThat(result.getId()).isEqualTo(id);
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
-        assertThat(result.getQuizCategory()).isEqualTo(quiz.getQuizCategory());
+        assertThat(result.getCategory()).isEqualTo(enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
     }

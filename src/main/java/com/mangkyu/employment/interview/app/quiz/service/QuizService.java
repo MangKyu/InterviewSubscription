@@ -42,7 +42,7 @@ public class QuizService {
     public GetQuizResponse getQuiz(final long id) {
         // TODO(MinKyu): Add Exception Handling
         final Quiz quiz = quizRepository.findById(id).get();
-        return QuizDtoConverter.convert(quiz);
+        return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }
 
     public GetQuizResponseHolder getQuizList(final GetQuizRequest getQuizRequest) {

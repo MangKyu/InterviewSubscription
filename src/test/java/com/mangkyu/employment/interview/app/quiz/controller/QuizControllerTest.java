@@ -5,6 +5,8 @@ import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
+import com.mangkyu.employment.interview.enums.common.EnumMapperType;
+import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +60,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .quizCategory(QuizCategory.JAVA)
+                .category(enumMapperValue(QuizCategory.JAVA))
                 .build();
         doReturn(quizResponse).when(quizService).getQuiz(id);
 
@@ -74,8 +76,7 @@ class QuizControllerTest {
 
         assertThat(getQuizResult.getId()).isEqualTo(quizResponse.getId());
         assertThat(getQuizResult.getTitle()).isEqualTo(quizResponse.getTitle());
-        assertThat(getQuizResult.getQuizCategory()).isEqualTo(quizResponse.getQuizCategory());
-        assertThat(getQuizResult.getQuizCategory()).isEqualTo(quizResponse.getQuizCategory());
+        assertThat(getQuizResult.getCategory().getCode()).isEqualTo(quizResponse.getCategory().getCode());
         assertThat(getQuizResult.getCreatedAt()).isEqualTo(quizResponse.getCreatedAt());
     }
 
@@ -91,7 +92,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .quizCategory(QuizCategory.JAVA)
+                .category(enumMapperValue(QuizCategory.JAVA))
                 .build();
         final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
                 .quizList(Collections.singletonList(quizResponse))
@@ -119,7 +120,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .quizCategory(QuizCategory.JAVA)
+                .category(enumMapperValue(QuizCategory.JAVA))
                 .build();
 
         final Pageable pageable = PageRequest.of(page, size);
@@ -170,7 +171,7 @@ class QuizControllerTest {
     }
 
     @Test
-    public void getQuizCategory() throws Exception {
+    public void getCategory() throws Exception {
         // given
         final String url = "/quiz/categories";
         final long count = 15L;
@@ -204,6 +205,14 @@ class QuizControllerTest {
                 Arguments.of(QuizCategory.JAVA, QuizConstants.MAX_PAGE_SIZE + 1, QuizConstants.MIN_PAGE_NUMBER),
                 Arguments.of(QuizCategory.JAVA, QuizConstants.MIN_PAGE_SIZE, QuizConstants.MIN_PAGE_NUMBER - 1)
         );
+    }
+
+    private EnumMapperValue enumMapperValue(final EnumMapperType enumMapperType) {
+        return EnumMapperValue.builder()
+                .code(enumMapperType.name())
+                .title(enumMapperType.getTitle())
+                .desc(enumMapperType.getDesc())
+                .build();
     }
 
 }
