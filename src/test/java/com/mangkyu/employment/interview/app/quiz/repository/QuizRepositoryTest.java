@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.quiz.repository;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
+import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,59 +21,31 @@ class QuizRepositoryTest {
     private QuizRepository quizRepository;
 
     @Test
+    public void selectByResourceId() {
+        // given
+        final Quiz quiz = EntityCreationUtils.quiz();
+        quizRepository.save(quiz);
+
+        // when
+        final Optional<Quiz> result = quizRepository.findByResourceId(quiz.getResourceId());
+
+        // then
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getTitle()).isEqualTo(quiz.getTitle());
+    }
+
+    @Test
     public void selectQuizListByCategoryWithPaging() {
         // given
         final QuizCategory quizCategory = QuizCategory.JAVA;
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(quizCategory)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(QuizCategory.ALGORITHM)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
-        quizRepository.save(Quiz.builder()
-                .title("quiz4")
-                .quizCategory(QuizCategory.DATABASE)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build());
+        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        EntityCreationUtils.quiz("quiz", QuizCategory.ALGORITHM, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        EntityCreationUtils.quiz("quiz", QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
 
         // when
         boolean hasNext = true;
@@ -94,26 +67,10 @@ class QuizRepositoryTest {
     @Test
     public void selectQuizCountByCategory() {
         // given
-        final Quiz quiz1 = Quiz.builder()
-                .title("quiz1")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz2 = Quiz.builder()
-                .title("quiz2")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz3 = Quiz.builder()
-                .title("quiz3")
-                .quizCategory(QuizCategory.DATABASE)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz4 = Quiz.builder()
-                .title("quiz4")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
+        final Quiz quiz1 = EntityCreationUtils.quiz("quiz1", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz2 = EntityCreationUtils.quiz("quiz2", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz3 = EntityCreationUtils.quiz("quiz3", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz4 = EntityCreationUtils.quiz("quiz4", QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
 
         quizRepository.save(quiz1);
         quizRepository.save(quiz2);
@@ -132,11 +89,7 @@ class QuizRepositoryTest {
     @Test
     public void insertQuiz() {
         // given
-        final Quiz quiz = Quiz.builder()
-                .title("quiz")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
+        final Quiz quiz = EntityCreationUtils.quiz();
 
         // when
         final Quiz result = quizRepository.save(quiz);
@@ -149,26 +102,10 @@ class QuizRepositoryTest {
     @Test
     public void selectQuizNotInAndLevelAndQuizCategory() {
         // given
-        final Quiz quiz1 = Quiz.builder()
-                .title("quiz1")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz2 = Quiz.builder()
-                .title("quiz2")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz3 = Quiz.builder()
-                .title("quiz3")
-                .quizCategory(QuizCategory.DATABASE)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz4 = Quiz.builder()
-                .title("quiz4")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
+        final Quiz quiz1 = EntityCreationUtils.quiz("quiz1", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz2 = EntityCreationUtils.quiz("quiz2", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz3 = EntityCreationUtils.quiz("quiz3", QuizCategory.DATABASE, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz4 = EntityCreationUtils.quiz("quiz4", QuizCategory.JAVA, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
 
         final Quiz savedQuiz1 = quizRepository.save(quiz1);
         final Quiz savedQuiz2 = quizRepository.save(quiz2);
@@ -193,26 +130,10 @@ class QuizRepositoryTest {
     @Test
     public void selectQuizNotInAndLevel() {
         // given
-        final Quiz quiz1 = Quiz.builder()
-                .title("quiz1")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz2 = Quiz.builder()
-                .title("quiz2")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz3 = Quiz.builder()
-                .title("quiz3")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz4 = Quiz.builder()
-                .title("quiz4")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
+        final Quiz quiz1 = EntityCreationUtils.quiz("quiz1", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz2 = EntityCreationUtils.quiz("quiz2", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz3 = EntityCreationUtils.quiz("quiz3", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz4 = EntityCreationUtils.quiz("quiz4", QuizCategory.JAVA, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
 
         final Quiz savedQuiz1 = quizRepository.save(quiz1);
         final Quiz savedQuiz2 = quizRepository.save(quiz2);
@@ -231,26 +152,10 @@ class QuizRepositoryTest {
     @Test
     public void selectQuizLevel() {
         // given
-        final Quiz quiz1 = Quiz.builder()
-                .title("quiz1")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz2 = Quiz.builder()
-                .title("quiz2")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz3 = Quiz.builder()
-                .title("quiz3")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-        final Quiz quiz4 = Quiz.builder()
-                .title("quiz4")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
+        final Quiz quiz1 = EntityCreationUtils.quiz("quiz1", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz2 = EntityCreationUtils.quiz("quiz2", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz3 = EntityCreationUtils.quiz("quiz3", QuizCategory.JAVA, Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        final Quiz quiz4 = EntityCreationUtils.quiz("quiz4", QuizCategory.JAVA, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
 
         quizRepository.save(quiz1);
         quizRepository.save(quiz2);

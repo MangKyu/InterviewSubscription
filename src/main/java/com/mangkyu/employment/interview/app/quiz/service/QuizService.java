@@ -41,9 +41,10 @@ public class QuizService {
         quizRepository.save(quiz);
     }
 
-    public GetQuizResponse getQuiz(final long id) throws QuizException {
-        final Quiz quiz = quizRepository.findById(id)
+    public GetQuizResponse getQuiz(final String resourceId) throws QuizException {
+        final Quiz quiz = quizRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
         return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }
 

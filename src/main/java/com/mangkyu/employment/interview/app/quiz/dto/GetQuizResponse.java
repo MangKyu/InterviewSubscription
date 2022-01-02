@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetQuizResponse {
 
-    private final long id;
+    private final String resourceId;
     private final String title;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -25,6 +25,7 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
@@ -53,11 +54,11 @@ class GlobalExceptionHandlerTest {
     @Test
     public void handleQuizException() throws Exception {
         // given
-        final long quizId = -1;
-        final String url = "/quiz/" + quizId;
+        final String resourceId = UUID.randomUUID().toString();
+        final String url = "/quiz/" + resourceId;
         final ErrorCode errorCode = CommonErrorCode.RESOURCE_NOT_FOUND;
 
-        doThrow(new QuizException(errorCode)).when(quizService).getQuiz(quizId);
+        doThrow(new QuizException(errorCode)).when(quizService).getQuiz(resourceId);
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -77,11 +78,11 @@ class GlobalExceptionHandlerTest {
     @Test
     public void handleIllegalArgument() throws Exception {
         // given
-        final long quizId = -1;
-        final String url = "/quiz/" + quizId;
+        final String resourceId = UUID.randomUUID().toString();
+        final String url = "/quiz/" + resourceId;
         final String message = "message";
 
-        doThrow(new IllegalArgumentException(message)).when(quizService).getQuiz(quizId);
+        doThrow(new IllegalArgumentException(message)).when(quizService).getQuiz(resourceId);
 
         // when
         final ResultActions result = mockMvc.perform(

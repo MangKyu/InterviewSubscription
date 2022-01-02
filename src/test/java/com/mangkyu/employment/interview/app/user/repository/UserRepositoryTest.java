@@ -3,7 +3,7 @@ package com.mangkyu.employment.interview.app.user.repository;
 import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
-import com.mangkyu.employment.interview.enums.value.QuizLevel;
+import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,7 +20,6 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-
     @Test
     public void selectUserListByCycle() {
         // given
@@ -34,13 +33,7 @@ class UserRepositoryTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final User user = User.builder()
-                .email("minkyu@test.com")
-                .quizLevel(QuizLevel.JUNIOR)
-                .quizSize(5)
-                .quizDaySet(quizDaySet)
-                .quizCategorySet(quizCategorySet)
-                .build();
+        final User user = EntityCreationUtils.user(5, quizDaySet, quizCategorySet);
 
         final User savedUser = userRepository.save(user);
         userRepository.save(savedUser);
@@ -67,13 +60,7 @@ class UserRepositoryTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final User user = User.builder()
-                .email("minkyu@test.com")
-                .quizLevel(QuizLevel.JUNIOR)
-                .quizSize(5)
-                .quizDaySet(quizDaySet)
-                .quizCategorySet(quizCategorySet)
-                .build();
+        final User user = EntityCreationUtils.user(5, quizDaySet, quizCategorySet);
 
         // when
         final User result = userRepository.save(user);
@@ -97,12 +84,7 @@ class UserRepositoryTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final User user = User.builder()
-                .email("minkyu@test.com")
-                .quizLevel(QuizLevel.JUNIOR)
-                .quizDaySet(quizDaySet)
-                .quizCategorySet(quizCategorySet)
-                .build();
+        final User user = EntityCreationUtils.user(3, quizDaySet, quizCategorySet);
 
         final User savedUser = userRepository.save(user);
         savedUser.setIsEnable(false);

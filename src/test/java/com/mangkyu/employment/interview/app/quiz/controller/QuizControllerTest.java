@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,14 +56,14 @@ class QuizControllerTest {
     @Test
     public void getQuiz() throws Exception {
         // given
-        final long id = -1L;
-        final String url = "/quiz/" + id;
+        final String resourceId = UUID.randomUUID().toString();
+        final String url = "/quiz/" + resourceId;
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
                 .category(enumMapperValue(QuizCategory.JAVA))
                 .build();
-        doReturn(quizResponse).when(quizService).getQuiz(id);
+        doReturn(quizResponse).when(quizService).getQuiz(resourceId);
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -74,7 +75,7 @@ class QuizControllerTest {
         final String stringResponse = resultActions.andReturn().getResponse().getContentAsString();
         final GetQuizResponse getQuizResult = new Gson().fromJson(stringResponse, GetQuizResponse.class);
 
-        assertThat(getQuizResult.getId()).isEqualTo(quizResponse.getId());
+        assertThat(getQuizResult.getResourceId()).isEqualTo(quizResponse.getResourceId());
         assertThat(getQuizResult.getTitle()).isEqualTo(quizResponse.getTitle());
         assertThat(getQuizResult.getCategory().getCode()).isEqualTo(quizResponse.getCategory().getCode());
         assertThat(getQuizResult.getCreatedAt()).isEqualTo(quizResponse.getCreatedAt());

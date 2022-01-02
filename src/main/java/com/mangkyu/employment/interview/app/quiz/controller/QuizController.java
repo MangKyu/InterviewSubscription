@@ -39,9 +39,9 @@ public class QuizController {
                 .build();
     }
 
-    @GetMapping("/quiz/{id}")
-    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final long id) throws QuizException {
-        return ResponseEntity.ok(quizService.getQuiz(id));
+    @GetMapping("/quiz/{resourceId}")
+    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final String resourceId) throws QuizException {
+        return ResponseEntity.ok(quizService.getQuiz(resourceId));
     }
 
     @GetMapping("/quizzes")

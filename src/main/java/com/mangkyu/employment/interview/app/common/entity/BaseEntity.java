@@ -26,6 +26,9 @@ public abstract class BaseEntity implements Serializable {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
+	@Column(nullable = false)
+	private String resourceId;
+
 	@CreationTimestamp
 	@Column(nullable = false, length = 20, updatable = false)
 	private LocalDateTime createdAt;

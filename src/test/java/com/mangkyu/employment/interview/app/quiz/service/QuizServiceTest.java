@@ -21,6 +21,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -59,19 +60,19 @@ class QuizServiceTest {
     public void init() {
         modelMapper.getConfiguration()
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setFieldMatchingEnabled(true);
+                .setFieldMatchingEnabled(true)
+                .setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
     @Test
     public void getQuizFail_NotExists() {
         // given
-        final long id = -1L;
-        final Quiz quiz = quiz(id);
+        final Quiz quiz = quiz(-1L);
 
-        doReturn(Optional.empty()).when(quizRepository).findById(id);
+        doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
 
         // when
-        final QuizException result = assertThrows(QuizException.class, () -> quizService.getQuiz(id));
+        final QuizException result = assertThrows(QuizException.class, () -> quizService.getQuiz(quiz.getResourceId()));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -83,13 +84,13 @@ class QuizServiceTest {
         final long id = -1L;
         final Quiz quiz = quiz(id);
 
-        doReturn(Optional.of(quiz)).when(quizRepository).findById(id);
+        doReturn(Optional.of(quiz)).when(quizRepository).findByResourceId(quiz.getResourceId());
 
         // when
-        final GetQuizResponse result = quizService.getQuiz(id);
+        final GetQuizResponse result = quizService.getQuiz(quiz.getResourceId());
 
         // then
-        assertThat(result.getId()).isEqualTo(id);
+        assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
         assertThat(result.getCategory()).isEqualTo(enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
@@ -268,6 +269,7 @@ class QuizServiceTest {
                 .build();
 
         ReflectionTestUtils.setField(quiz, "id", id);
+        ReflectionTestUtils.setField(quiz, "resourceId", UUID.randomUUID().toString());
         ReflectionTestUtils.setField(quiz, "createdAt", LocalDateTime.now());
         return quiz;
     }

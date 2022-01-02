@@ -17,7 +17,7 @@ public final class QuizDtoConverter {
 
     public static GetQuizResponse convert(final Quiz quiz) {
         return GetQuizResponse.builder()
-                .id(quiz.getId())
+                .resourceId(quiz.getResourceId())
                 .title(quiz.getTitle())
                 .quizLevelList(convert(quiz.getQuizLevel()))
                 .createdAt(Timestamp.valueOf(quiz.getCreatedAt()).getTime())
@@ -26,7 +26,7 @@ public final class QuizDtoConverter {
 
     public static GetQuizResponse convert(final Quiz quiz, final EnumMapperValue enumMapperValue) {
         return GetQuizResponse.builder()
-                .id(quiz.getId())
+                .resourceId(quiz.getResourceId())
                 .title(quiz.getTitle())
                 .category(enumMapperValue)
                 .quizLevelList(convert(quiz.getQuizLevel()))
