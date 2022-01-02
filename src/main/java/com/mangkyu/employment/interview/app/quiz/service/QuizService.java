@@ -1,5 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
+import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
@@ -39,9 +41,9 @@ public class QuizService {
         quizRepository.save(quiz);
     }
 
-    public GetQuizResponse getQuiz(final long id) {
-        // TODO(MinKyu): Add Exception Handling
-        final Quiz quiz = quizRepository.findById(id).get();
+    public GetQuizResponse getQuiz(final long id) throws QuizException {
+        final Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
         return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }
 

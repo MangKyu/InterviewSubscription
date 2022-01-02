@@ -1,6 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.common.pagination.CursorPageable;
+import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
@@ -31,6 +32,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -61,7 +63,22 @@ class QuizServiceTest {
     }
 
     @Test
-    public void getQuiz_Success() {
+    public void getQuizFail_NotExists() {
+        // given
+        final long id = -1L;
+        final Quiz quiz = quiz(id);
+
+        doReturn(Optional.empty()).when(quizRepository).findById(id);
+
+        // when
+        final QuizException result = assertThrows(QuizException.class, () -> quizService.getQuiz(id));
+
+        // then
+        assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
+    }
+
+    @Test
+    public void getQuizSuccess() throws QuizException {
         // given
         final long id = -1L;
         final Quiz quiz = quiz(id);
