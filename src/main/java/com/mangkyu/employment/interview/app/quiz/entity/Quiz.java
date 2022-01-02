@@ -1,12 +1,10 @@
 package com.mangkyu.employment.interview.app.quiz.entity;
 
+import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Quiz extends BaseEntity {
 
+    @Column(nullable = false)
+    private String resourceId;
+
     private String title;
 
     @Enumerated(EnumType.STRING)
@@ -28,5 +29,10 @@ public class Quiz extends BaseEntity {
     @CollectionTable
     @Enumerated(EnumType.STRING)
     private List<QuizLevel> quizLevel;
+
+//    @Setter
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "answer_id")
+//    private Answer answer;
 
 }

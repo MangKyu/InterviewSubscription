@@ -9,45 +9,50 @@ import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public final class EntityCreationUtils {
 
     public static Quiz quiz() {
         final Quiz quiz = Quiz.builder()
+                .resourceId(UUID.randomUUID().toString())
                 .title("quiz")
                 .quizCategory(QuizCategory.JAVA)
                 .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .build();
-        ReflectionTestUtils.setField(quiz, "resourceId", UUID.randomUUID().toString());
+        ReflectionTestUtils.setField(quiz, "createdAt", LocalDateTime.now());
 
         return quiz;
     }
 
     public static Quiz quiz(final String title, final QuizCategory category, final List<QuizLevel> quizLevelList) {
         final Quiz quiz = Quiz.builder()
+                .resourceId(UUID.randomUUID().toString())
                 .title(title)
                 .quizCategory(category)
                 .quizLevel(quizLevelList)
                 .build();
-        ReflectionTestUtils.setField(quiz, "resourceId", UUID.randomUUID().toString());
+        ReflectionTestUtils.setField(quiz, "createdAt", LocalDateTime.now());
 
         return quiz;
     }
 
     public static User user() {
         final User user = User.builder()
+                .resourceId(UUID.randomUUID().toString())
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .solvedQuizList(Collections.emptyList())
                 .build();
-        ReflectionTestUtils.setField(user, "resourceId", UUID.randomUUID().toString());
+        ReflectionTestUtils.setField(user, "createdAt", LocalDateTime.now());
 
         return user;
     }
 
     public static User user(final int quizSize, final Set<QuizDay> daySet, final Set<QuizCategory> categorySet) {
         final User user = User.builder()
+                .resourceId( UUID.randomUUID().toString())
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .solvedQuizList(Collections.emptyList())
@@ -55,28 +60,26 @@ public final class EntityCreationUtils {
                 .quizDaySet(daySet)
                 .quizCategorySet(categorySet)
                 .build();
-        ReflectionTestUtils.setField(user, "resourceId", UUID.randomUUID().toString());
+        ReflectionTestUtils.setField(user, "createdAt", LocalDateTime.now());
 
         return user;
     }
 
     public static SolvedQuiz solvedQuiz(final Quiz quiz, final User user) {
-        final SolvedQuiz solvedQuiz = SolvedQuiz.builder()
+        return SolvedQuiz.builder()
                 .quiz(quiz)
                 .user(user)
                 .build();
-
-        ReflectionTestUtils.setField(solvedQuiz, "resourceId", UUID.randomUUID().toString());
-        return solvedQuiz;
     }
 
     public static Answer answer(final Quiz quiz) {
         final Answer answer = Answer.builder()
-                .quiz(quiz)
+                .resourceId(UUID.randomUUID().toString())
+//                .quiz(quiz)
                 .desc("desc")
                 .build();
 
-        ReflectionTestUtils.setField(answer, "resourceId", UUID.randomUUID().toString());
+        ReflectionTestUtils.setField(answer, "createdAt", LocalDateTime.now());
         return answer;
     }
 
