@@ -1,23 +1,18 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
+import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
-import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
-
-import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,18 +40,13 @@ public class QuizController {
     }
 
     @GetMapping("/quiz/{id}")
-    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final long id) {
+    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final long id) throws QuizException {
         return ResponseEntity.ok(quizService.getQuiz(id));
     }
 
-    @Valid
     @GetMapping("/quizzes")
-    public ResponseEntity<GetQuizResponseHolder> getQuizList(
-            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) @Range(min = MIN_PAGE_SIZE, max = MAX_PAGE_SIZE) int size,
-            @RequestParam(defaultValue = DEFAULT_PAGE_NUMBER) @Range(min = MIN_PAGE_NUMBER) int page,
-            @NotNull final QuizCategory category) {
-
-        final GetQuizResponseHolder response = quizService.getQuizList(QuizDtoConverter.convert(size, page, category));
+    public ResponseEntity<GetQuizResponseHolder> getQuizList(@Valid final GetQuizRequest getQuizRequest) {
+        final GetQuizResponseHolder response = quizService.getQuizList(getQuizRequest);
         return ResponseEntity.ok(response);
     }
 
