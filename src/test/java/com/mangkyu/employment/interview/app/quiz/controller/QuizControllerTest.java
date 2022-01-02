@@ -132,7 +132,7 @@ class QuizControllerTest {
                 .hasNext(quizPage.hasNext())
                 .page(quizPage.nextOrLastPageable().getPageNumber())
                 .size(quizPage.nextOrLastPageable().getPageSize())
-                .totalElements(quizPage.getTotalElements())
+                .totalPages(quizPage.getTotalPages())
                 .build();
 
         doReturn(getQuizResponseHolder).when(quizService).getQuizList(any(GetQuizRequest.class));

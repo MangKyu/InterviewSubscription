@@ -41,10 +41,13 @@ public class QuizService {
         quizRepository.save(quiz);
     }
 
-    public GetQuizResponse getQuiz(final String resourceId) throws QuizException {
-        final Quiz quiz = quizRepository.findByResourceId(resourceId)
+    public Quiz findQuiz(final String resourceId) throws QuizException {
+        return quizRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
+    }
 
+    public GetQuizResponse getQuiz(final String resourceId) throws QuizException {
+        final Quiz quiz = findQuiz(resourceId);
         return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }
 
@@ -62,7 +65,7 @@ public class QuizService {
                 .hasNext(quizPage.hasNext())
                 .page(quizPage.nextOrLastPageable().getPageNumber())
                 .size(quizPage.nextOrLastPageable().getPageSize())
-                .totalElements(quizPage.getTotalElements())
+                .totalPages(quizPage.getTotalPages())
                 .build();
     }
 

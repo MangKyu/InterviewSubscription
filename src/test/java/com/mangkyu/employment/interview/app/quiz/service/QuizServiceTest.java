@@ -7,6 +7,7 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
+import com.mangkyu.employment.interview.config.modelmapper.ModelMapperConfig;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
@@ -20,8 +21,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -58,10 +57,38 @@ class QuizServiceTest {
 
     @BeforeEach
     public void init() {
-        modelMapper.getConfiguration()
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setFieldMatchingEnabled(true)
-                .setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper = new ModelMapperConfig().modelMapper();
+    }
+
+    @Test
+    public void findQuizEntityFail_NotExists() {
+        // given
+        final Quiz quiz = quiz(-1L);
+
+        doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
+
+        // when
+        final QuizException result = assertThrows(QuizException.class, () -> quizService.findQuiz(quiz.getResourceId()));
+
+        // then
+        assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
+    }
+
+    @Test
+    public void findQuizEntitySuccess() throws QuizException {
+        // given
+        final long id = -1L;
+        final Quiz quiz = quiz(id);
+
+        doReturn(Optional.of(quiz)).when(quizRepository).findByResourceId(quiz.getResourceId());
+
+        // when
+        final Quiz result = quizService.findQuiz(quiz.getResourceId());
+
+        // then
+        assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
+        assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
+        assertThat(result.getCreatedAt()).isEqualTo(quiz.getCreatedAt());
     }
 
     @Test

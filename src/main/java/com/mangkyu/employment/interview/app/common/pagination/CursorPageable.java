@@ -22,7 +22,7 @@ public class CursorPageable<T> {
                 page.hasNext(),
                 page.nextOrLastPageable().getPageNumber(),
                 page.nextOrLastPageable().getPageSize(),
-                page.getTotalElements());
+                page.getTotalPages());
     }
 
     public static <T> CursorPageable<T> of(final T response, final Page<?> page) {
