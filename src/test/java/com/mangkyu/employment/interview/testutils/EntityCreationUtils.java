@@ -75,7 +75,7 @@ public final class EntityCreationUtils {
     public static Answer answer(final Quiz quiz) {
         final Answer answer = Answer.builder()
                 .resourceId(UUID.randomUUID().toString())
-//                .quiz(quiz)
+                .quiz(quiz)
                 .desc("desc")
                 .build();
 

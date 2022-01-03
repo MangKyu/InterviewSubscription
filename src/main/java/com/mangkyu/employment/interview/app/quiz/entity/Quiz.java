@@ -30,9 +30,9 @@ public class Quiz extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private List<QuizLevel> quizLevel;
 
-//    @Setter
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "answer_id")
-//    private Answer answer;
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Answer answer;
 
 }
