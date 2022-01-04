@@ -1,8 +1,8 @@
 package com.mangkyu.employment.interview.app.quiz.repository;
 
+import com.mangkyu.employment.interview.JpaTestConfig;
 import com.mangkyu.employment.interview.app.quiz.dto.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.config.querydsl.QueryDslConfig;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
@@ -11,8 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -21,8 +19,8 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@Import({QueryDslConfig.class})
+
+@JpaTestConfig
 class QuizRepositoryTest {
 
     @Autowired
