@@ -114,4 +114,23 @@ public class QuizService {
                 .build();
     }
 
+    public GetQuizResponseHolder searchQuizList(final SearchQuizListRequest searchRequest) {
+        final QuizSearchCondition condition = modelMapper.map(searchRequest, QuizSearchCondition.class);
+        final PageRequest pageRequest = PageRequest.of(searchRequest.getPage(), searchRequest.getSize());
+
+        final Page<Quiz> quizPage = quizRepository.search(condition, pageRequest);
+
+        final List<GetQuizResponse> quizResponseList = quizPage.getContent().stream()
+                .map(QuizDtoConverter::convert)
+                .collect(Collectors.toList());
+
+        return GetQuizResponseHolder.builder()
+                .quizList(quizResponseList)
+                .hasNext(quizPage.hasNext())
+                .page(quizPage.nextOrLastPageable().getPageNumber())
+                .size(quizPage.nextOrLastPageable().getPageSize())
+                .totalPages(quizPage.getTotalPages())
+                .build();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mangkyu.employment.interview.app.common.pagination.ResponseMetaData;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import lombok.Builder;
@@ -11,6 +12,8 @@ import java.util.List;
 public class GetQuizResponseHolder extends ResponseMetaData {
 
     private final List<GetQuizResponse> quizList;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final EnumMapperValue category;
 
     @Builder

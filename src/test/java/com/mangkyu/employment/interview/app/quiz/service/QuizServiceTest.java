@@ -13,7 +13,6 @@ import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -49,15 +48,36 @@ class QuizServiceTest {
     @Mock
     private EnumMapperFactory enumMapperFactory;
     @Spy
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = new ModelMapperConfig().modelMapper();
 
     private final Long userId = -1L;
     private final QuizLevel quizLevel = QuizLevel.NEW;
     private final int quizSize = 3;
 
-    @BeforeEach
-    public void init() {
-        modelMapper = new ModelMapperConfig().modelMapper();
+    @Test
+    public void searchQuizList() {
+        // given
+        final int page = 0;
+        final int size = 20;
+
+        final List<Quiz> quizList = quizList();
+        final SearchQuizListRequest request = SearchQuizListRequest.builder()
+                .query("query")
+                .categories(new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.JAVA)))
+                .levels(new HashSet<>(Arrays.asList(QuizLevel.NEW, QuizLevel.SENIOR)))
+                .page(0)
+                .size(20)
+                .build();
+        final Pageable pageable = PageRequest.of(page, size);
+
+        final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
+        doReturn(quizPage).when(quizRepository).search(any(QuizSearchCondition.class), any(PageRequest.class));
+
+        // when
+        final GetQuizResponseHolder result = quizService.searchQuizList(request);
+
+        // then
+        assertThat(result.getQuizList().size()).isEqualTo(quizList.size());
     }
 
     @Test

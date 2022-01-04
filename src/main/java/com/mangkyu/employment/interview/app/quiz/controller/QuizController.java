@@ -58,4 +58,10 @@ public class QuizController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/quizzes/search")
+    public ResponseEntity<GetQuizResponseHolder> searchQuizList(@Valid final SearchQuizListRequest request) {
+        final GetQuizResponseHolder response = quizService.searchQuizList(request);
+        return ResponseEntity.ok(response);
+    }
+
 }

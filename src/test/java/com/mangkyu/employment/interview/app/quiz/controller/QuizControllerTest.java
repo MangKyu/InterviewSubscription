@@ -95,9 +95,6 @@ class QuizControllerTest {
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
                 .category(enumMapperValue(QuizCategory.JAVA))
                 .build();
-        final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
-                .quizList(Collections.singletonList(quizResponse))
-                .build();
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -197,6 +194,69 @@ class QuizControllerTest {
         final QuizCategoryResponseHolder responseHolder = new Gson().fromJson(stringResponse, QuizCategoryResponseHolder.class);
         assertThat(responseHolder.getCategoryList().size()).isEqualTo(1);
         assertThat(responseHolder.getCategoryList().get(0).getCount()).isEqualTo(count);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideParameters")
+    public void searchQuizFail_InvalidParameter(final QuizCategory quizCategory, final int size, final int page) throws Exception {
+        // given
+        if (quizCategory == null) {
+            return;
+        }
+
+        final String url = "/quizzes/search";
+        final GetQuizResponse quizResponse = GetQuizResponse.builder()
+                .title("quiz")
+                .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
+                .category(enumMapperValue(QuizCategory.JAVA))
+                .build();
+
+        // when
+        final ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .param("size", String.valueOf(size))
+                        .param("page", String.valueOf(page))
+        );
+
+        // then
+        result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void searchQuizSuccess() throws Exception {
+        // given
+        final String url = "/quizzes/search";
+        final int size = QuizConstants.MIN_PAGE_SIZE;
+        final int page = QuizConstants.MIN_PAGE_NUMBER;
+
+        final GetQuizResponse quizResponse = GetQuizResponse.builder()
+                .title("quiz")
+                .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
+                .category(enumMapperValue(QuizCategory.JAVA))
+                .build();
+
+        final Pageable pageable = PageRequest.of(page, size);
+        final PageImpl<Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
+
+        final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
+                .quizList(Collections.singletonList(quizResponse))
+                .hasNext(quizPage.hasNext())
+                .page(quizPage.nextOrLastPageable().getPageNumber())
+                .size(quizPage.nextOrLastPageable().getPageSize())
+                .totalPages(quizPage.getTotalPages())
+                .build();
+
+        doReturn(getQuizResponseHolder).when(quizService).searchQuizList(any(SearchQuizListRequest.class));
+
+        // when
+        final ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .param("size", String.valueOf(size))
+                        .param("page", String.valueOf(page))
+        );
+
+        // then
+        result.andExpect(status().isOk());
     }
 
     private static Stream<Arguments> provideParameters() {

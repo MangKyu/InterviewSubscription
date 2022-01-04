@@ -1,24 +1,184 @@
 package com.mangkyu.employment.interview.app.quiz.repository;
 
+import com.mangkyu.employment.interview.app.quiz.dto.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.config.querydsl.QueryDslConfig;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@Import({QueryDslConfig.class})
 class QuizRepositoryTest {
 
     @Autowired
     private QuizRepository quizRepository;
+
+    @ParameterizedTest
+    @MethodSource("validQuizParameters")
+    public void search_QueryOnly_QuizValid(final String query) {
+        // given
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+        initForPaging(quizCategory);
+
+        final QuizSearchCondition searchCondition = QuizSearchCondition.builder()
+                .query(query)
+                .categories(null)
+                .levels(null)
+                .build();
+
+        boolean hasNext = true;
+        int page = 0;
+        int size = 3;
+        long result = 0;
+        while (hasNext) {
+            final PageRequest pageRequest = PageRequest.of(page++, size);
+            final Page<Quiz> pageQuiz = quizRepository.search(searchCondition, pageRequest);
+
+            result += pageQuiz.getContent().size();
+            hasNext = pageQuiz.hasNext();
+        }
+
+        // when
+
+        // then
+        assertThat(result).isEqualTo(8);
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidQuizParameters")
+    public void search_QueryOnly_QuizInvalid(final String query) {
+        // given
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+        initForPaging(quizCategory);
+
+        final QuizSearchCondition searchCondition = QuizSearchCondition.builder()
+                .query(query)
+                .categories(null)
+                .levels(null)
+                .build();
+
+        boolean hasNext = true;
+        int page = 0;
+        int size = 3;
+        long result = 0;
+        while (hasNext) {
+            final PageRequest pageRequest = PageRequest.of(page++, size);
+            final Page<Quiz> pageQuiz = quizRepository.search(searchCondition, pageRequest);
+
+            result += pageQuiz.getContent().size();
+            hasNext = pageQuiz.hasNext();
+        }
+
+        // when
+
+        // then
+        assertThat(result).isEqualTo(0);
+    }
+
+    @Test
+    public void search_LevelsOnly() {
+        // given
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+        initForPaging(quizCategory);
+
+        final QuizSearchCondition searchCondition = QuizSearchCondition.builder()
+                .query(null)
+                .categories(Collections.emptySet())
+                .levels(new HashSet<>(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR)))
+                .build();
+
+        boolean hasNext = true;
+        int page = 0;
+        int size = 3;
+        long result = 0;
+        while (hasNext) {
+            final PageRequest pageRequest = PageRequest.of(page++, size);
+            final Page<Quiz> pageQuiz = quizRepository.search(searchCondition, pageRequest);
+
+            result += pageQuiz.getContent().size();
+            hasNext = pageQuiz.hasNext();
+        }
+
+        // when
+
+        // then
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    public void search_CategoriesOnly() {
+        // given
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+        initForPaging(quizCategory);
+
+        final QuizSearchCondition searchCondition = QuizSearchCondition.builder()
+                .query(null)
+                .categories(new HashSet<>(Arrays.asList(QuizCategory.ALGORITHM, QuizCategory.DATABASE)))
+                .levels(Collections.emptySet())
+                .build();
+
+        boolean hasNext = true;
+        int page = 0;
+        int size = 3;
+        long result = 0;
+        while (hasNext) {
+            final PageRequest pageRequest = PageRequest.of(page++, size);
+            final Page<Quiz> pageQuiz = quizRepository.search(searchCondition, pageRequest);
+
+            result += pageQuiz.getContent().size();
+            hasNext = pageQuiz.hasNext();
+        }
+
+        // when
+
+        // then
+        assertThat(result).isEqualTo(2);
+    }
+
+    @Test
+    public void search_AllEmpty() {
+        // given
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+        initForPaging(quizCategory);
+
+        final QuizSearchCondition searchCondition = QuizSearchCondition.builder()
+                .query(null)
+                .categories(Collections.emptySet())
+                .levels(Collections.emptySet())
+                .build();
+
+        boolean hasNext = true;
+        int page = 0;
+        int size = 3;
+        long result = 0;
+        while (hasNext) {
+            final PageRequest pageRequest = PageRequest.of(page++, size);
+            final Page<Quiz> pageQuiz = quizRepository.search(searchCondition, pageRequest);
+
+            result += pageQuiz.getContent().size();
+            hasNext = pageQuiz.hasNext();
+        }
+
+        // when
+
+        // then
+        assertThat(result).isEqualTo(8);
+    }
 
     @Test
     public void selectByResourceId() {
@@ -38,14 +198,7 @@ class QuizRepositoryTest {
     public void selectQuizListByCategoryWithPaging() {
         // given
         final QuizCategory quizCategory = QuizCategory.JAVA;
-        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
-        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
-        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
-        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
-        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
-        EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
-        EntityCreationUtils.quiz("quiz", QuizCategory.ALGORITHM, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
-        EntityCreationUtils.quiz("quiz", QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR));
+        initForPaging(quizCategory);
 
         // when
         boolean hasNext = true;
@@ -167,6 +320,35 @@ class QuizRepositoryTest {
 
         // then
         assertThat(unsolvedQuizList.size()).isEqualTo(3);
+    }
+
+    private void initForPaging(final QuizCategory quizCategory) {
+        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        quizRepository.save(EntityCreationUtils.quiz("quiz", QuizCategory.ALGORITHM, Collections.singletonList(QuizLevel.SENIOR)));
+        quizRepository.save(EntityCreationUtils.quiz("quiz", QuizCategory.DATABASE, Collections.singletonList(QuizLevel.SENIOR)));
+    }
+
+    private static Stream<Arguments> validQuizParameters() {
+        return Stream.of(
+                Arguments.of("q"),
+                Arguments.of("qui"),
+                Arguments.of("ui"),
+                Arguments.of("iz")
+        );
+    }
+
+    private static Stream<Arguments> invalidQuizParameters() {
+        return Stream.of(
+                Arguments.of("banana"),
+                Arguments.of("taxi"),
+                Arguments.of("mangkyu"),
+                Arguments.of("gosudeath")
+        );
     }
 
 }
