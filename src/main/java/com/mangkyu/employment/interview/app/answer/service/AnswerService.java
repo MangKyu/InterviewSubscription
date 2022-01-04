@@ -31,9 +31,14 @@ public class AnswerService {
     @Transactional
     public void addAnswer(final AddAnswerRequest addAnswerRequest) throws QuizException {
         final Quiz quiz = quizService.findQuiz(addAnswerRequest.getQuizResourceId());
-        final Answer answer = QuizDtoConverter.convert(addAnswerRequest, quiz);
-        answerRepository.save(answer);
-        quiz.setAnswer(answer);
+        final Answer quizAnswer = quiz.getAnswer();
+        if (quizAnswer == null) {
+            final Answer answer = QuizDtoConverter.convert(addAnswerRequest, quiz);
+            quiz.setAnswer(answer);
+            answerRepository.save(answer);
+        } else {
+            quizAnswer.setDescription(addAnswerRequest.getDescription());
+        }
     }
 
 }

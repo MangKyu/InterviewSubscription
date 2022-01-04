@@ -17,10 +17,10 @@ public class AnswerController {
 
     private final AnswerService answerService;
 
-    @PostMapping("/answer")
+    @PutMapping("/answer")
     public ResponseEntity<Void> addQuiz(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) throws QuizException {
         answerService.addAnswer(addAnswerRequest);
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.noContent()
                 .build();
     }
 
