@@ -14,13 +14,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AnswerServiceTest {
@@ -34,7 +35,29 @@ class AnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    public void addAnswerSuccess() throws QuizException {
+    public void addAnswerSuccess_Modify() throws QuizException {
+        // given
+        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+                .quizResourceId(UUID.randomUUID().toString())
+                .description("desc")
+                .build();
+        final Quiz quiz = EntityCreationUtils.quiz();
+        final Answer answer = EntityCreationUtils.answer(quiz);
+        ReflectionTestUtils.setField(quiz, "answer", answer);
+
+        doReturn(quiz).when(quizService).findQuiz(addAnswerRequest.getQuizResourceId());
+
+        // when
+        answerService.addAnswer(addAnswerRequest);
+
+        // then
+
+        // verify
+        verify(answerRepository, times(0)).save(answer);
+    }
+
+    @Test
+    public void addAnswerSuccess_Insert() throws QuizException {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
@@ -48,6 +71,7 @@ class AnswerServiceTest {
         answerService.addAnswer(addAnswerRequest);
 
         // then
+        verify(answerRepository, times(1)).save(any(Answer.class));
     }
 
     @Test
