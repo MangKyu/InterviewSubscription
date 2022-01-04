@@ -29,4 +29,10 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.getAnswer(resourceId));
     }
 
+    // TODO(MinKyu): 임시 삭제
+    @DeleteMapping("/answer/{resourceId}")
+    public void deleteAnswer(@PathVariable final String resourceId) throws QuizException {
+        answerService.deleteAnswer(resourceId);
+    }
+
 }
