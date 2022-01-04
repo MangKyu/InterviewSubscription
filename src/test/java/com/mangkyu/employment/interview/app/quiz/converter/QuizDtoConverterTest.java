@@ -22,7 +22,7 @@ class QuizDtoConverterTest {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
-                .desc("desc")
+                .description("desc")
                 .build();
         final Quiz quiz = EntityCreationUtils.quiz();
 
@@ -31,7 +31,7 @@ class QuizDtoConverterTest {
 
         // then
         assertThat(result.getQuiz()).isEqualTo(quiz);
-        assertThat(result.getDesc()).isEqualTo(addAnswerRequest.getDesc());
+        assertThat(result.getDescription()).isEqualTo(addAnswerRequest.getDescription());
     }
 
     @Test
@@ -47,7 +47,7 @@ class QuizDtoConverterTest {
         assertThat(result.getResourceId()).isEqualTo(answer.getResourceId());
         assertThat(result.getQuizResourceId()).isEqualTo(answer.getQuiz().getResourceId());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(answer.getCreatedAt()).getTime());
-        assertThat(result.getDesc()).isEqualTo(answer.getDesc());
+        assertThat(result.getDescription()).isEqualTo(answer.getDescription());
     }
 
     @Test

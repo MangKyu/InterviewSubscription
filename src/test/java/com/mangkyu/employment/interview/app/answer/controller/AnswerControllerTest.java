@@ -51,7 +51,7 @@ class AnswerControllerTest {
         final GetAnswerResponse getAnswerResponse = GetAnswerResponse.builder()
                 .resourceId(resourceId)
                 .quizResourceId(UUID.randomUUID().toString())
-                .desc("설명")
+                .description("설명")
                 .createdAt(System.currentTimeMillis())
                 .build();
 
@@ -68,7 +68,7 @@ class AnswerControllerTest {
         final GetAnswerResponse getAnswerResult = new Gson().fromJson(stringResponse, GetAnswerResponse.class);
 
         assertThat(getAnswerResult.getResourceId()).isEqualTo(getAnswerResponse.getResourceId());
-        assertThat(getAnswerResult.getDesc()).isEqualTo(getAnswerResponse.getDesc());
+        assertThat(getAnswerResult.getDescription()).isEqualTo(getAnswerResponse.getDescription());
         assertThat(getAnswerResult.getCreatedAt()).isEqualTo(getAnswerResponse.getCreatedAt());
     }
 
@@ -80,7 +80,7 @@ class AnswerControllerTest {
 
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(quizResourceId)
-                .desc(desc)
+                .description(desc)
                 .build();
 
         // when
@@ -101,7 +101,7 @@ class AnswerControllerTest {
 
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
-                .desc("desc")
+                .description("desc")
                 .build();
 
 

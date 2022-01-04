@@ -23,6 +23,6 @@ public class AddAnswerRequest {
 
     @NotBlank
     @Size(max = AnswerConstants.MAX_ANSWER_SIZE)
-    private final String desc;
+    private final String description;
 
 }

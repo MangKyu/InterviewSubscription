@@ -76,7 +76,7 @@ public final class EntityCreationUtils {
         final Answer answer = Answer.builder()
                 .resourceId(UUID.randomUUID().toString())
                 .quiz(quiz)
-                .desc("desc")
+                .description("desc")
                 .build();
 
         ReflectionTestUtils.setField(answer, "createdAt", LocalDateTime.now());

@@ -20,7 +20,7 @@ public final class QuizDtoConverter {
         return GetAnswerResponse.builder()
                 .resourceId(answer.getResourceId())
                 .quizResourceId(answer.getQuiz().getResourceId())
-                .desc(answer.getDesc())
+                .description(answer.getDescription())
                 .createdAt(Timestamp.valueOf(answer.getCreatedAt()).getTime())
                 .build();
     }
@@ -56,7 +56,7 @@ public final class QuizDtoConverter {
         return Answer.builder()
                 .resourceId(addAnswerRequest.getResourceId())
                 .quiz(quiz)
-                .desc(addAnswerRequest.getDesc()).build();
+                .description(addAnswerRequest.getDescription()).build();
     }
 
     private static String getAnswerResourceId(final Quiz quiz) {

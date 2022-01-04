@@ -39,7 +39,7 @@ class AnswerRepositoryTest {
         final Answer result = answerRepository.save(answer);
 
         assertThat(result.getResourceId()).isEqualTo(answer.getResourceId());
-        assertThat(result.getDesc()).isEqualTo(answer.getDesc());
+        assertThat(result.getDescription()).isEqualTo(answer.getDescription());
         assertThat(result.getQuiz()).isEqualTo(quiz);
     }
 
@@ -59,7 +59,7 @@ class AnswerRepositoryTest {
         final Optional<Quiz> optionalQuizResult = quizRepository.findById(savedQuiz.getId());
 
         assertThat(result.isPresent()).isTrue();
-        assertThat(result.get().getDesc()).isEqualTo(answer.getDesc());
+        assertThat(result.get().getDescription()).isEqualTo(answer.getDescription());
         assertThat(optionalQuizResult.isPresent()).isTrue();
         assertThat(optionalQuizResult.get().getAnswer()).isNotNull();
         assertThat(optionalQuizResult.get().getAnswer().getResourceId()).isEqualTo(saveAnswer.getResourceId());
