@@ -1,12 +1,12 @@
 package com.mangkyu.employment.interview.app.user.repository;
 
+import com.mangkyu.employment.interview.JpaTestConfig;
 import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
+@JpaTestConfig
 class UserRepositoryTest {
 
     @Autowired
