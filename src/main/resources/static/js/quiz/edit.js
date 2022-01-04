@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $("#innerEditor").append($("#description").val())
+
     let editor
     ClassicEditor.create(document.querySelector('#editor'))
         .then(newEditor => {
@@ -11,10 +13,6 @@ $(document).ready(function () {
     $("#btn-edit-answer").click(function () {
         editAnswer(editor);
     });
-    $("#btn-delete-answer").click(function () {
-        deleteAnswer();
-    });
-
 });
 
 function editAnswer(editor) {
@@ -41,28 +39,4 @@ function editAnswer(editor) {
             alert("설명 추가 실패");
         }
     });
-}
-
-function deleteAnswer() {
-    const answerResourceId = $("#answerResourceId").val();
-
-    if (!answerResourceId) {
-        alert("Answer Not Exists");
-        return false;
-    }
-
-    $.ajax({
-        url: '/answer/' + answerResourceId,
-        type: 'DELETE',
-        contentType: 'application/json',
-        success: function () {
-            $("#description").text('');
-            $("#answerResourceId").val('');
-            alert("설명 삭제 성공");
-        },
-        error: function () {
-            alert("설명 삭제 실패");
-        }
-    });
-
 }

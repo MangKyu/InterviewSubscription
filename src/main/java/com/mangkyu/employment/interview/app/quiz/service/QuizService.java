@@ -1,5 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
+import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
 import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
 import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
@@ -45,6 +46,8 @@ public class QuizService {
         return quizRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
+
+    private final AnswerRepository answerRepository;
 
     public GetQuizResponse getQuiz(final String resourceId) throws QuizException {
         final Quiz quiz = findQuiz(resourceId);

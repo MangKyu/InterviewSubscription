@@ -5,7 +5,6 @@ import com.mangkyu.employment.interview.app.answer.dto.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.service.AnswerService;
 import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +26,6 @@ public class AnswerController {
     @GetMapping("/answer/{resourceId}")
     public ResponseEntity<GetAnswerResponse> getAnswer(@PathVariable final String resourceId) throws QuizException {
         return ResponseEntity.ok(answerService.getAnswer(resourceId));
-    }
-
-    // TODO(MinKyu): 임시 삭제
-    @DeleteMapping("/answer/{resourceId}")
-    public void deleteAnswer(@PathVariable final String resourceId) throws QuizException {
-        answerService.deleteAnswer(resourceId);
     }
 
 }

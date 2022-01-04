@@ -33,13 +33,15 @@
             <div class="col-12x">
                 <input type="hidden" th:value="${quiz.resourceId}" name="quizResourceId" id="quizResourceId"/>
                 <input type="hidden" th:value="${answer.resourceId}" name="answerResourceId" id="answerResourceId"/>
+                <input type="hidden" th:value="${answer.description}" name="description" id="description"/>
                 <h2 class="contact-title" th:text="${quiz.title}"></h2>
                 <div id="editor">
-                    <textarea contenteditable="true" name="description" id="description" placeholder="Enter title" th:text="${answer.description}"></textarea>
+                    <div id="innerEditor">
+<!--                    <textarea contenteditable="true" name="description" id="description" placeholder="Enter title" th:text="${answer.description}"></textarea>-->
+                    </div>
                 </div>
                 <div class="form-group mt-3">
                     <button type="submit" class="button boxed-btn" id="btn-edit-answer">Edit</button>
-                    <button type="submit" class="button boxed-btn" id="btn-delete-answer">Delete</button>
                 </div>
             </div>
         </div>

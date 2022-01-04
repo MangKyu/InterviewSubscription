@@ -5,7 +5,6 @@ import com.mangkyu.employment.interview.app.answer.dto.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
 import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CustomErrorCode;
 import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
@@ -40,13 +39,6 @@ public class AnswerService {
         } else {
             quizAnswer.setDescription(addAnswerRequest.getDescription());
         }
-    }
-
-    @Transactional
-    public void deleteAnswer(final String resourceId) throws QuizException {
-        final Answer answer = answerRepository.findByResourceId(resourceId)
-                .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
-        answerRepository.delete(answer);
     }
 
 }
