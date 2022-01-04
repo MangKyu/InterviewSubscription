@@ -11,7 +11,7 @@ public class GetAnswerResponse {
 
     private final String resourceId;
     private final String quizResourceId;
-    private final String desc;
+    private final String description;
     private final long createdAt;
 
 }

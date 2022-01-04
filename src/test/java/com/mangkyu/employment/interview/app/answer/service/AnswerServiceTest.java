@@ -38,7 +38,7 @@ class AnswerServiceTest {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
-                .desc("desc")
+                .description("desc")
                 .build();
         final Quiz quiz = EntityCreationUtils.quiz();
 
@@ -74,7 +74,7 @@ class AnswerServiceTest {
         final GetAnswerResponse result = answerService.getAnswer(answer.getResourceId());
 
         // then
-        assertThat(result.getDesc()).isEqualTo(answer.getDesc());
+        assertThat(result.getDescription()).isEqualTo(answer.getDescription());
     }
 
 }

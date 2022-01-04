@@ -26,6 +26,6 @@ public class Answer extends BaseEntity {
 
     @Lob
     @Column(length = AnswerConstants.MAX_ANSWER_SIZE)
-    private String desc;
+    private String description;
 
 }
