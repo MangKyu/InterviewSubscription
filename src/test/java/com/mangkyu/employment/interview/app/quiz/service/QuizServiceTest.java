@@ -7,12 +7,12 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
+import com.mangkyu.employment.interview.config.modelmapper.ModelMapperConfig;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +20,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -49,29 +48,78 @@ class QuizServiceTest {
     @Mock
     private EnumMapperFactory enumMapperFactory;
     @Spy
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = new ModelMapperConfig().modelMapper();
 
     private final Long userId = -1L;
     private final QuizLevel quizLevel = QuizLevel.NEW;
     private final int quizSize = 3;
 
-    @BeforeEach
-    public void init() {
-        modelMapper.getConfiguration()
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setFieldMatchingEnabled(true);
+    @Test
+    public void searchQuizList() {
+        // given
+        final int page = 0;
+        final int size = 20;
+
+        final List<Quiz> quizList = quizList();
+        final SearchQuizListRequest request = SearchQuizListRequest.builder()
+                .query("query")
+                .categories(new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.JAVA)))
+                .levels(new HashSet<>(Arrays.asList(QuizLevel.NEW, QuizLevel.SENIOR)))
+                .page(0)
+                .size(20)
+                .build();
+        final Pageable pageable = PageRequest.of(page, size);
+
+        final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
+        doReturn(quizPage).when(quizRepository).search(any(QuizSearchCondition.class), any(PageRequest.class));
+
+        // when
+        final GetQuizResponseHolder result = quizService.searchQuizList(request);
+
+        // then
+        assertThat(result.getQuizList().size()).isEqualTo(quizList.size());
+    }
+
+    @Test
+    public void findQuizEntityFail_NotExists() {
+        // given
+        final Quiz quiz = quiz(-1L);
+
+        doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
+
+        // when
+        final QuizException result = assertThrows(QuizException.class, () -> quizService.findQuiz(quiz.getResourceId()));
+
+        // then
+        assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
+    }
+
+    @Test
+    public void findQuizEntitySuccess() throws QuizException {
+        // given
+        final long id = -1L;
+        final Quiz quiz = quiz(id);
+
+        doReturn(Optional.of(quiz)).when(quizRepository).findByResourceId(quiz.getResourceId());
+
+        // when
+        final Quiz result = quizService.findQuiz(quiz.getResourceId());
+
+        // then
+        assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
+        assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
+        assertThat(result.getCreatedAt()).isEqualTo(quiz.getCreatedAt());
     }
 
     @Test
     public void getQuizFail_NotExists() {
         // given
-        final long id = -1L;
-        final Quiz quiz = quiz(id);
+        final Quiz quiz = quiz(-1L);
 
-        doReturn(Optional.empty()).when(quizRepository).findById(id);
+        doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
 
         // when
-        final QuizException result = assertThrows(QuizException.class, () -> quizService.getQuiz(id));
+        final QuizException result = assertThrows(QuizException.class, () -> quizService.getQuiz(quiz.getResourceId()));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -83,13 +131,13 @@ class QuizServiceTest {
         final long id = -1L;
         final Quiz quiz = quiz(id);
 
-        doReturn(Optional.of(quiz)).when(quizRepository).findById(id);
+        doReturn(Optional.of(quiz)).when(quizRepository).findByResourceId(quiz.getResourceId());
 
         // when
-        final GetQuizResponse result = quizService.getQuiz(id);
+        final GetQuizResponse result = quizService.getQuiz(quiz.getResourceId());
 
         // then
-        assertThat(result.getId()).isEqualTo(id);
+        assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
         assertThat(result.getCategory()).isEqualTo(enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
@@ -268,6 +316,7 @@ class QuizServiceTest {
                 .build();
 
         ReflectionTestUtils.setField(quiz, "id", id);
+        ReflectionTestUtils.setField(quiz, "resourceId", UUID.randomUUID().toString());
         ReflectionTestUtils.setField(quiz, "createdAt", LocalDateTime.now());
         return quiz;
     }

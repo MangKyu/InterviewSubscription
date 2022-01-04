@@ -39,9 +39,9 @@ public class QuizController {
                 .build();
     }
 
-    @GetMapping("/quiz/{id}")
-    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final long id) throws QuizException {
-        return ResponseEntity.ok(quizService.getQuiz(id));
+    @GetMapping("/quiz/{resourceId}")
+    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final String resourceId) throws QuizException {
+        return ResponseEntity.ok(quizService.getQuiz(resourceId));
     }
 
     @GetMapping("/quizzes")
@@ -55,6 +55,12 @@ public class QuizController {
         final QuizCategoryResponseHolder response = QuizCategoryResponseHolder.builder()
                 .categoryList(quizService.getQuizCategoryList())
                 .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/quizzes/search")
+    public ResponseEntity<GetQuizResponseHolder> searchQuizList(@Valid final SearchQuizListRequest request) {
+        final GetQuizResponseHolder response = quizService.searchQuizList(request);
         return ResponseEntity.ok(response);
     }
 

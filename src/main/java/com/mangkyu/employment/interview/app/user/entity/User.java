@@ -25,6 +25,9 @@ import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.
 @AllArgsConstructor
 public class User extends BaseEntity {
 
+    @Column(nullable = false)
+    private String resourceId;
+
     @Column(unique = true)
     private String email;
 

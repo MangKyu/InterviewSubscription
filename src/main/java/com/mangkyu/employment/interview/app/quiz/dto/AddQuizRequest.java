@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -23,6 +24,8 @@ public class AddQuizRequest {
 
     @NotNull
     private final QuizCategory quizCategory;
+
+    private final String resourceId = String.valueOf(UUID.randomUUID());
 
     @NotEmpty
     private final List<QuizLevel> quizLevel;

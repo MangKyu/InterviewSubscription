@@ -12,5 +12,5 @@ public class ResponseMetaData {
     private final boolean hasNext;
     private final int page;
     private final int size;
-    private final long totalElements;
+    private final int totalPage;
 }

@@ -41,9 +41,13 @@ public class QuizService {
         quizRepository.save(quiz);
     }
 
-    public GetQuizResponse getQuiz(final long id) throws QuizException {
-        final Quiz quiz = quizRepository.findById(id)
+    public Quiz findQuiz(final String resourceId) throws QuizException {
+        return quizRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
+    }
+
+    public GetQuizResponse getQuiz(final String resourceId) throws QuizException {
+        final Quiz quiz = findQuiz(resourceId);
         return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }
 
@@ -61,7 +65,7 @@ public class QuizService {
                 .hasNext(quizPage.hasNext())
                 .page(quizPage.nextOrLastPageable().getPageNumber())
                 .size(quizPage.nextOrLastPageable().getPageSize())
-                .totalElements(quizPage.getTotalElements())
+                .totalPages(quizPage.getTotalPages())
                 .build();
     }
 
@@ -107,6 +111,25 @@ public class QuizService {
                 .code(enumMapperValue.getCode())
                 .title(enumMapperValue.getTitle())
                 .desc(enumMapperValue.getDesc())
+                .build();
+    }
+
+    public GetQuizResponseHolder searchQuizList(final SearchQuizListRequest searchRequest) {
+        final QuizSearchCondition condition = modelMapper.map(searchRequest, QuizSearchCondition.class);
+        final PageRequest pageRequest = PageRequest.of(searchRequest.getPage(), searchRequest.getSize());
+
+        final Page<Quiz> quizPage = quizRepository.search(condition, pageRequest);
+
+        final List<GetQuizResponse> quizResponseList = quizPage.getContent().stream()
+                .map(QuizDtoConverter::convert)
+                .collect(Collectors.toList());
+
+        return GetQuizResponseHolder.builder()
+                .quizList(quizResponseList)
+                .hasNext(quizPage.hasNext())
+                .page(quizPage.nextOrLastPageable().getPageNumber())
+                .size(quizPage.nextOrLastPageable().getPageSize())
+                .totalPages(quizPage.getTotalPages())
                 .build();
     }
 
