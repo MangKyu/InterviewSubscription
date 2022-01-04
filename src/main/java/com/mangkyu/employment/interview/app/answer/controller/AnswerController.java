@@ -18,7 +18,7 @@ public class AnswerController {
     private final AnswerService answerService;
 
     @PutMapping("/answer")
-    public ResponseEntity<Void> addQuiz(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) throws QuizException {
+    public ResponseEntity<Void> putAnswer(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) throws QuizException {
         answerService.addAnswer(addAnswerRequest);
         return ResponseEntity.noContent()
                 .build();
