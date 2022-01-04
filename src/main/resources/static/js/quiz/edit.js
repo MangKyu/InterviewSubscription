@@ -19,34 +19,28 @@ $(document).ready(function () {
 
 function editAnswer(editor) {
     const quizResourceId = $('#quizResourceId').val(),
-        answerResourceId = $("#answerResourceId").val(),
         description = editor.getData();
 
     if (!description) {
         alert("Input description");
         return false;
     }
-
-    if (answerResourceId) {
-        alert('정답이 이미 존재합니다.')
-    } else {
-        $.ajax({
-            url: '/answer',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                'quizResourceId': quizResourceId,
-                'description': description
-            }),
-            success: function () {
-                alert("설명 추가 성공")
-            },
-            error: function (e) {
-                alert("설명 추가 실패");
-            }
-        });
-    }
-
+    $.ajax({
+        url: '/answer',
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            'quizResourceId': quizResourceId,
+            'description': description
+        }),
+        success: function () {
+            $("#answerResourceId").val('a');
+            alert("설명 추가 성공")
+        },
+        error: function (e) {
+            alert("설명 추가 실패");
+        }
+    });
 }
 
 function deleteAnswer() {
