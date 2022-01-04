@@ -3,10 +3,7 @@ package com.mangkyu.employment.interview.app.answer.entity;
 import com.mangkyu.employment.interview.app.answer.constants.AnswerConstants;
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -24,6 +21,7 @@ public class Answer extends BaseEntity {
     @OneToOne(mappedBy = "answer")
     private Quiz quiz;
 
+    @Setter
     @Lob
     @Column(length = AnswerConstants.MAX_ANSWER_SIZE)
     private String description;
