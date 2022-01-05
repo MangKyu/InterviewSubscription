@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
+import java.util.UUID;
 
 import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.*;
 
@@ -22,6 +23,8 @@ import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class AddUserRequest {
+
+    private final String resourceId = String.valueOf(UUID.randomUUID());
 
     @Email
     @NotBlank

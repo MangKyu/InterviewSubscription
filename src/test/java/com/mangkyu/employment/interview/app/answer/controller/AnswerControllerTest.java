@@ -85,7 +85,7 @@ class AnswerControllerTest {
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
+                MockMvcRequestBuilders.put(url)
                         .content(new Gson().toJson(addAnswerRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -107,13 +107,13 @@ class AnswerControllerTest {
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
+                MockMvcRequestBuilders.put(url)
                         .content(new Gson().toJson(addAnswerRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
         // then
-        result.andExpect(status().isCreated());
+        result.andExpect(status().isNoContent());
     }
 
     private static Stream<Arguments> provideParameters() {

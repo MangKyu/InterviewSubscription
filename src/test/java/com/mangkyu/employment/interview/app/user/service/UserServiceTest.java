@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.user.service;
 import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
 import com.mangkyu.employment.interview.app.user.entity.User;
 import com.mangkyu.employment.interview.app.user.repository.UserRepository;
+import com.mangkyu.employment.interview.config.modelmapper.ModelMapperConfig;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,16 +33,9 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @Spy
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = new ModelMapperConfig().modelMapper();
 
     private final QuizDay quizDay = QuizDay.MONDAY;
-
-    @BeforeEach
-    public void init() {
-        modelMapper.getConfiguration()
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setFieldMatchingEnabled(true);
-    }
 
     @Test
     public void addUserSuccess() {
