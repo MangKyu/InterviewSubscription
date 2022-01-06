@@ -29,4 +29,10 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.getAnswer(resourceId));
     }
 
+    @DeleteMapping("/answer/{resourceId}")
+    public ResponseEntity<Void> deleteAnswer(@PathVariable final String resourceId) throws QuizException {
+        answerService.deleteAnswer(resourceId);
+
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -116,6 +116,20 @@ class AnswerControllerTest {
         result.andExpect(status().isNoContent());
     }
 
+    @Test
+    public void deleteAnswerSuccess() throws Exception {
+        // given
+        final String url = "/answer/" + UUID.randomUUID();
+
+        // when
+        final ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.delete(url)
+        );
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
                 Arguments.of(null, desc(1)),
