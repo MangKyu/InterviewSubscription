@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class QuizException extends Exception {
+public class QuizException extends RuntimeException {
 
     private final ErrorCode errorCode;
 
