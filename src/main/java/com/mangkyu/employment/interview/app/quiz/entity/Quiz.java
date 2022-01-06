@@ -32,7 +32,7 @@ public class Quiz extends BaseEntity {
 
     @Setter
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "answer_id")
     private Answer answer;
 
 }

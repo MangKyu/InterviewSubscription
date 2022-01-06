@@ -8,6 +8,7 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -61,7 +62,7 @@ public final class QuizDtoConverter {
 
     private static String getAnswerResourceId(final Quiz quiz) {
         return (quiz.getAnswer() == null)
-                ? null
+                ? StringUtils.EMPTY
                 : quiz.getAnswer().getResourceId();
     }
 

@@ -8,6 +8,7 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
@@ -83,7 +84,7 @@ class QuizDtoConverterTest {
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
         assertThat(result.getCategory().getCode()).isEqualTo(enumMapperValue(quiz.getQuizCategory()).getCode());
-        assertThat(result.getAnswerResourceId()).isNull();
+        assertThat(result.getAnswerResourceId()).isEqualTo(StringUtils.EMPTY);
     }
 
     @Test
@@ -119,7 +120,7 @@ class QuizDtoConverterTest {
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
         assertThat(result.getCategory()).isNull();
-        assertThat(result.getAnswerResourceId()).isNull();
+        assertThat(result.getAnswerResourceId()).isEqualTo(StringUtils.EMPTY);
     }
 
     private EnumMapperValue enumMapperValue(final EnumMapperType enumMapperType) {

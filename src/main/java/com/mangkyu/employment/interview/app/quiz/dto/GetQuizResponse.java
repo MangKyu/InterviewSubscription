@@ -14,8 +14,6 @@ import java.util.List;
 public class GetQuizResponse {
 
     private final String resourceId;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final String answerResourceId;
 
     private final String title;
