@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum QuizLevel implements EnumMapperType {
 
-    NEW("New Developers", "신입"),
-    JUNIOR("Junior Developers", "주니어"),
-    SENIOR("Senior Developers", "시니어"),
+    NEW("New", "신입"),
+    JUNIOR("Junior", "주니어"),
+    SENIOR("Senior", "시니어"),
     ;
 
     private final String title;
