@@ -2,11 +2,13 @@ $(document).ready(function () {
     $("#innerEditor").append($("#description").val())
 
     let editor
-    ClassicEditor.create(document.querySelector('#editor'))
-        .then(newEditor => {
+    ClassicEditor.create(document.querySelector('#editor'), {
+        ckfinder: {
+            // todo 파일 업로드 api
+            // uploadUrl: 'https://freeimage.host/json?command=QuickUpload&type=Files&responseType=json'
+        }}).then(newEditor => {
             editor = newEditor;
-        })
-        .catch(error => {
+        }).catch(error => {
             console.error(error);
         });
 
@@ -40,7 +42,7 @@ function editAnswer(editor) {
             alert("설명 추가 성공")
             window.location = window.location
         },
-        error: function (e) {
+        error: function () {
             alert("설명 추가 실패");
         }
     });
