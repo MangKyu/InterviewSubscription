@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.file.service;
 
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.file.dto.FileUploadResponse;
 import com.mangkyu.employment.interview.app.file.entity.MyFile;
 import com.mangkyu.employment.interview.app.file.repository.FileRepository;
@@ -41,7 +41,7 @@ class FileServiceTest {
         // given
 
         // when
-        final QuizException result = assertThrows(QuizException.class, () -> target.init());
+        final RestApiException result = assertThrows(RestApiException.class, () -> target.init());
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.INTERNAL_SERVER_ERROR);
@@ -124,7 +124,7 @@ class FileServiceTest {
         doReturn(Optional.empty()).when(fileRepository).findByResourceId(resourceId);
 
         // when
-        final QuizException result = assertThrows(QuizException.class, () -> target.getFileAsResource(resourceId));
+        final RestApiException result = assertThrows(RestApiException.class, () -> target.getFileAsResource(resourceId));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);

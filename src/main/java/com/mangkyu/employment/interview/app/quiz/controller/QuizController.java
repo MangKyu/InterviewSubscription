@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class QuizController {
     }
 
     @GetMapping("/quiz/{resourceId}")
-    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final String resourceId) throws QuizException {
+    public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final String resourceId) throws RestApiException {
         return ResponseEntity.ok(quizService.getQuiz(resourceId));
     }
 

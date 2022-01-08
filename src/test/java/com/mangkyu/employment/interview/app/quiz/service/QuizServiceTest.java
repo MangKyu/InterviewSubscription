@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
@@ -88,14 +88,14 @@ class QuizServiceTest {
         doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
 
         // when
-        final QuizException result = assertThrows(QuizException.class, () -> quizService.findQuiz(quiz.getResourceId()));
+        final RestApiException result = assertThrows(RestApiException.class, () -> quizService.findQuiz(quiz.getResourceId()));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
     }
 
     @Test
-    public void findQuizEntitySuccess() throws QuizException {
+    public void findQuizEntitySuccess() throws RestApiException {
         // given
         final long id = -1L;
         final Quiz quiz = quiz(id);
@@ -119,14 +119,14 @@ class QuizServiceTest {
         doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
 
         // when
-        final QuizException result = assertThrows(QuizException.class, () -> quizService.getQuiz(quiz.getResourceId()));
+        final RestApiException result = assertThrows(RestApiException.class, () -> quizService.getQuiz(quiz.getResourceId()));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
     }
 
     @Test
-    public void getQuizSuccess() throws QuizException {
+    public void getQuizSuccess() throws RestApiException {
         // given
         final long id = -1L;
         final Quiz quiz = quiz(id);

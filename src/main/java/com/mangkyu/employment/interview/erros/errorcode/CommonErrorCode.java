@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.common.erros.errorcode;
+package com.mangkyu.employment.interview.erros.errorcode;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
