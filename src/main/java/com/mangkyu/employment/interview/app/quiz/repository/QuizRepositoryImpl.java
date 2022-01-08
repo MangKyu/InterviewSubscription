@@ -38,6 +38,7 @@ public class QuizRepositoryImpl implements QuizRepositoryCustom {
                 .fetch();
 
         final long count = query.selectFrom(qQuiz)
+                .where(titleLike(qQuiz, condition.getQuery()))
                 .where(quizCategoriesIn(qQuiz, condition.getCategories()))
                 .where(quizLevelsIn(qQuiz, condition.getLevels()))
                 .stream().count();
