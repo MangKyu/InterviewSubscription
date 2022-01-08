@@ -62,7 +62,7 @@ public final class QuizDtoConverter {
 
     private static String getAnswerResourceId(final Quiz quiz) {
         return (quiz.getAnswer() == null)
-                ? StringUtils.EMPTY
+                ? null
                 : quiz.getAnswer().getResourceId();
     }
 

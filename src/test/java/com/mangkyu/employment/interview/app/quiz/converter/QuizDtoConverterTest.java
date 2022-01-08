@@ -84,7 +84,7 @@ class QuizDtoConverterTest {
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
         assertThat(result.getCategory().getCode()).isEqualTo(enumMapperValue(quiz.getQuizCategory()).getCode());
-        assertThat(result.getAnswerResourceId()).isEqualTo(StringUtils.EMPTY);
+        assertThat(result.getAnswerResourceId()).isNull();
     }
 
     @Test
@@ -120,7 +120,7 @@ class QuizDtoConverterTest {
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
         assertThat(result.getCategory()).isNull();
-        assertThat(result.getAnswerResourceId()).isEqualTo(StringUtils.EMPTY);
+        assertThat(result.getAnswerResourceId()).isNull();
     }
 
     private EnumMapperValue enumMapperValue(final EnumMapperType enumMapperType) {
