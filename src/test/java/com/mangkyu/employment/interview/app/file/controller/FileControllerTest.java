@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +23,6 @@ import java.util.UUID;
 import static com.mangkyu.employment.interview.app.file.constants.FileConstants.FILE_API_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,7 +44,7 @@ class FileControllerTest {
     @Test
     public void uploadFileSuccess() throws Exception {
         // given
-        final MockMultipartFile multipartFile = new MockMultipartFile("a", new byte[0]);
+        final MockMultipartFile multipartFile = new MockMultipartFile("upload", new byte[0]);
         final FileUploadResponse fileUploadResponse = FileUploadResponse.builder()
                 .uploaded(false)
                 .build();
@@ -66,11 +66,11 @@ class FileControllerTest {
     }
 
     @Test
-    public void addAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
+    public void getResource() throws Exception {
         // given
         final String resourceId = UUID.randomUUID().toString();
         final String url = FILE_API_PREFIX + "/" + resourceId;
-        final Resource resource = mock(Resource.class);
+        final Resource resource = new ByteArrayResource(new byte[0]);
 
         doReturn(resource).when(fileService).getFileAsResource(resourceId);
 
