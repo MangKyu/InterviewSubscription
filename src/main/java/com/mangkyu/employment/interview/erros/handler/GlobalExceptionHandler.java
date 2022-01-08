@@ -1,9 +1,9 @@
-package com.mangkyu.employment.interview.app.common.erros.handler;
+package com.mangkyu.employment.interview.erros.handler;
 
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.errorcode.ErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
-import com.mangkyu.employment.interview.app.common.erros.response.ErrorResponse;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.errorcode.ErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
+import com.mangkyu.employment.interview.erros.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(QuizException.class)
-    public ResponseEntity<Object> handleQuizException(final QuizException e) {
+    @ExceptionHandler(RestApiException.class)
+    public ResponseEntity<Object> handleQuizException(final RestApiException e) {
         final ErrorCode errorCode = e.getErrorCode();
         return handleExceptionInternal(errorCode);
     }

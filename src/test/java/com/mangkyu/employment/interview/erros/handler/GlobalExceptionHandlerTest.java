@@ -1,10 +1,10 @@
-package com.mangkyu.employment.interview.app.common.erros.handler;
+package com.mangkyu.employment.interview.erros.handler;
 
 import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.errorcode.ErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.response.ErrorResponse;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.errorcode.ErrorCode;
+import com.mangkyu.employment.interview.erros.response.ErrorResponse;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.controller.QuizController;
 import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
@@ -58,7 +58,7 @@ class GlobalExceptionHandlerTest {
         final String url = "/quiz/" + resourceId;
         final ErrorCode errorCode = CommonErrorCode.RESOURCE_NOT_FOUND;
 
-        doThrow(new QuizException(errorCode)).when(quizService).getQuiz(resourceId);
+        doThrow(new RestApiException(errorCode)).when(quizService).getQuiz(resourceId);
 
         // when
         final ResultActions result = mockMvc.perform(

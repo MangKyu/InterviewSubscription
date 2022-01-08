@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
@@ -41,12 +41,12 @@ public class QuizService {
         quizRepository.save(quiz);
     }
 
-    public Quiz findQuiz(final String resourceId) throws QuizException {
+    public Quiz findQuiz(final String resourceId) throws RestApiException {
         return quizRepository.findByResourceId(resourceId)
-                .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
 
-    public GetQuizResponse getQuiz(final String resourceId) throws QuizException {
+    public GetQuizResponse getQuiz(final String resourceId) throws RestApiException {
         final Quiz quiz = findQuiz(resourceId);
         return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }

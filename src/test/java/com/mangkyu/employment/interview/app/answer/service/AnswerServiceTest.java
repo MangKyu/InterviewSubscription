@@ -4,8 +4,8 @@ import com.mangkyu.employment.interview.app.answer.dto.AddAnswerRequest;
 import com.mangkyu.employment.interview.app.answer.dto.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
@@ -35,7 +35,7 @@ class AnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    public void addAnswerSuccess_Modify() throws QuizException {
+    public void addAnswerSuccess_Modify() throws RestApiException {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
@@ -57,7 +57,7 @@ class AnswerServiceTest {
     }
 
     @Test
-    public void addAnswerSuccess_Insert() throws QuizException {
+    public void addAnswerSuccess_Insert() throws RestApiException {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
@@ -81,14 +81,14 @@ class AnswerServiceTest {
         doReturn(Optional.empty()).when(answerRepository).findByResourceId(resourceId);
 
         // when
-        final QuizException result = assertThrows(QuizException.class, () -> answerService.getAnswer(resourceId));
+        final RestApiException result = assertThrows(RestApiException.class, () -> answerService.getAnswer(resourceId));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
     }
 
     @Test
-    public void getAnswerByQuizResourceIdSuccess() throws QuizException {
+    public void getAnswerByQuizResourceIdSuccess() throws RestApiException {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);

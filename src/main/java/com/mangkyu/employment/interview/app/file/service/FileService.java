@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.file.service;
 
-import com.mangkyu.employment.interview.app.common.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.app.common.erros.exception.QuizException;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.file.dto.FileUploadResponse;
 import com.mangkyu.employment.interview.app.file.entity.MyFile;
 import com.mangkyu.employment.interview.app.file.repository.FileRepository;
@@ -39,7 +39,7 @@ public class FileService {
     @PostConstruct
     public void init() throws IOException {
         if (StringUtils.isBlank(fileDirectory)) {
-            throw new QuizException(CommonErrorCode.INTERNAL_SERVER_ERROR);
+            throw new RestApiException(CommonErrorCode.INTERNAL_SERVER_ERROR);
         }
 
         final Path fileDirectoryPath = Paths.get(fileDirectory);
@@ -76,14 +76,14 @@ public class FileService {
 
     public Resource getFileAsResource(final String resourceId) {
         final MyFile myFile = fileRepository.findByResourceId(resourceId)
-                .orElseThrow(() -> new QuizException(CommonErrorCode.RESOURCE_NOT_FOUND));
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         try {
             final Path path = Paths.get(fileDirectory + myFile.getFileName());
             return new ByteArrayResource(Files.readAllBytes(path));
         } catch (final IOException e) {
             log.error("getFileAsResource Fail", e);
-            throw new QuizException(CommonErrorCode.INTERNAL_SERVER_ERROR);
+            throw new RestApiException(CommonErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
 

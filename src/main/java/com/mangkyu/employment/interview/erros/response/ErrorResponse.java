@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.common.erros.response;
+package com.mangkyu.employment.interview.erros.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
