@@ -4,8 +4,7 @@ $(document).ready(function () {
     let editor
     ClassicEditor.create(document.querySelector('#editor'), {
         ckfinder: {
-            // todo 파일 업로드 api
-            // uploadUrl: 'https://freeimage.host/json?command=QuickUpload&type=Files&responseType=json'
+            uploadUrl: '/file'
         }}).then(newEditor => {
             editor = newEditor;
         }).catch(error => {
@@ -32,7 +31,7 @@ function editAnswer(editor) {
 
     $.ajax({
         url: '/answer',
-        type: 'PUT',
+        type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
             'quizResourceId': quizResourceId,
