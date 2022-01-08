@@ -85,7 +85,7 @@ class AnswerControllerTest {
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.put(url)
+                MockMvcRequestBuilders.post(url)
                         .content(new Gson().toJson(addAnswerRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -96,6 +96,50 @@ class AnswerControllerTest {
 
     @Test
     public void addAnswerSuccess() throws Exception {
+        // given
+        final String url = "/answer";
+
+        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+                .quizResourceId(UUID.randomUUID().toString())
+                .description("desc")
+                .build();
+
+
+        // when
+        final ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .content(new Gson().toJson(addAnswerRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideParameters")
+    public void putAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
+        // given
+        final String url = "/answer";
+
+        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+                .quizResourceId(quizResourceId)
+                .description(desc)
+                .build();
+
+        // when
+        final ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.put(url)
+                        .content(new Gson().toJson(addAnswerRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void putAnswerSuccess() throws Exception {
         // given
         final String url = "/answer";
 
