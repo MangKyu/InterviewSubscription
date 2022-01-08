@@ -23,6 +23,13 @@ public class AnswerController {
                 .build();
     }
 
+    @PostMapping("/answer")
+    public ResponseEntity<Void> postAnswer(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) throws QuizException {
+        answerService.addAnswer(addAnswerRequest);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
     @GetMapping("/answer/{resourceId}")
     public ResponseEntity<GetAnswerResponse> getAnswer(@PathVariable final String resourceId) throws QuizException {
         return ResponseEntity.ok(answerService.getAnswer(resourceId));
