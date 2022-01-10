@@ -1,6 +1,7 @@
 package com.mangkyu.employment.interview.app.file.controller;
 
 import com.google.gson.Gson;
+import com.mangkyu.employment.interview.app.enums.controller.EnumsController;
 import com.mangkyu.employment.interview.app.file.dto.FileUploadResponse;
 import com.mangkyu.employment.interview.app.file.service.FileService;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
@@ -25,21 +29,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(FileController.class)
 class FileControllerTest {
 
-    @InjectMocks
-    private FileController target;
-
-    @Mock
-    private FileService fileService;
-
+    @Autowired
     private MockMvc mockMvc;
 
-    @BeforeEach
-    public void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(target).build();
-    }
+    @MockBean
+    private FileService fileService;
 
     @Test
     public void uploadFileSuccess() throws Exception {

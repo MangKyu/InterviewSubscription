@@ -4,20 +4,17 @@ import com.google.gson.Gson;
 import com.mangkyu.employment.interview.app.answer.dto.AddAnswerRequest;
 import com.mangkyu.employment.interview.app.answer.dto.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.service.AnswerService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -27,21 +24,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(AnswerController.class)
 class AnswerControllerTest {
 
-    @InjectMocks
-    private AnswerController target;
-
-    @Mock
-    private AnswerService answerService;
-
+    @Autowired
     private MockMvc mockMvc;
 
-    @BeforeEach
-    public void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(target).build();
-    }
+    @MockBean
+    private AnswerService answerService;
 
     @Test
     public void getAnswer() throws Exception {
