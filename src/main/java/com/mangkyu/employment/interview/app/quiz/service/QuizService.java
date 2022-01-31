@@ -56,7 +56,7 @@ public class QuizService {
         final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIsAndIsEnableTrue(getQuizRequest.getCategory(), pageRequest);
 
         final List<GetQuizResponse> quizResponseList = quizPage.getContent().stream()
-                .map(v -> QuizDtoConverter.convert(v, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, v.getQuizCategory())))
+                .map(QuizDtoConverter::convert)
                 .collect(Collectors.toList());
 
         return GetQuizResponseHolder.builder()
@@ -121,7 +121,7 @@ public class QuizService {
         final Page<Quiz> quizPage = quizRepository.search(condition, pageRequest);
 
         final List<GetQuizResponse> quizResponseList = quizPage.getContent().stream()
-                .map(v -> QuizDtoConverter.convert(v, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, v.getQuizCategory())))
+                .map(QuizDtoConverter::convert)
                 .collect(Collectors.toList());
 
         return GetQuizResponseHolder.builder()

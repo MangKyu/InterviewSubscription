@@ -1,7 +1,5 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
@@ -13,6 +11,8 @@ import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -139,7 +139,7 @@ class QuizServiceTest {
         // then
         assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
-        assertThat(result.getCategory()).isEqualTo(enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
+        assertThat(result.getCategory()).isEqualTo(quiz.getQuizCategory().getTitle());
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
     }

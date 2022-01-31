@@ -8,7 +8,6 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
@@ -66,7 +65,7 @@ class QuizDtoConverterTest {
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
-        assertThat(result.getCategory().getCode()).isEqualTo(enumMapperValue(quiz.getQuizCategory()).getCode());
+        assertThat(result.getCategory()).isEqualTo(quiz.getQuizCategory().getTitle());
         assertThat(result.getAnswerResourceId()).isEqualTo(answer.getResourceId());
     }
 
@@ -83,7 +82,7 @@ class QuizDtoConverterTest {
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
-        assertThat(result.getCategory().getCode()).isEqualTo(enumMapperValue(quiz.getQuizCategory()).getCode());
+        assertThat(result.getCategory()).isEqualTo(quiz.getQuizCategory().getTitle());
         assertThat(result.getAnswerResourceId()).isNull();
     }
 
@@ -102,7 +101,7 @@ class QuizDtoConverterTest {
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
-        assertThat(result.getCategory()).isNull();
+        assertThat(result.getCategory()).isEqualTo(quiz.getQuizCategory().getTitle());
         assertThat(result.getAnswerResourceId()).isEqualTo(answer.getResourceId());
     }
 
@@ -119,7 +118,7 @@ class QuizDtoConverterTest {
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
         assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
         assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
-        assertThat(result.getCategory()).isNull();
+        assertThat(result.getCategory()).isEqualTo(quiz.getQuizCategory().getTitle());
         assertThat(result.getAnswerResourceId()).isNull();
     }
 

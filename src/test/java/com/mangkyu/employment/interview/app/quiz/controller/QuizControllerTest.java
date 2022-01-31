@@ -51,7 +51,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA))
+                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
                 .build();
         doReturn(quizResponse).when(quizService).getQuiz(resourceId);
 
@@ -67,7 +67,7 @@ class QuizControllerTest {
 
         assertThat(getQuizResult.getResourceId()).isEqualTo(quizResponse.getResourceId());
         assertThat(getQuizResult.getTitle()).isEqualTo(quizResponse.getTitle());
-        assertThat(getQuizResult.getCategory().getCode()).isEqualTo(quizResponse.getCategory().getCode());
+        assertThat(getQuizResult.getCategory()).isEqualTo(quizResponse.getCategory());
         assertThat(getQuizResult.getCreatedAt()).isEqualTo(quizResponse.getCreatedAt());
     }
 
@@ -83,7 +83,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA))
+                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
                 .build();
 
         // when
@@ -108,7 +108,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA))
+                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
                 .build();
 
         final Pageable pageable = PageRequest.of(page, size);
@@ -198,7 +198,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA))
+                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
                 .build();
 
         // when
@@ -222,7 +222,7 @@ class QuizControllerTest {
         final GetQuizResponse quizResponse = GetQuizResponse.builder()
                 .title("quiz")
                 .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA))
+                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
                 .build();
 
         final Pageable pageable = PageRequest.of(page, size);
