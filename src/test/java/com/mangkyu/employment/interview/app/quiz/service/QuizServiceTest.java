@@ -267,6 +267,7 @@ class QuizServiceTest {
                 .code(quizCategory.name())
                 .title(quizCategory.getTitle())
                 .desc(quizCategory.getDesc())
+                .expose(true)
                 .build();
 
         doReturn(Collections.singletonList(enumMapperValue)).when(enumMapperFactory).get(EnumMapperKey.QUIZ_CATEGORY);
