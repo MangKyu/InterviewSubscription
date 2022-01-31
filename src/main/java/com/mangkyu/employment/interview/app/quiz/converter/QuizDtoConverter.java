@@ -32,17 +32,19 @@ public final class QuizDtoConverter {
                 .resourceId(quiz.getResourceId())
                 .answerResourceId(getAnswerResourceId(quiz))
                 .title(quiz.getTitle())
+                .category(quiz.getQuizCategory().getTitle())
                 .quizLevelList(convert(quiz.getQuizLevel()))
                 .createdAt(Timestamp.valueOf(quiz.getCreatedAt()).getTime())
                 .build();
     }
 
+    @Deprecated
     public static GetQuizResponse convert(final Quiz quiz, final EnumMapperValue enumMapperValue) {
         return GetQuizResponse.builder()
                 .resourceId(quiz.getResourceId())
                 .answerResourceId(getAnswerResourceId(quiz))
                 .title(quiz.getTitle())
-                .category(enumMapperValue)
+                .category(quiz.getQuizCategory().getTitle())
                 .quizLevelList(convert(quiz.getQuizLevel()))
                 .createdAt(Timestamp.valueOf(quiz.getCreatedAt()).getTime())
                 .build();

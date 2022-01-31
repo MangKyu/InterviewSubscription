@@ -19,7 +19,7 @@ public class GetQuizResponse {
     private final String title;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final EnumMapperValue category;
+    private final String category;
 
     private final List<String> quizLevelList;
     private final long createdAt;
