@@ -8,4 +8,6 @@ public interface EnumMapperType {
 
     String getDesc();
 
+    boolean isExpose();
+
 }

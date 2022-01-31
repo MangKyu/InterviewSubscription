@@ -12,6 +12,7 @@ public class EnumMapperValue implements EnumMapperType {
     private final String code;
     private final String title;
     private final String desc;
+    private final boolean expose;
 
     @Override
     public String name() {

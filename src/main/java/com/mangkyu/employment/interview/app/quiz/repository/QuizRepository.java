@@ -29,14 +29,20 @@ public interface QuizRepository extends JpaRepository<Quiz, Long>, QuizRepositor
 
     List<Quiz> findByIdNotInAndQuizLevelAndIsEnableTrue(final Set<Long> quizIdSet, final QuizLevel quizLevel);
 
-    default List<Quiz> customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel) {
+    /**
+    * 여기 아래는 메일 발송에 사용되는 API들이므로 IsEnable 처리를 제외함
+    *
+    *
+    **/
+
+    default List<Quiz> customFindByIdNotInAndQuizCategoryInAndQuizLevel(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel) {
         return quizIdSet.isEmpty()
-                ? findByQuizCategoryInAndQuizLevelAndIsEnableTrue(quizCategorySet, quizLevel)
-                : findByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(quizIdSet, quizCategorySet, quizLevel);
+                ? findByQuizCategoryInAndQuizLevel(quizCategorySet, quizLevel)
+                : findByIdNotInAndQuizCategoryInAndQuizLevel(quizIdSet, quizCategorySet, quizLevel);
     }
 
-    List<Quiz> findByQuizCategoryInAndQuizLevelAndIsEnableTrue(final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
+    List<Quiz> findByQuizCategoryInAndQuizLevel(final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
 
-    List<Quiz> findByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
+    List<Quiz> findByIdNotInAndQuizCategoryInAndQuizLevel(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
 
 }

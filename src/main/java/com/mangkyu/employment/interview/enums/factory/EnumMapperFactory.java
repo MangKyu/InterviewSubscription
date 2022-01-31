@@ -42,6 +42,7 @@ public class EnumMapperFactory {
                 .code(enumMapperType.name())
                 .title(enumMapperType.getTitle())
                 .desc(enumMapperType.getDesc())
+                .expose(enumMapperType.isExpose())
                 .build();
     }
 

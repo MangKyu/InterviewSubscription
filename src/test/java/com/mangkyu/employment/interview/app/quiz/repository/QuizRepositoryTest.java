@@ -269,10 +269,10 @@ class QuizRepositoryTest {
         final Set<Long> idSet = new HashSet<>(Arrays.asList(savedQuiz1.getId(), savedQuiz2.getId(), savedQuiz3.getId(), savedQuiz4.getId()));
 
         // when
-        final List<Quiz> unsolvedQuizList1 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.CULTURE)), QuizLevel.NEW);
-        final List<Quiz> unsolvedQuizList2 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.NETWORK)), QuizLevel.NEW);
-        final List<Quiz> unsolvedQuizList3 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.DATABASE)), QuizLevel.NEW);
-        final List<Quiz> unsolvedQuizList4 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(idSet, new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.DATABASE)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList1 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.CULTURE)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList2 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.NETWORK)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList3 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.DATABASE)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList4 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(idSet, new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.DATABASE)), QuizLevel.NEW);
 
         // then
         assertThat(unsolvedQuizList1.size()).isEqualTo(2);
