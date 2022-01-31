@@ -99,7 +99,7 @@ public class QuizService {
     }
 
     public List<QuizCategoryResponse> getQuizCategoryList() {
-        final List<EnumMapperValue> enumMapperValueList = enumMapperFactory.get(EnumMapperKey.QUIZ_CATEGORY);
+        final List<EnumMapperValue> enumMapperValueList = enumMapperFactory.get(EnumMapperKey.QUIZ_CATEGORY).stream().filter(EnumMapperValue::isExpose).collect(Collectors.toList());
         return enumMapperValueList.stream()
                 .map(this::convertToQuizCategoryResponse)
                 .collect(Collectors.toList());
