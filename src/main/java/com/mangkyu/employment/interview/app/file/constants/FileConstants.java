@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public final class FileConstants {
 
-    public static final String FILE_API_PREFIX = "/file";
+    public static final String FILE_API_PREFIX = "/api/file";
 
 }

@@ -4,7 +4,7 @@ $(document).ready(function () {
     let editor
     ClassicEditor.create(document.querySelector('#editor'), {
         ckfinder: {
-            uploadUrl: '/file'
+            uploadUrl: '/api/file'
         }}).then(newEditor => {
             editor = newEditor;
         }).catch(error => {

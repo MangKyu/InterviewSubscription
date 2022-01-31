@@ -23,6 +23,11 @@ public class FileController {
     }
 
     @GetMapping(FILE_API_PREFIX + "/{resourceId}")
+    public ResponseEntity<Resource> getFileApi(@PathVariable String resourceId) {
+        return ResponseEntity.ok(fileService.getFileAsResource(resourceId));
+    }
+
+    @GetMapping("/file/{resourceId}")
     public ResponseEntity<Resource> getFile(@PathVariable String resourceId) {
         return ResponseEntity.ok(fileService.getFileAsResource(resourceId));
     }
