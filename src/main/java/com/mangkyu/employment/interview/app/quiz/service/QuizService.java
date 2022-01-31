@@ -75,7 +75,7 @@ public class QuizService {
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
 
-        return quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(solvedQuizIdList, quizCategorySet, quizLevel);
+        return quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
     }
 
     public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList, final Integer quizSize) {

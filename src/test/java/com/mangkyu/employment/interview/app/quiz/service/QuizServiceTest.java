@@ -203,7 +203,7 @@ class QuizServiceTest {
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(solvedQuizIdList, quizCategorySet, quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
 
         // when
         final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
@@ -224,7 +224,7 @@ class QuizServiceTest {
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), quizCategorySet, quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
 
         // when
         final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
