@@ -15,28 +15,28 @@ public interface QuizRepository extends JpaRepository<Quiz, Long>, QuizRepositor
 
     Optional<Quiz> findByResourceId(final String resourceId);
 
-    Page<Quiz> findByQuizCategoryIs(final QuizCategory quizCategory, final Pageable pageable);
+    Page<Quiz> findByQuizCategoryIsAndIsEnableTrue(final QuizCategory quizCategory, final Pageable pageable);
 
-    Long countByQuizCategory(final QuizCategory category);
+    Long countByQuizCategoryAndIsEnableTrue(final QuizCategory category);
 
-    default List<Quiz> customFindByIdNotInAndQuizLevel(final Set<Long> quizIdSet, final QuizLevel quizLevel) {
+    default List<Quiz> customFindByIdNotInAndQuizLevelAndIsEnableTrue(final Set<Long> quizIdSet, final QuizLevel quizLevel) {
         return quizIdSet.isEmpty()
-                ? findByQuizLevel(quizLevel)
-                : findByIdNotInAndQuizLevel(quizIdSet, quizLevel);
+                ? findByQuizLevelAndIsEnableTrue(quizLevel)
+                : findByIdNotInAndQuizLevelAndIsEnableTrue(quizIdSet, quizLevel);
     }
 
-    List<Quiz> findByQuizLevel(final QuizLevel quizLevel);
+    List<Quiz> findByQuizLevelAndIsEnableTrue(final QuizLevel quizLevel);
 
-    List<Quiz> findByIdNotInAndQuizLevel(final Set<Long> quizIdSet, final QuizLevel quizLevel);
+    List<Quiz> findByIdNotInAndQuizLevelAndIsEnableTrue(final Set<Long> quizIdSet, final QuizLevel quizLevel);
 
-    default List<Quiz> customFindByIdNotInAndQuizCategoryInAndQuizLevel(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel) {
+    default List<Quiz> customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel) {
         return quizIdSet.isEmpty()
-                ? findByQuizCategoryInAndQuizLevel(quizCategorySet, quizLevel)
-                : findByIdNotInAndQuizCategoryInAndQuizLevel(quizIdSet, quizCategorySet, quizLevel);
+                ? findByQuizCategoryInAndQuizLevelAndIsEnableTrue(quizCategorySet, quizLevel)
+                : findByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(quizIdSet, quizCategorySet, quizLevel);
     }
 
-    List<Quiz> findByQuizCategoryInAndQuizLevel(final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
+    List<Quiz> findByQuizCategoryInAndQuizLevelAndIsEnableTrue(final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
 
-    List<Quiz> findByIdNotInAndQuizCategoryInAndQuizLevel(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
+    List<Quiz> findByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(final Set<Long> quizIdSet, final Set<QuizCategory> quizCategorySet, final QuizLevel quizLevel);
 
 }

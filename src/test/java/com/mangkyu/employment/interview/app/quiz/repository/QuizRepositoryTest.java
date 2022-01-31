@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.repository;
 
 import com.mangkyu.employment.interview.JpaTestConfig;
-import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
 import com.mangkyu.employment.interview.app.quiz.dto.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
@@ -209,14 +208,14 @@ class QuizRepositoryTest {
         long result = 0;
         while (hasNext) {
             final PageRequest pageRequest = PageRequest.of(page++, size);
-            final Page<Quiz> pageQuiz = quizRepository.findByQuizCategoryIs(quizCategory, pageRequest);
+            final Page<Quiz> pageQuiz = quizRepository.findByQuizCategoryIsAndIsEnableTrue(quizCategory, pageRequest);
 
             result += pageQuiz.getContent().size();
             hasNext = pageQuiz.hasNext();
         }
 
         // then
-        assertThat(result).isEqualTo(quizRepository.countByQuizCategory(quizCategory));
+        assertThat(result).isEqualTo(quizRepository.countByQuizCategoryAndIsEnableTrue(quizCategory));
     }
 
     @Test
@@ -233,8 +232,8 @@ class QuizRepositoryTest {
         quizRepository.save(quiz4);
 
         // when
-        final Long result1 = quizRepository.countByQuizCategory(QuizCategory.JAVA);
-        final Long result2 = quizRepository.countByQuizCategory(QuizCategory.DATABASE);
+        final Long result1 = quizRepository.countByQuizCategoryAndIsEnableTrue(QuizCategory.JAVA);
+        final Long result2 = quizRepository.countByQuizCategoryAndIsEnableTrue(QuizCategory.DATABASE);
 
         // then
         assertThat(result1).isEqualTo(3);
@@ -270,10 +269,10 @@ class QuizRepositoryTest {
         final Set<Long> idSet = new HashSet<>(Arrays.asList(savedQuiz1.getId(), savedQuiz2.getId(), savedQuiz3.getId(), savedQuiz4.getId()));
 
         // when
-        final List<Quiz> unsolvedQuizList1 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.CULTURE)), QuizLevel.NEW);
-        final List<Quiz> unsolvedQuizList2 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.NETWORK)), QuizLevel.NEW);
-        final List<Quiz> unsolvedQuizList3 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.DATABASE)), QuizLevel.NEW);
-        final List<Quiz> unsolvedQuizList4 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(idSet, new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.DATABASE)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList1 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.CULTURE)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList2 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.NETWORK)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList3 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.ALGORITHM, QuizCategory.DATABASE)), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList4 = quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(idSet, new HashSet<>(Arrays.asList(QuizCategory.JAVA, QuizCategory.DATABASE)), QuizLevel.NEW);
 
         // then
         assertThat(unsolvedQuizList1.size()).isEqualTo(2);
@@ -296,8 +295,8 @@ class QuizRepositoryTest {
         final Quiz savedQuiz4 = quizRepository.save(quiz4);
 
         // when
-        final List<Quiz> unsolvedQuizList1 = quizRepository.customFindByIdNotInAndQuizLevel(new HashSet<>(Arrays.asList(savedQuiz1.getId(), savedQuiz2.getId())), QuizLevel.NEW);
-        final List<Quiz> unsolvedQuizList2 = quizRepository.customFindByIdNotInAndQuizLevel(Collections.emptySet(), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList1 = quizRepository.customFindByIdNotInAndQuizLevelAndIsEnableTrue(new HashSet<>(Arrays.asList(savedQuiz1.getId(), savedQuiz2.getId())), QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList2 = quizRepository.customFindByIdNotInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), QuizLevel.NEW);
 
         // then
         assertThat(unsolvedQuizList1.size()).isEqualTo(1);
@@ -318,7 +317,7 @@ class QuizRepositoryTest {
         quizRepository.save(quiz4);
 
         // when
-        final List<Quiz> unsolvedQuizList = quizRepository.findByQuizLevel(QuizLevel.NEW);
+        final List<Quiz> unsolvedQuizList = quizRepository.findByQuizLevelAndIsEnableTrue(QuizLevel.NEW);
 
         // then
         assertThat(unsolvedQuizList.size()).isEqualTo(3);

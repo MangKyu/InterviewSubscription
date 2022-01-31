@@ -53,7 +53,7 @@ public class QuizService {
 
     public GetQuizResponseHolder getQuizList(final GetQuizRequest getQuizRequest) {
         final PageRequest pageRequest = PageRequest.of(getQuizRequest.getPage(), getQuizRequest.getSize());
-        final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIs(getQuizRequest.getCategory(), pageRequest);
+        final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIsAndIsEnableTrue(getQuizRequest.getCategory(), pageRequest);
 
         final List<GetQuizResponse> quizResponseList = quizPage.getContent().stream()
                 .map(QuizDtoConverter::convert)
@@ -75,7 +75,7 @@ public class QuizService {
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
 
-        return quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
+        return quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(solvedQuizIdList, quizCategorySet, quizLevel);
     }
 
     public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList, final Integer quizSize) {
@@ -107,7 +107,7 @@ public class QuizService {
 
     private QuizCategoryResponse convertToQuizCategoryResponse(final EnumMapperValue enumMapperValue) {
         return QuizCategoryResponse.builder()
-                .count(quizRepository.countByQuizCategory(QuizCategory.valueOf(enumMapperValue.name())))
+                .count(quizRepository.countByQuizCategoryAndIsEnableTrue(QuizCategory.valueOf(enumMapperValue.name())))
                 .code(enumMapperValue.getCode())
                 .title(enumMapperValue.getTitle())
                 .desc(enumMapperValue.getDesc())
