@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +19,11 @@ public class EnumsController {
 
     @GetMapping("/enums/quiz-categories")
     public ResponseEntity<List<EnumMapperValue>> getQuizCategoryList() {
-        return ResponseEntity.ok(enumMapperFactory.get(EnumMapperKey.QUIZ_CATEGORY));
+        final List<EnumMapperValue> quizCategoryList = enumMapperFactory.get(EnumMapperKey.QUIZ_CATEGORY);
+
+        return ResponseEntity.ok(quizCategoryList.stream()
+                .filter(EnumMapperValue::isExpose)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/enums/quiz-levels")

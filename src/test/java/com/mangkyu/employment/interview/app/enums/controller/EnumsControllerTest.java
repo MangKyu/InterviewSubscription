@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +44,7 @@ class EnumsControllerTest {
         // then
         final ResultActions resultActions = result.andExpect(status().isOk());
         final String stringResponse = resultActions.andReturn().getResponse().getContentAsString();
-        assertThat(new Gson().fromJson(stringResponse, List.class).size()).isEqualTo(QuizCategory.values().length);
+        assertThat(new Gson().fromJson(stringResponse, List.class).size()).isEqualTo(Arrays.stream(QuizCategory.values()).filter(QuizCategory::isExpose).count());
     }
 
     @Test
