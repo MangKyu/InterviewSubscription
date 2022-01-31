@@ -1,8 +1,9 @@
 package com.mangkyu.employment.interview.app.quiz.constants;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class QuizConstants {
 
     public static final int DEFAULT_QUIZ_SIZE = 3;

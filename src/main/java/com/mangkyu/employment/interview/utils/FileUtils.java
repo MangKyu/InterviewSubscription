@@ -1,5 +1,6 @@
 package com.mangkyu.employment.interview.utils;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.ResourceUtils;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FileUtils {
 
     public static String readFileText(final String filePath) throws IOException {

@@ -1,6 +1,8 @@
 package com.mangkyu.employment.interview.app.quiz.repository;
 
 import com.mangkyu.employment.interview.JpaTestConfig;
+import com.mangkyu.employment.interview.app.answer.entity.Answer;
+import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
 import com.mangkyu.employment.interview.app.quiz.dto.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
@@ -25,6 +27,8 @@ class QuizRepositoryTest {
 
     @Autowired
     private QuizRepository quizRepository;
+    @Autowired
+    private AnswerRepository answerRepository;
 
     @ParameterizedTest
     @MethodSource("validQuizParameters")
@@ -321,14 +325,23 @@ class QuizRepositoryTest {
     }
 
     private void initForPaging(final QuizCategory quizCategory) {
-        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
-        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
-        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
-        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
-        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
-        quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
-        quizRepository.save(EntityCreationUtils.quiz("quiz", QuizCategory.ALGORITHM, Collections.singletonList(QuizLevel.SENIOR)));
-        quizRepository.save(EntityCreationUtils.quiz("quiz", QuizCategory.DATABASE, Collections.singletonList(QuizLevel.SENIOR)));
+        final Quiz savedQuiz1 = quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        final Quiz savedQuiz2 = quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        final Quiz savedQuiz3 = quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        final Quiz savedQuiz4 = quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        final Quiz savedQuiz5 = quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        final Quiz savedQuiz6 = quizRepository.save(EntityCreationUtils.quiz("quiz", quizCategory, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)));
+        final Quiz savedQuiz7 = quizRepository.save(EntityCreationUtils.quiz("quiz", QuizCategory.ALGORITHM, Collections.singletonList(QuizLevel.SENIOR)));
+        final Quiz savedQuiz8 = quizRepository.save(EntityCreationUtils.quiz("quiz", QuizCategory.DATABASE, Collections.singletonList(QuizLevel.SENIOR)));
+
+        savedQuiz1.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz1)));
+        savedQuiz2.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz2)));
+        savedQuiz3.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz3)));
+        savedQuiz4.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz4)));
+        savedQuiz5.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz5)));
+        savedQuiz6.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz6)));
+        savedQuiz7.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz7)));
+        savedQuiz8.setAnswer(answerRepository.save(EntityCreationUtils.answer(savedQuiz8)));
     }
 
     private static Stream<Arguments> validQuizParameters() {
