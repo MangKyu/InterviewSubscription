@@ -36,6 +36,7 @@ public class QuizRepositoryImpl implements QuizRepositoryCustom {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .where(qQuiz.answer.isNotNull())
+                .where(qQuiz.isEnable.isTrue())
                 .fetch();
 
         final long count = query.selectFrom(qQuiz)
@@ -43,6 +44,7 @@ public class QuizRepositoryImpl implements QuizRepositoryCustom {
                 .where(quizCategoriesIn(qQuiz, condition.getCategories()))
                 .where(quizLevelsIn(qQuiz, condition.getLevels()))
                 .where(qQuiz.answer.isNotNull())
+                .where(qQuiz.isEnable.isTrue())
                 .stream().count();
 
         return new PageImpl<>(quizList, pageable, count);
