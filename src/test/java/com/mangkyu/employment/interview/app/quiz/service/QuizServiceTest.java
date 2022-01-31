@@ -159,7 +159,7 @@ class QuizServiceTest {
         final Pageable pageable = PageRequest.of(page, size);
 
         final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
-        doReturn(quizPage).when(quizRepository).findByQuizCategoryIs(any(QuizCategory.class), any(PageRequest.class));
+        doReturn(quizPage).when(quizRepository).findByQuizCategoryIsAndIsEnableTrue(any(QuizCategory.class), any(PageRequest.class));
 
         // when
         final GetQuizResponseHolder result = quizService.getQuizList(request);
@@ -203,7 +203,7 @@ class QuizServiceTest {
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(solvedQuizIdList, quizCategorySet, quizLevel);
 
         // when
         final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
@@ -224,7 +224,7 @@ class QuizServiceTest {
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
         doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
+        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevelAndIsEnableTrue(Collections.emptySet(), quizCategorySet, quizLevel);
 
         // when
         final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
@@ -270,7 +270,7 @@ class QuizServiceTest {
                 .build();
 
         doReturn(Collections.singletonList(enumMapperValue)).when(enumMapperFactory).get(EnumMapperKey.QUIZ_CATEGORY);
-        doReturn(count).when(quizRepository).countByQuizCategory(quizCategory);
+        doReturn(count).when(quizRepository).countByQuizCategoryAndIsEnableTrue(quizCategory);
 
         // when
         final List<QuizCategoryResponse> result = quizService.getQuizCategoryList();
