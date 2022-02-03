@@ -1,0 +1,41 @@
+.Emergency_contact{
+    // background: #000;
+    .single_emergency{
+        padding: 91px 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        @media #{$mobile_device} {
+            padding: 40px;
+            display: block !important;
+        }
+        .info{
+            margin-right: 30px;
+            h3{
+                font-size: 26px;
+                font-weight: 500;
+                color: #fff;
+                @media #{$large_device} {
+                    font-size: 20px;
+                }
+            }
+            p{
+                color: #fff;
+                font-size: 13px;
+                font-weight: 400;
+                margin-bottom: 0;
+            }
+        }
+        .info_button{
+            a{
+                @include border-radius(30px);
+            }
+        }
+    }
+}
+.emergency_bg_1{
+    background-image: url(../img/banner/emergency-1.png);
+}
+.emergency_bg_2{
+    background-image: url(../img/banner/emergency-2.png);
+}

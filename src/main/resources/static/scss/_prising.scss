@@ -1,0 +1,121 @@
+.prise_area{
+    .col-xl-4:nth-child(1) .single_prise:before{
+        background-image: url(../img/prise/2.png);
+    }
+    .col-xl-4:nth-child(3) .single_prise:before{
+        background-image: url(../img/prise/3.png);
+    }
+    .single_prise{
+        position: relative;
+        z-index: 0;
+        padding: 65px 85px;
+        @media #{$mobile_device} {
+            padding: 20px;
+        }
+        @media #{$tablet_device} {
+            padding: 20px;
+        }
+        @media #{$mid_device} {
+            padding: 20px;
+        }
+
+        .prise_header{
+            h5{
+                font-size: 30px;
+                color: #001D38;
+                font-weight: 500;
+                margin-bottom: 10px;
+                position: relative;
+                padding-left: 45px;
+                @include transition(.5s);
+                &::before{
+                    height: 3px;
+                    width: 32px;
+                    background: #FFD35A;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    margin-bottom: -1px;
+                    content: '';
+                    position: absolute;
+                }
+            }
+           .prise_text{
+            padding-left: 45px;
+            margin-bottom: 100px;
+            opacity: 0;
+            color: #EAEAEA;
+            @include transition(.5s);
+            @media #{$mobile_device} {
+                margin-bottom: 30px;
+             }
+             @media #{$tablet_device}{
+                 margin-bottom: 30px;
+             }
+           } 
+        }
+        .prise_number{
+            font-size: 179px;
+            font-weight: 500;
+            color: #E5E8EA;
+            @include transition(.5s);
+            line-height: 1;
+            @media #{$mobile_device} {
+               font-size: 90px;
+            }
+            @media #{$tablet_device} {
+               font-size: 90px;
+            }
+        }
+        &:before{
+            background-image: url(../img/prise/1.png);
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            content: '';
+            position: absolute;
+            z-index: -1;
+            background-size: cover;
+            background-position: center center;
+            opacity: 0;
+            @include transition(.5s);
+        }
+        &:after{
+            background: #001D38;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            content: '';
+            position: absolute;
+            z-index: -1;
+            background-size: cover;
+            background-position: center center;
+            opacity: .6;
+            opacity: 0;
+            @include transition(.5s);
+        }
+        &:hover{
+            &::before{
+                opacity: 1;
+            }
+            &::after{
+                opacity: .6;
+            }
+            .prise_header{
+                .prise_text{
+                    opacity: 1;
+                }
+                h5{
+                    color: #fff;
+                }
+            }
+            .prise_number{
+               color: #fff;
+               opacity: .20;
+            }
+        }
+    }
+
+}

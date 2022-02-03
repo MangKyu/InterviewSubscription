@@ -1,0 +1,369 @@
+/* 1. Theme default css */
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600,600i,700&display=swap");
+/* line 5, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 12, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.img {
+  max-width: 100%;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+/* line 16, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+a,
+.button {
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+/* line 20, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+a:focus,
+.button:focus, button:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+/* line 25, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+a:focus {
+  text-decoration: none;
+}
+
+/* line 28, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+a:focus,
+a:hover,
+.portfolio-cat a:hover,
+.footer -menu li a:hover {
+  text-decoration: none;
+}
+
+/* line 34, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+a,
+button {
+  color: #1F1F1F;
+  outline: medium none;
+}
+
+/* line 39, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+h1, h2, h3, h4, h5 {
+  font-family: "Poppins", sans-serif;
+  color: #001D38;
+}
+
+/* line 43, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  color: inherit;
+}
+
+/* line 52, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+/* line 56, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+li {
+  list-style: none;
+}
+
+/* line 59, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #596672;
+  margin-bottom: 0px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* line 68, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+label {
+  color: #7e7e7e;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* line 74, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+*::-moz-selection {
+  background: #444;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* line 79, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+::-moz-selection {
+  background: #444;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* line 84, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+::selection {
+  background: #444;
+  color: #fff;
+  text-shadow: none;
+}
+
+/* line 89, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+*::-webkit-input-placeholder {
+  color: #cccccc;
+  font-size: 14px;
+  opacity: 1;
+}
+
+/* line 94, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+*:-ms-input-placeholder {
+  color: #cccccc;
+  font-size: 14px;
+  opacity: 1;
+}
+
+/* line 99, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+*::-ms-input-placeholder {
+  color: #cccccc;
+  font-size: 14px;
+  opacity: 1;
+}
+
+/* line 104, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+*::placeholder {
+  color: #cccccc;
+  font-size: 14px;
+  opacity: 1;
+}
+
+/* line 110, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+h3 {
+  font-size: 24px;
+}
+
+/* line 114, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.mb-65 {
+  margin-bottom: 67px;
+}
+
+/* line 118, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.black-bg {
+  background: #020c26 !important;
+}
+
+/* line 122, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.white-bg {
+  background: #ffffff;
+}
+
+/* line 125, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.gray-bg {
+  background: #f5f5f5;
+}
+
+/* line 130, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.bg-img-1 {
+  background-image: url(../img/slider/slider-img-1.jpg);
+}
+
+/* line 133, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.bg-img-2 {
+  background-image: url(../img/background-img/bg-img-2.jpg);
+}
+
+/* line 136, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.cta-bg-1 {
+  background-image: url(../img/background-img/bg-img-3.jpg);
+}
+
+/* line 141, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.overlay {
+  position: relative;
+  z-index: 0;
+}
+
+/* line 145, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.overlay::before {
+  position: absolute;
+  content: "";
+  background-color: #001D38;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: .3;
+}
+
+/* line 157, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.overlay2 {
+  position: relative;
+  z-index: 0;
+}
+
+/* line 161, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.overlay2::before {
+  position: absolute;
+  content: "";
+  background-color: #001D38;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* line 173, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.overlay_03 {
+  position: relative;
+  z-index: 0;
+}
+
+/* line 177, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.overlay_03::before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #001D38;
+  opacity: .6;
+  content: '';
+  z-index: -1;
+}
+
+/* line 190, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.bradcam_overlay {
+  position: relative;
+  z-index: 0;
+}
+
+/* line 194, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.bradcam_overlay::before {
+  position: absolute;
+  content: "";
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#5db2ff+0,7db9e8+100&1+24,0+96 */
+  background: -moz-linear-gradient(left, #5db2ff 0%, #65b4f9 24%, rgba(124, 185, 233, 0) 96%, rgba(125, 185, 232, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #5db2ff 0%, #65b4f9 24%, rgba(124, 185, 233, 0) 96%, rgba(125, 185, 232, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #5db2ff 0%, #65b4f9 24%, rgba(124, 185, 233, 0) 96%, rgba(125, 185, 232, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5db2ff', endColorstr='#007db9e8',GradientType=1 );
+  /* IE6-9 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 1;
+}
+
+/* line 210, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.section-padding {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+/* line 214, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.pt-120 {
+  padding-top: 120px;
+}
+
+/* button style */
+/* line 220, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.owl-carousel .owl-nav div {
+  background: transparent;
+  height: 50px;
+  left: 0px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  width: 50px;
+  color: #707070;
+  background-color: transparent;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  left: 50px;
+  font-size: 15px;
+  line-height: 50px;
+  border: 1px solid #4D6174;
+  left: 150px;
+  color: #fff;
+}
+
+/* line 248, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.owl-carousel .owl-nav div.owl-next {
+  left: auto;
+  right: 150px;
+}
+
+/* line 253, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.owl-carousel .owl-nav div.owl-next i {
+  position: relative;
+  right: 0;
+}
+
+/* line 260, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.owl-carousel .owl-nav div.owl-prev i {
+  position: relative;
+  top: 0px;
+}
+
+/* line 270, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.owl-carousel:hover .owl-nav div {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 273, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.owl-carousel:hover .owl-nav div:hover {
+  color: #fff;
+  background: #001D38;
+  border: 1px solid transparent;
+}
+
+/* line 283, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.mb-20px {
+  margin-bottom: 20px;
+}
+
+/* line 287, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.mb-55 {
+  margin-bottom: 55px;
+}
+
+/* line 290, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.mb-40 {
+  margin-bottom: 40px;
+}
+
+/* line 293, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+/* line 298, ../../Arafath/CL/Cl November/224. Interior Design/HTML/scss/theme-default.scss */
+.mb-60 {
+  margin-bottom: 50px !important;
+}
+
+/*# sourceMappingURL=theme-default.css.map */

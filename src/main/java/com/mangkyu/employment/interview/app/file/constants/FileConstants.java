@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FileConstants {
 
-    public static final String FILE_API_PREFIX = "/file";
+    public static final String FILE_API_PREFIX = "/api/file";
 
 }

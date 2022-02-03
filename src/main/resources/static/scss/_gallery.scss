@@ -1,0 +1,123 @@
+.gallery_area{
+    padding-top: 150px;
+    padding-bottom: 150px;
+    @media #{$mobile-device}{
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    @media #{$tablet-device}{
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+    .single-gallery{
+        overflow: hidden;
+        position: relative;
+        img{
+            width: 100%;
+            @include transform(scale(1));
+            @include transition(.5s);
+        }
+        .gallery_hover{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: table;
+            text-align: center;
+            background: rgba(40, 174, 96, .70);
+            @include transform(translateX(-50%));
+            opacity: 0;
+            @include transition(.5s);
+            visibility: hidden;
+            .hover_inner{
+                display: table-cell;
+                vertical-align: middle;
+                h3{
+                    font-size: 22px;
+                    color: #fff;
+                    font-weight: 400;
+                }
+                span{
+                    color: #fff;
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+            }
+        }
+        &:hover{
+            .gallery_hover{
+                @include transform(translateX(0%));
+                visibility: visible;
+                opacity: 1;
+            }
+            img{
+                @include transform(scale(1.05));
+            }
+        }
+    }
+    .More_Works_btn{
+        margin-top: 40px;
+    }
+}
+
+.portfolio_details_area{
+    padding-top: 280px;
+    padding-bottom: 150px;
+    @media #{$mobile_device}{
+        padding-top: 100px;
+        padding-bottom: 50px;
+    }
+    @media #{$tablet_device}{
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+    .portfolio_details_thumb{
+        img{
+            width: 100%;
+        }
+    }
+    .portfolio_details_content{
+        span{
+            font-size: 14px;
+            font-weight: 300;
+            color: #919191;
+        }
+        h3{
+            color: #2C2C2C;
+            font-size: 36px;
+            font-weight: 400;
+            line-height: 55px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            @media #{$mobile_device} {
+                font-size: 25px;
+                line-height: 40px;
+            }
+        }
+        h4{
+            font-size: 20px;
+            font-weight: 400;
+            color: #2C2C2C;
+        }
+        p{
+                font-size: 16px;
+                font-family: $font1;
+                color: #727272;
+                line-height: 28px;
+
+        }
+    }
+}
+.mt-50{
+    margin-top: 50px;
+    @media #{$mobile_device} {
+        margin-top: 30px;
+    }
+}
+.mb-50{
+    margin-bottom: 50px;
+    @media #{$mobile_device} {
+        margin-bottom: 30px;
+    }
+}

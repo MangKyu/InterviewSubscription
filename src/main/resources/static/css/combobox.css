@@ -1,0 +1,77 @@
+span.combo-choose {
+    color: #555;
+    padding: 5px 0 10px;
+    display: inherit
+}
+
+/*Styling Selectbox*/
+.combo-dropdown {
+    width: 300px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgb(204, 204, 204);
+    transition: all .5s ease;
+    position: relative;
+    font-size: 14px;
+    color: #474747;
+    height: 100%;
+    text-align: left
+}
+.combo-dropdown .select {
+    cursor: pointer;
+    display: block;
+    padding: 10px
+}
+.combo-dropdown .select > i {
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    float: right;
+    line-height: 20px
+}
+.combo-dropdown:hover {
+    box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+.combo-dropdown:active {
+    background-color: #f8f8f8
+}
+.combo-dropdown.active:hover,
+.combo-dropdown.active {
+    box-shadow: 0 0 4px rgb(204, 204, 204);
+    border-radius: 5px 5px 0 0;
+    background-color: #f8f8f8
+}
+.combo-dropdown.active .select > i {
+    transform: rotate(-90deg)
+}
+.combo-dropdown .combo-dropdown-menu {
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    left: 0;
+    margin-top: 1px;
+    box-shadow: 0 1px 2px rgb(204, 204, 204);
+    border-radius: 0 1px 5px 5px;
+    overflow: hidden;
+    display: none;
+    max-height: 144px;
+    overflow-y: auto;
+    z-index: 9
+}
+.combo-dropdown .combo-dropdown-menu li {
+    padding: 10px;
+    transition: all .2s ease-in-out;
+    cursor: pointer
+}
+.combo-dropdown .combo-dropdown-menu {
+    padding: 0;
+    list-style: none
+}
+.combo-dropdown .combo-dropdown-menu li:hover {
+    background-color: #f2f2f2
+}
+.combo-dropdown .combo-dropdown-menu li:active {
+    background-color: #e2e2e2
+}

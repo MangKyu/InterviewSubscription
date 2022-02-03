@@ -1,0 +1,90 @@
+.service_area{
+    padding-top: 100px;
+    padding-bottom: 70px;
+    &.minus_padding{
+        padding-bottom: 0;
+    }
+    .single_service{
+        padding: 30px;
+        border: 1px solid #E8E8E8;
+        @include transition(.3s);
+        margin-bottom: 30px;
+
+        .service_icon{
+            line-height: 94px;
+            text-align: center;
+            width: 98px;
+            height: 98px;
+            margin: auto;
+            @include border-radius(50%);
+            /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0181f5+0,5db2ff+100 */
+            background: rgb(1,129,245); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(1,129,245,1) 0%, rgba(93,178,255,1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top,  rgba(1,129,245,1) 0%,rgba(93,178,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom,  rgba(1,129,245,1) 0%,rgba(93,178,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0181f5', endColorstr='#5db2ff',GradientType=0 ); /* IE6-9 */
+        }
+        h3{
+            font-size: 22px;
+            color: #001D38;
+            font-weight: 300;
+            margin-top: 35px;
+            margin-bottom: 23px;
+        }
+        p{
+            font-size: 15px;
+            font-weight: 400;
+            color: #727272;
+            line-height: 28px;
+            margin-bottom: 6px;
+        }
+        a.learn_more{
+            color: #5DB2FF;
+            font-weight: 400;
+            font-size: 15px;
+        }
+        &:hover{
+            box-shadow: 0 10px 20px rgba(0,0,0,.04);
+            border-color: transparent;
+        }
+    }
+    .col-xl-4:nth-child(2) .single_service .service_icon{
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#00d363+0,37ef8d+100 */
+background: rgb(0,211,99); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(0,211,99,1) 0%, rgba(55,239,141,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(0,211,99,1) 0%,rgba(55,239,141,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(0,211,99,1) 0%,rgba(55,239,141,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00d363', endColorstr='#37ef8d',GradientType=0 ); /* IE6-9 */
+
+    }
+    .col-xl-4:nth-child(3) .single_service .service_icon{
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fd8e5e+0,fd8e5e+100 */
+background: rgb(253,142,94); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(253,142,94,1) 0%, rgba(253,142,94,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(253,142,94,1) 0%,rgba(253,142,94,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(253,142,94,1) 0%,rgba(253,142,94,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fd8e5e', endColorstr='#fd8e5e',GradientType=0 ); /* IE6-9 */
+
+    }
+    .col-xl-4:nth-child(4) .single_service .service_icon{
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#615cfd+0,d465ef+100 */
+background: rgb(97,92,253); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(97,92,253,1) 0%, rgba(212,101,239,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(97,92,253,1) 0%,rgba(212,101,239,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(97,92,253,1) 0%,rgba(212,101,239,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#615cfd', endColorstr='#d465ef',GradientType=0 ); /* IE6-9 */
+
+    }
+    .col-xl-4:nth-child(2) .single_service .service_icon{
+        
+    }
+    .col-xl-4:nth-child(6) .single_service .service_icon{
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#a64eee+0,3c35ce+100 */
+        background: rgb(166,78,238); /* Old browsers */
+        background: -moz-linear-gradient(top,  rgba(166,78,238,1) 0%, rgba(60,53,206,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  rgba(166,78,238,1) 0%,rgba(60,53,206,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  rgba(166,78,238,1) 0%,rgba(60,53,206,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a64eee', endColorstr='#3c35ce',GradientType=0 ); /* IE6-9 */
+
+    }
+}
