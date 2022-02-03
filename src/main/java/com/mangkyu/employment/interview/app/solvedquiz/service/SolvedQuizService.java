@@ -1,9 +1,9 @@
 package com.mangkyu.employment.interview.app.solvedquiz.service;
 
+import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
-import com.mangkyu.employment.interview.app.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,17 +20,17 @@ public class SolvedQuizService {
     private final SolvedQuizRepository solvedQuizRepository;
 
     @Transactional
-    public void addSolvedQuizList(final User user, final List<Quiz> quizList) {
+    public void addSolvedQuizList(final Member member, final List<Quiz> quizList) {
         final List<SolvedQuiz> solvedQuizList = quizList.stream()
-                .map(quiz -> createSolvedQuizEntity(user, quiz))
+                .map(quiz -> createSolvedQuizEntity(member, quiz))
                 .collect(Collectors.toList());
 
         solvedQuizRepository.saveAll(solvedQuizList);
     }
 
-    private SolvedQuiz createSolvedQuizEntity(final User user, final Quiz quiz) {
+    private SolvedQuiz createSolvedQuizEntity(final Member member, final Quiz quiz) {
         return SolvedQuiz.builder()
-                .user(user)
+                .member(member)
                 .quiz(quiz).build();
     }
 

@@ -1,7 +1,7 @@
-package com.mangkyu.employment.interview.app.user.repository;
+package com.mangkyu.employment.interview.app.member.repository;
 
 import com.mangkyu.employment.interview.JpaTestConfig;
-import com.mangkyu.employment.interview.app.user.entity.User;
+import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
@@ -15,13 +15,13 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JpaTestConfig
-class UserRepositoryTest {
+class MemberRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     @Test
-    public void selectUserListByCycle() {
+    public void selectMemberListByCycle() {
         // given
         final Set<QuizDay> quizDaySet = new HashSet<>();
         quizDaySet.add(QuizDay.MONDAY);
@@ -33,14 +33,14 @@ class UserRepositoryTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final User user = EntityCreationUtils.user(5, quizDaySet, quizCategorySet);
+        final Member member = EntityCreationUtils.member(5, quizDaySet, quizCategorySet);
 
-        final User savedUser = userRepository.save(user);
-        userRepository.save(savedUser);
+        final Member savedMember = memberRepository.save(member);
+        memberRepository.save(savedMember);
 
         // when
-        final List<User> dailyResult = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.MONDAY);
-        final List<User> regularResult = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.THURSDAY);
+        final List<Member> dailyResult = memberRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.MONDAY);
+        final List<Member> regularResult = memberRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.THURSDAY);
 
         // then
         assertThat(dailyResult.size()).isOne();
@@ -48,7 +48,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void insertUser() {
+    public void insertMember() {
         // given
         final Set<QuizDay> quizDaySet = new HashSet<>();
         quizDaySet.add(QuizDay.MONDAY);
@@ -60,19 +60,19 @@ class UserRepositoryTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final User user = EntityCreationUtils.user(5, quizDaySet, quizCategorySet);
+        final Member member = EntityCreationUtils.member(5, quizDaySet, quizCategorySet);
 
         // when
-        final User result = userRepository.save(user);
+        final Member result = memberRepository.save(member);
 
         // then
-        assertThat(result.getEmail()).isEqualTo(user.getEmail());
-        assertThat(result.getQuizLevel()).isEqualTo(user.getQuizLevel());
-        assertThat(result.getQuizSize()).isEqualTo(user.getQuizSize());
+        assertThat(result.getEmail()).isEqualTo(member.getEmail());
+        assertThat(result.getQuizLevel()).isEqualTo(member.getQuizLevel());
+        assertThat(result.getQuizSize()).isEqualTo(member.getQuizSize());
     }
 
     @Test
-    public void updateUserDisabled() {
+    public void updateMemberDisabled() {
         // given
         final Set<QuizDay> quizDaySet = new HashSet<>();
         quizDaySet.add(QuizDay.MONDAY);
@@ -84,14 +84,14 @@ class UserRepositoryTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final User user = EntityCreationUtils.user(3, quizDaySet, quizCategorySet);
+        final Member member = EntityCreationUtils.member(3, quizDaySet, quizCategorySet);
 
-        final User savedUser = userRepository.save(user);
-        savedUser.setIsEnable(false);
-        userRepository.save(savedUser);
+        final Member savedMember = memberRepository.save(member);
+        savedMember.setIsEnable(false);
+        memberRepository.save(savedMember);
 
         // when
-        final List<User> result = userRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.MONDAY);
+        final List<Member> result = memberRepository.findAllByIsEnableTrueAndQuizDaySetIs(QuizDay.MONDAY);
 
         // then
         assertThat(result.size()).isZero();

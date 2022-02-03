@@ -1,12 +1,11 @@
-package com.mangkyu.employment.interview.app.user.service;
+package com.mangkyu.employment.interview.app.member.service;
 
-import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
-import com.mangkyu.employment.interview.app.user.entity.User;
-import com.mangkyu.employment.interview.app.user.repository.UserRepository;
+import com.mangkyu.employment.interview.app.member.dto.AddMemberRequest;
+import com.mangkyu.employment.interview.app.member.entity.Member;
+import com.mangkyu.employment.interview.app.member.repository.MemberRepository;
 import com.mangkyu.employment.interview.config.modelmapper.ModelMapperConfig;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,13 +23,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class MemberServiceTest {
 
     @InjectMocks
-    private UserService target;
+    private MemberService target;
 
     @Mock
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
     @Spy
     private ModelMapper modelMapper = new ModelMapperConfig().modelMapper();
 
@@ -45,14 +43,14 @@ class UserServiceTest {
         quizDaySet.add(QuizDay.WEDNESDAY);
         quizDaySet.add(QuizDay.SATURDAY);
 
-        final AddUserRequest addUserRequest = AddUserRequest.builder()
+        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .quizDaySet(quizDaySet)
                 .build();
 
         // when
-        target.addUser(addUserRequest);
+        target.addUser(addMemberRequest);
 
         // then
     }
@@ -60,40 +58,40 @@ class UserServiceTest {
     @Test
     public void disableUserSuccess() {
         // given
-        final User user = user(true);
+        final Member member = user(true);
 
         // when
-        target.disableUser(user);
+        target.disableUser(member);
 
         // then
 
         // verify
-        verify(userRepository, times(1)).save(user);
+        verify(memberRepository, times(1)).save(member);
     }
 
     @Test
     public void getEnabledUserListSuccess() {
         // given
-        final List<User> enabledUserList = Arrays.asList(user(true), user(true));
-        doReturn(enabledUserList).when(userRepository).findAllByIsEnableTrueAndQuizDaySetIs(quizDay);
+        final List<Member> enabledMemberList = Arrays.asList(user(true), user(true));
+        doReturn(enabledMemberList).when(memberRepository).findAllByIsEnableTrueAndQuizDaySetIs(quizDay);
 
         // when
-        final List<User> result = target.getEnabledUserList(quizDay);
+        final List<Member> result = target.getEnabledUserList(quizDay);
 
         // then
-        assertThat(result.size()).isEqualTo(enabledUserList.size());
+        assertThat(result.size()).isEqualTo(enabledMemberList.size());
 
         // verify
-        verify(userRepository, times(1)).findAllByIsEnableTrueAndQuizDaySetIs(quizDay);
+        verify(memberRepository, times(1)).findAllByIsEnableTrueAndQuizDaySetIs(quizDay);
     }
 
-    private User user(final boolean isEnable) {
-        final User user = User.builder()
+    private Member user(final boolean isEnable) {
+        final Member member = Member.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .build();
-        user.setIsEnable(isEnable);
-        return user;
+        member.setIsEnable(isEnable);
+        return member;
     }
 
 

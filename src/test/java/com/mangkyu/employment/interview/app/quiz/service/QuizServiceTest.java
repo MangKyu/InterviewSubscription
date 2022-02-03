@@ -202,7 +202,7 @@ class QuizServiceTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
+        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByMember_Id(userId);
         doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
 
         // when
@@ -223,7 +223,7 @@ class QuizServiceTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByUser_Id(userId);
+        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByMember_Id(userId);
         doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
 
         // when

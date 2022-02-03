@@ -1,8 +1,8 @@
-package com.mangkyu.employment.interview.app.user.controller;
+package com.mangkyu.employment.interview.app.member.controller;
 
 import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.user.dto.AddUserRequest;
-import com.mangkyu.employment.interview.app.user.service.UserService;
+import com.mangkyu.employment.interview.app.member.dto.AddMemberRequest;
+import com.mangkyu.employment.interview.app.member.service.MemberService;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
@@ -20,11 +20,11 @@ import java.util.Set;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserController.class)
-class UserControllerTest {
+@WebMvcTest(MemberController.class)
+class MemberControllerTest {
 
     @MockBean
-    private UserService userService;
+    private MemberService memberService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,7 +32,7 @@ class UserControllerTest {
     @Test
     public void addUserFail_EmailIsEmpty() throws Exception {
         // given
-        final AddUserRequest addUserRequest = AddUserRequest.builder()
+        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
                 .email("")
                 .quizLevel(QuizLevel.JUNIOR)
                 .build();
@@ -40,7 +40,7 @@ class UserControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addUserRequest))
+                        .content(new Gson().toJson(addMemberRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -51,7 +51,7 @@ class UserControllerTest {
     @Test
     public void addUserFail_NotEmailFormat() throws Exception {
         // given
-        final AddUserRequest addUserRequest = AddUserRequest.builder()
+        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
                 .email("asdas")
                 .quizLevel(QuizLevel.JUNIOR)
                 .build();
@@ -59,7 +59,7 @@ class UserControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addUserRequest))
+                        .content(new Gson().toJson(addMemberRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -70,7 +70,7 @@ class UserControllerTest {
     @Test
     public void addUserFail_QuizLevelIsNull() throws Exception {
         // given
-        final AddUserRequest addUserRequest = AddUserRequest.builder()
+        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(null)
                 .build();
@@ -78,7 +78,7 @@ class UserControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addUserRequest))
+                        .content(new Gson().toJson(addMemberRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -90,7 +90,7 @@ class UserControllerTest {
     @Test
     public void addUserFail_QuizDaySetIsEmpty() throws Exception {
         // given
-        final AddUserRequest addUserRequest = AddUserRequest.builder()
+        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.NEW)
                 .build();
@@ -98,7 +98,7 @@ class UserControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addUserRequest))
+                        .content(new Gson().toJson(addMemberRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -115,7 +115,7 @@ class UserControllerTest {
         quizDaySet.add(QuizDay.WEDNESDAY);
         quizDaySet.add(QuizDay.FRIDAY);
 
-        final AddUserRequest addUserRequest = AddUserRequest.builder()
+        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .quizDaySet(quizDaySet)
@@ -124,7 +124,7 @@ class UserControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addUserRequest))
+                        .content(new Gson().toJson(addMemberRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -145,7 +145,7 @@ class UserControllerTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final AddUserRequest addUserRequest = AddUserRequest.builder()
+        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .quizDaySet(quizDaySet)
@@ -155,7 +155,7 @@ class UserControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addUserRequest))
+                        .content(new Gson().toJson(addMemberRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 

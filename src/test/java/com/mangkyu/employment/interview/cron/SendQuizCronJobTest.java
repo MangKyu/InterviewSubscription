@@ -1,11 +1,11 @@
 package com.mangkyu.employment.interview.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.MailService;
+import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
-import com.mangkyu.employment.interview.app.user.entity.User;
-import com.mangkyu.employment.interview.app.user.service.UserService;
+import com.mangkyu.employment.interview.app.member.service.MemberService;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ class SendQuizCronJobTest {
     private SendQuizCronJob target;
 
     @Mock
-    private UserService userService;
+    private MemberService memberService;
     @Mock
     private QuizService quizService;
     @Mock
@@ -37,19 +37,19 @@ class SendQuizCronJobTest {
     @Mock
     private SolvedQuizService solvedQuizService;
 
-    private User user;
-    private List<User> userList;
+    private Member member;
+    private List<Member> memberList;
     private QuizDay quizDay;
 
     @BeforeEach
     public void init() {
-        user = User.builder()
+        member = Member.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .quizSize(3)
                 .build();
 
-        userList = Collections.singletonList(user);
+        memberList = Collections.singletonList(member);
         quizDay = QuizDay.findQuizDay(LocalDate.now().getDayOfWeek());
     }
 
@@ -57,7 +57,7 @@ class SendQuizCronJobTest {
     public void sendQuizMailDaily_UserNotExists() {
         // given
         doReturn(Collections.emptyList())
-                .when(userService)
+                .when(memberService)
                 .getEnabledUserList(quizDay);
 
         // when
@@ -66,11 +66,11 @@ class SendQuizCronJobTest {
         // then
 
         // verify
-        verify(quizService, times(0)).getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
+        verify(quizService, times(0)).getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         verify(quizService, times(0)).getRandomQuizListUnderLimit(anyList(), anyInt());
-        verify(userService, times(0)).disableUser(user);
+        verify(memberService, times(0)).disableUser(member);
         verify(mailService, times(0)).sendMail(anyString(), anyList(), anyBoolean());
-        verify(solvedQuizService, times(0)).addSolvedQuizList(any(User.class), anyList());
+        verify(solvedQuizService, times(0)).addSolvedQuizList(any(Member.class), anyList());
     }
 
     @Test
@@ -79,15 +79,15 @@ class SendQuizCronJobTest {
         final List<Quiz> unsolvedQuizList = quizList(5);
         final List<Quiz> randomQuizList = unsolvedQuizList.subList(0, 3);
 
-        doReturn(userList)
-                .when(userService)
+        doReturn(memberList)
+                .when(memberService)
                 .getEnabledUserList(quizDay);
         doReturn(unsolvedQuizList)
                 .when(quizService)
-                .getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
+                .getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         doReturn(randomQuizList)
                 .when(quizService)
-                .getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
+                .getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
 
         // when
         target.sendQuizMail();
@@ -95,11 +95,11 @@ class SendQuizCronJobTest {
         // then
 
         // verify
-        verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
-        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
-        verify(userService, times(0)).disableUser(user);
-        verify(mailService, times(1)).sendMail(user.getEmail(), randomQuizList, false);
-        verify(solvedQuizService, times(1)).addSolvedQuizList(user, randomQuizList);
+        verify(quizService, times(1)).getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
+        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
+        verify(memberService, times(0)).disableUser(member);
+        verify(mailService, times(1)).sendMail(member.getEmail(), randomQuizList, false);
+        verify(solvedQuizService, times(1)).addSolvedQuizList(member, randomQuizList);
     }
 
     @Test
@@ -108,15 +108,15 @@ class SendQuizCronJobTest {
         final List<Quiz> unsolvedQuizList = quizList(3);
         final List<Quiz> randomQuizList = unsolvedQuizList.subList(0, 3);
 
-        doReturn(userList)
-                .when(userService)
+        doReturn(memberList)
+                .when(memberService)
                 .getEnabledUserList(quizDay);
         doReturn(unsolvedQuizList)
                 .when(quizService)
-                .getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
+                .getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         doReturn(randomQuizList)
                 .when(quizService)
-                .getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
+                .getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
 
         // when
         target.sendQuizMail();
@@ -124,11 +124,11 @@ class SendQuizCronJobTest {
         // then
 
         // verify
-        verify(quizService, times(1)).getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
-        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
-        verify(userService, times(1)).disableUser(user);
-        verify(mailService, times(1)).sendMail(user.getEmail(), randomQuizList, true);
-        verify(solvedQuizService, times(1)).addSolvedQuizList(user, randomQuizList);
+        verify(quizService, times(1)).getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
+        verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
+        verify(memberService, times(1)).disableUser(member);
+        verify(mailService, times(1)).sendMail(member.getEmail(), randomQuizList, true);
+        verify(solvedQuizService, times(1)).addSolvedQuizList(member, randomQuizList);
     }
 
     private List<Quiz> quizList(final int size) {

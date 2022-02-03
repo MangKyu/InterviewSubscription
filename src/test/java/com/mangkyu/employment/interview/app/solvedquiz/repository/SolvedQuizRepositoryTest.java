@@ -4,8 +4,8 @@ import com.mangkyu.employment.interview.JpaTestConfig;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
-import com.mangkyu.employment.interview.app.user.entity.User;
-import com.mangkyu.employment.interview.app.user.repository.UserRepository;
+import com.mangkyu.employment.interview.app.member.entity.Member;
+import com.mangkyu.employment.interview.app.member.repository.MemberRepository;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +22,25 @@ class SolvedQuizRepositoryTest {
     private QuizRepository quizRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     @Test
     public void insertQuiz() {
         // given
-        final User user = EntityCreationUtils.user();
+        final Member member = EntityCreationUtils.member();
         final Quiz quiz = EntityCreationUtils.quiz();
 
         final Quiz quizResult = quizRepository.save(quiz);
-        final User userResult = userRepository.save(user);
+        final Member memberResult = memberRepository.save(member);
 
-        final SolvedQuiz solvedQuiz = EntityCreationUtils.solvedQuiz(quiz, user);
+        final SolvedQuiz solvedQuiz = EntityCreationUtils.solvedQuiz(quiz, member);
 
         // when
         final SolvedQuiz result = solvedQuizRepository.save(solvedQuiz);
 
         // then
         assertThat(result.getQuiz()).isEqualTo(quizResult);
-        assertThat(result.getUser()).isEqualTo(userResult);
+        assertThat(result.getMember()).isEqualTo(memberResult);
     }
 
 }

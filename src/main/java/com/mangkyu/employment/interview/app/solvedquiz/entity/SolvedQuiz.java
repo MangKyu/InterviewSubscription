@@ -1,8 +1,8 @@
 package com.mangkyu.employment.interview.app.solvedquiz.entity;
 
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
+import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.app.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,8 +19,8 @@ import javax.persistence.*;
 public class SolvedQuiz extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")

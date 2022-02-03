@@ -70,7 +70,7 @@ public class QuizService {
     }
 
     public List<Quiz> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {
-        final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByUser_Id(userId)
+        final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByMember_Id(userId)
                 .stream()
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());

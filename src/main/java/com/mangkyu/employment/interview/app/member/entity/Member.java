@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.user.entity;
+package com.mangkyu.employment.interview.app.member.entity;
 
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
@@ -18,12 +18,12 @@ import java.util.Set;
 import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.DEFAULT_QUIZ_SIZE;
 
 @Entity
-@Table(name = "user")
+@Table(name = "member")
 @Getter
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Column(nullable = false)
     private String resourceId;
@@ -48,7 +48,7 @@ public class User extends BaseEntity {
     private Integer quizSize = DEFAULT_QUIZ_SIZE;
 
     @Builder.Default
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "member")
     private List<SolvedQuiz> solvedQuizList = new ArrayList<>();
 
 }

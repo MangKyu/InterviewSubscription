@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.user.dto;
+package com.mangkyu.employment.interview.app.member.dto;
 
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
@@ -22,7 +22,7 @@ import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.
 @Builder
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
-public class AddUserRequest {
+public class AddMemberRequest {
 
     private final String resourceId = String.valueOf(UUID.randomUUID());
 

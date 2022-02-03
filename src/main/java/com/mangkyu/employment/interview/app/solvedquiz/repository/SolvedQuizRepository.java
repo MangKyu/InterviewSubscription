@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface SolvedQuizRepository extends JpaRepository <SolvedQuiz, Long> {
 
-    List<SolvedQuiz> findAllByUser_Id(Long userId);
+    List<SolvedQuiz> findAllByMember_Id(Long userId);
 
 }

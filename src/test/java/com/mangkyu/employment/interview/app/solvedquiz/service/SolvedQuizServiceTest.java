@@ -1,10 +1,10 @@
 package com.mangkyu.employment.interview.app.solvedquiz.service;
 
+import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
-import com.mangkyu.employment.interview.app.user.entity.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,19 +27,19 @@ class SolvedQuizServiceTest {
     @Test
     public void addSolvedQuizListSuccess() {
         // given
-        final User user = user();
+        final Member member = user();
         final List<Quiz> quizList = quizList();
 
         // when
-        target.addSolvedQuizList(user, quizList);
+        target.addSolvedQuizList(member, quizList);
 
         // then
         
         // verify
     }
 
-    private User user() {
-        return User.builder()
+    private Member user() {
+        return Member.builder()
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .build();

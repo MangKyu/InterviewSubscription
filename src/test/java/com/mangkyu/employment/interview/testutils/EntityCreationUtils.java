@@ -3,7 +3,7 @@ package com.mangkyu.employment.interview.testutils;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
-import com.mangkyu.employment.interview.app.user.entity.User;
+import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
@@ -38,20 +38,20 @@ public final class EntityCreationUtils {
         return quiz;
     }
 
-    public static User user() {
-        final User user = User.builder()
+    public static Member member() {
+        final Member member = Member.builder()
                 .resourceId(UUID.randomUUID().toString())
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .solvedQuizList(Collections.emptyList())
                 .build();
-        ReflectionTestUtils.setField(user, "createdAt", LocalDateTime.now());
+        ReflectionTestUtils.setField(member, "createdAt", LocalDateTime.now());
 
-        return user;
+        return member;
     }
 
-    public static User user(final int quizSize, final Set<QuizDay> daySet, final Set<QuizCategory> categorySet) {
-        final User user = User.builder()
+    public static Member member(final int quizSize, final Set<QuizDay> daySet, final Set<QuizCategory> categorySet) {
+        final Member member = Member.builder()
                 .resourceId( UUID.randomUUID().toString())
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
@@ -60,15 +60,15 @@ public final class EntityCreationUtils {
                 .quizDaySet(daySet)
                 .quizCategorySet(categorySet)
                 .build();
-        ReflectionTestUtils.setField(user, "createdAt", LocalDateTime.now());
+        ReflectionTestUtils.setField(member, "createdAt", LocalDateTime.now());
 
-        return user;
+        return member;
     }
 
-    public static SolvedQuiz solvedQuiz(final Quiz quiz, final User user) {
+    public static SolvedQuiz solvedQuiz(final Quiz quiz, final Member member) {
         return SolvedQuiz.builder()
                 .quiz(quiz)
-                .user(user)
+                .member(member)
                 .build();
     }
 

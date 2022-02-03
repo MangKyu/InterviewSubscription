@@ -1,11 +1,11 @@
 package com.mangkyu.employment.interview.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.MailService;
+import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
-import com.mangkyu.employment.interview.app.user.entity.User;
-import com.mangkyu.employment.interview.app.user.service.UserService;
+import com.mangkyu.employment.interview.app.member.service.MemberService;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 public class SendQuizCronJob {
 
-    private final UserService userService;
+    private final MemberService memberService;
     private final QuizService quizService;
     private final MailService mailService;
     private final SolvedQuizService solvedQuizService;
@@ -37,23 +37,23 @@ public class SendQuizCronJob {
     @Transactional
     public void sendQuizMail() {
         final DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
-        final List<User> userList = userService.getEnabledUserList(QuizDay.findQuizDay(dayOfWeek));
-        for (final User user : userList) {
-            sendUnsolvedQuizForUser(user);
+        final List<Member> memberList = memberService.getEnabledUserList(QuizDay.findQuizDay(dayOfWeek));
+        for (final Member member : memberList) {
+            sendUnsolvedQuizForUser(member);
         }
     }
 
-    private void sendUnsolvedQuizForUser(final User user) {
-        final List<Quiz> unsolvedQuizList = quizService.getUnsolvedQuizList(user.getId(), user.getQuizLevel(), user.getQuizCategorySet());
-        final boolean isLastMail = isLastMail(unsolvedQuizList, user.getQuizSize());
+    private void sendUnsolvedQuizForUser(final Member member) {
+        final List<Quiz> unsolvedQuizList = quizService.getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
+        final boolean isLastMail = isLastMail(unsolvedQuizList, member.getQuizSize());
 
-        final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, user.getQuizSize());
+        final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
         if (isLastMail) {
-            userService.disableUser(user);
+            memberService.disableUser(member);
         }
 
-        mailService.sendMail(user.getEmail(), randomQuizList, isLastMail);
-        solvedQuizService.addSolvedQuizList(user, randomQuizList);
+        mailService.sendMail(member.getEmail(), randomQuizList, isLastMail);
+        solvedQuizService.addSolvedQuizList(member, randomQuizList);
     }
 
     private boolean isLastMail(final List<Quiz> quizList, final Integer quizSize) {
