@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.user.controller;
+package com.mangkyu.employment.interview.app.member.controller;
 
 import com.mangkyu.employment.interview.app.quiz.constants.QuizConstants;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class WebUserController {
+public class WebMemberController {
 
     private final EnumMapperFactory factory;
 
