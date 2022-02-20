@@ -2,6 +2,7 @@ package com.mangkyu.employment.interview.app.solvedquiz.service;
 
 import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.solvedquiz.converter.SolvedQuizDtoConverter;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,16 +23,10 @@ public class SolvedQuizService {
     @Transactional
     public void addSolvedQuizList(final Member member, final List<Quiz> quizList) {
         final List<SolvedQuiz> solvedQuizList = quizList.stream()
-                .map(quiz -> createSolvedQuizEntity(member, quiz))
+                .map(quiz -> SolvedQuizDtoConverter.convert(member, quiz))
                 .collect(Collectors.toList());
 
         solvedQuizRepository.saveAll(solvedQuizList);
-    }
-
-    private SolvedQuiz createSolvedQuizEntity(final Member member, final Quiz quiz) {
-        return SolvedQuiz.builder()
-                .member(member)
-                .quiz(quiz).build();
     }
 
 }
