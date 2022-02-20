@@ -33,9 +33,10 @@ public class SendQuizCronJob {
      */
 
 //    @Scheduled(cron = "*/30 * * * * *") // every 30 seconds
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "0 1 0 * * ?")
     @Transactional
     public void sendQuizMail() {
+        log.info("========== sendQuizMail ============");
         final DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
         final List<Member> memberList = memberService.getEnabledUserList(QuizDay.findQuizDay(dayOfWeek));
         for (final Member member : memberList) {
