@@ -47,7 +47,7 @@ public class MailService {
             messageHelper.setText(mailText, true);
             mailSender.send(message);
         } catch (final MessagingException e) {
-            log.error("send mail fail: ", e);
+            log.error("send mail fail: {}", userEmail, e);
         }
 
     }
