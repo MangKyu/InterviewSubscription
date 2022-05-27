@@ -10,27 +10,25 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AnswerController.class)
+@WebMvcTest
 class AnswerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private AnswerService answerService;
 
     @Test
@@ -53,13 +51,10 @@ class AnswerControllerTest {
         );
 
         // then
-        final ResultActions resultActions = result.andExpect(status().isOk());
-        final String stringResponse = resultActions.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
-        final GetAnswerResponse getAnswerResult = new Gson().fromJson(stringResponse, GetAnswerResponse.class);
-
-        assertThat(getAnswerResult.getResourceId()).isEqualTo(getAnswerResponse.getResourceId());
-        assertThat(getAnswerResult.getDescription()).isEqualTo(getAnswerResponse.getDescription());
-        assertThat(getAnswerResult.getCreatedAt()).isEqualTo(getAnswerResponse.getCreatedAt());
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("resourceId").value(getAnswerResponse.getResourceId()))
+                .andExpect(jsonPath("quizResourceId").value(getAnswerResponse.getQuizResourceId()))
+                .andExpect(jsonPath("description").value(getAnswerResponse.getDescription()));
     }
 
     @ParameterizedTest

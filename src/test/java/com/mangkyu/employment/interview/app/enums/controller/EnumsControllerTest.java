@@ -2,14 +2,12 @@ package com.mangkyu.employment.interview.app.enums.controller;
 
 import com.google.gson.Gson;
 import com.mangkyu.employment.interview.config.enums.EnumMapperConfig;
-import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,12 +19,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(EnumsController.class)
+@WebMvcTest
 @Import(EnumMapperConfig.class)
 class EnumsControllerTest {
-
-    @SpyBean
-    private EnumMapperFactory enumMapperFactory;
 
     @Autowired
     private MockMvc mockMvc;
