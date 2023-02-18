@@ -1,6 +1,8 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
+import com.mangkyu.employment.interview.app.quiz.entity.PagingQuizzes;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
@@ -24,6 +26,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.*;
@@ -106,24 +109,20 @@ class GetQuizControllerTest {
     @Test
     void getQuizList() throws Exception {
         // given
-        final GetQuizResponse quizResponse = GetQuizResponse.builder()
-                .title("quiz")
-                .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
-                .build();
+        final Quiz quiz = EntityCreationUtils.quiz();
 
         final Pageable pageable = PageRequest.of(MIN_PAGE_NUMBER, MIN_PAGE_SIZE);
-        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
+        final PageImpl<Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
 
-        final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
-                .quizList(Collections.singletonList(quizResponse))
+        final PagingQuizzes quizzes = PagingQuizzes.builder()
+                .quizzes(new Quizzes(List.of(quiz)))
                 .hasNext(quizPage.hasNext())
-                .page(quizPage.nextOrLastPageable().getPageNumber())
-                .size(quizPage.nextOrLastPageable().getPageSize())
+                .pageNumber(quizPage.nextOrLastPageable().getPageNumber())
+                .pageSize(quizPage.nextOrLastPageable().getPageSize())
                 .totalPages(quizPage.getTotalPages())
                 .build();
 
-        doReturn(getQuizResponseHolder)
+        doReturn(quizzes)
                 .when(quizService)
                 .getQuizList(any(GetQuizRequest.class));
 

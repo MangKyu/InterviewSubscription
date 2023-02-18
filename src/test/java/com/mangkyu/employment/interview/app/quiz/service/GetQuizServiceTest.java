@@ -1,6 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.controller.*;
+import com.mangkyu.employment.interview.app.quiz.entity.PagingQuizzes;
 import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
@@ -135,12 +136,12 @@ class GetQuizServiceTest {
                 .findByQuizCategoryIsAndIsEnableTrue(any(QuizCategory.class), any(PageRequest.class));
 
         // when
-        final GetQuizResponseHolder result = quizService.getQuizList(request);
+        PagingQuizzes result = quizService.getQuizList(request);
 
         // then
         assertThat(result.isHasNext()).isFalse();
-        assertThat(result.getPage()).isEqualTo(page);
-        assertThat(result.getSize()).isEqualTo(size);
+        assertThat(result.getPageNumber()).isEqualTo(page);
+        assertThat(result.getPageSize()).isEqualTo(size);
     }
 
     @Test
