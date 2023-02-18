@@ -1,6 +1,8 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
+import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
+import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,8 @@ class GetAnswerController {
 
     @GetMapping("/answers/{resourceId}")
     public ResponseEntity<GetAnswerResponse> get(@PathVariable final String resourceId) {
-        return ResponseEntity.ok(answerService.get(resourceId));
+        Answer answer = answerService.get(resourceId);
+        return ResponseEntity.ok(QuizDtoConverter.convert(answer));
     }
 
 }

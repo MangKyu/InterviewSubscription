@@ -1,12 +1,11 @@
 package com.mangkyu.employment.interview.app.answer.service;
 
-import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
-import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +18,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class GetAnswerServiceTest {
@@ -33,7 +32,7 @@ class GetAnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    public void getAnswerByQuizResourceIdFail_AnswerNotExists() {
+    public void getAnswer_Fail_NotExists() {
         // given
         final String resourceId = UUID.randomUUID().toString();
 
@@ -51,7 +50,7 @@ class GetAnswerServiceTest {
     }
 
     @Test
-    public void getAnswerByQuizResourceIdSuccess() throws RestApiException {
+    public void getAnswer_Success() throws RestApiException {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);
@@ -61,7 +60,7 @@ class GetAnswerServiceTest {
                 .findByResourceId(answer.getResourceId());
 
         // when
-        final GetAnswerResponse result = answerService.get(answer.getResourceId());
+        final Answer result = answerService.get(answer.getResourceId());
 
         // then
         assertThat(result.getDescription()).isEqualTo(answer.getDescription());

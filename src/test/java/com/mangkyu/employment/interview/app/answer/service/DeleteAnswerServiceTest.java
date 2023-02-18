@@ -25,35 +25,19 @@ class DeleteAnswerServiceTest {
     @InjectMocks
     private DeleteAnswerService answerService;
     @Mock
+    private GetAnswerService getAnswerService;
+    @Mock
     private AnswerRepository answerRepository;
 
     @Test
-    void deleteAnswerByQuizResourceIdFail_AnswerNotExists() {
-        // given
-        final String resourceId = UUID.randomUUID().toString();
-
-        doReturn(Optional.empty())
-                .when(answerRepository)
-                .findByResourceId(resourceId);
-
-        // when
-        final RestApiException result = assertThrows(
-                RestApiException.class,
-                () -> answerService.delete(resourceId));
-
-        // then
-        assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
-    }
-
-    @Test
-    void deleteAnswerByQuizResourceIdSuccess() throws RestApiException {
+    void deleteAnswer_Success() throws RestApiException {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);
 
-        doReturn(Optional.of(answer))
-                .when(answerRepository)
-                .findByResourceId(answer.getResourceId());
+        doReturn(answer)
+                .when(getAnswerService)
+                .get(answer.getResourceId());
 
         // when
         answerService.delete(answer.getResourceId());

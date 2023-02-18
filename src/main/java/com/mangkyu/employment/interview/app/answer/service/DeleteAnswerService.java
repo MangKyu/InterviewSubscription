@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DeleteAnswerService {
 
+    private final GetAnswerService getAnswerService;
     private final AnswerRepository answerRepository;
 
     public void delete(final String resourceId) {
-        final Answer answer = answerRepository.findByResourceId(resourceId)
-                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        final Answer answer = getAnswerService.get(resourceId);
         answer.getQuiz().setAnswer(null);
         answerRepository.delete(answer);
     }

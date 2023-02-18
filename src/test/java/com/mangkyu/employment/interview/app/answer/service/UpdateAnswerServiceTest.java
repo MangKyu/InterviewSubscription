@@ -30,7 +30,7 @@ class UpdateAnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    public void addAnswerSuccess_Modify() throws RestApiException {
+    public void addAnswer_Success_Modify() throws RestApiException {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
@@ -54,7 +54,7 @@ class UpdateAnswerServiceTest {
     }
 
     @Test
-    public void addAnswerSuccess_Insert() throws RestApiException {
+    public void addAnswer_Success_Insert() throws RestApiException {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())

@@ -1,7 +1,9 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
+import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
+import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +26,8 @@ public class WebQuizController {
         model.addAttribute("quiz", quiz);
 
         if (StringUtils.isNotBlank(quiz.getAnswerResourceId())) {
-            final GetAnswerResponse answer = answerService.get(quiz.getAnswerResourceId());
-            model.addAttribute("answer", answer);
+            final Answer answer = answerService.get(quiz.getAnswerResourceId());
+            model.addAttribute("answer", QuizDtoConverter.convert(answer));
         } else {
             model.addAttribute("answer", GetAnswerResponse.builder().build());
         }

@@ -1,9 +1,7 @@
 package com.mangkyu.employment.interview.app.answer.service;
 
-import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
-import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
 import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +15,9 @@ public class GetAnswerService {
 
     private final AnswerRepository answerRepository;
 
-    public GetAnswerResponse get(final String resourceId) {
-        final Answer answer = answerRepository.findByResourceId(resourceId)
+    public Answer get(final String resourceId) {
+        return answerRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
-
-        return QuizDtoConverter.convert(answer);
     }
 
 }
