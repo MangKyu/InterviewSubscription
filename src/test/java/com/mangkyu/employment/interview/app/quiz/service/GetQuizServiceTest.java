@@ -198,33 +198,6 @@ class GetQuizServiceTest {
         assertThat(result.getQuizList().size()).isEqualTo(unsolvedQuizList.size());
     }
 
-    @Test
-    public void getQuizCategoryResponseList() {
-        // given
-        final long count = 15;
-        final QuizCategory quizCategory = QuizCategory.JAVA;
-
-        final EnumMapperValue enumMapperValue = EnumMapperValue.builder()
-                .code(quizCategory.name())
-                .title(quizCategory.getTitle())
-                .desc(quizCategory.getDesc())
-                .expose(true)
-                .build();
-
-        doReturn(Collections.singletonList(enumMapperValue))
-                .when(enumMapperFactory)
-                .get(EnumMapperKey.QUIZ_CATEGORY);
-        doReturn(count)
-                .when(quizRepository)
-                .countByQuizCategoryAndIsEnableTrue(quizCategory);
-
-        // when
-        final List<QuizCategoryResponse> result = quizService.getQuizCategoryList();
-
-        // then
-        assertThat(result.size()).isEqualTo(1);
-        assertThat(result.get(0).getCount()).isEqualTo(count);
-    }
 
     private List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizList() {
         final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> unsolvedQuizList = new ArrayList<>();

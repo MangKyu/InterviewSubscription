@@ -7,7 +7,6 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
-import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
@@ -39,6 +38,17 @@ public class GetQuizService {
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
 
+    public Quizzes getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {
+        final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByMember_Id(userId)
+                .stream()
+                .map(v -> v.getQuiz().getId())
+                .collect(Collectors.toSet());
+
+        return new Quizzes(quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel));
+    }
+
+    // TODO: do not use GetQuizResponseHolder in service layer
+
     public GetQuizResponseHolder getQuizList(final GetQuizRequest getQuizRequest) {
         final PageRequest pageRequest = PageRequest.of(getQuizRequest.getPage(), getQuizRequest.getSize());
         final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIsAndIsEnableTrue(getQuizRequest.getCategory(), pageRequest);
@@ -54,31 +64,6 @@ public class GetQuizService {
                 .page(quizPage.nextOrLastPageable().getPageNumber())
                 .size(quizPage.nextOrLastPageable().getPageSize())
                 .totalPages(quizPage.getTotalPages())
-                .build();
-    }
-
-    public Quizzes getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {
-        final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByMember_Id(userId)
-                .stream()
-                .map(v -> v.getQuiz().getId())
-                .collect(Collectors.toSet());
-
-        return new Quizzes(quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel));
-    }
-
-    public List<QuizCategoryResponse> getQuizCategoryList() {
-        final List<EnumMapperValue> enumMapperValueList = enumMapperFactory.get(EnumMapperKey.QUIZ_CATEGORY).stream().filter(EnumMapperValue::isExpose).collect(Collectors.toList());
-        return enumMapperValueList.stream()
-                .map(this::convertToQuizCategoryResponse)
-                .collect(Collectors.toList());
-    }
-
-    private QuizCategoryResponse convertToQuizCategoryResponse(final EnumMapperValue enumMapperValue) {
-        return QuizCategoryResponse.builder()
-                .count(quizRepository.countByQuizCategoryAndIsEnableTrue(QuizCategory.valueOf(enumMapperValue.name())))
-                .code(enumMapperValue.getCode())
-                .title(enumMapperValue.getTitle())
-                .desc(enumMapperValue.getDesc())
                 .build();
     }
 

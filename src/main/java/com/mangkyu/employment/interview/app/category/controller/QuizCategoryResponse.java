@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.quiz.controller;
+package com.mangkyu.employment.interview.app.category.controller;
 
 import lombok.Builder;
 import lombok.Getter;
