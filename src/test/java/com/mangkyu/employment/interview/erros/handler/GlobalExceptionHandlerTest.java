@@ -85,7 +85,7 @@ class GlobalExceptionHandlerTest {
 //
 //        final AddQuizRequest addQuizRequest = AddQuizRequest.builder()
 //                .title("Title")
-//                .quizLevel(Collections.singletonList(QuizLevel.NEW))
+//                .quizLevel(List.of(QuizLevel.NEW))
 //                .build();
 //
 //        // when

@@ -19,7 +19,7 @@ public final class EntityCreationUtils {
                 .resourceId(UUID.randomUUID().toString())
                 .title("quiz")
                 .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .quizLevel(List.of(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .build();
         ReflectionTestUtils.setField(quiz, "createdAt", LocalDateTime.now());
 
@@ -43,7 +43,7 @@ public final class EntityCreationUtils {
                 .resourceId(UUID.randomUUID().toString())
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
-                .solvedQuizList(Collections.emptyList())
+                .solvedQuizList(List.of())
                 .build();
         ReflectionTestUtils.setField(member, "createdAt", LocalDateTime.now());
 
@@ -55,7 +55,7 @@ public final class EntityCreationUtils {
                 .resourceId( UUID.randomUUID().toString())
                 .email("minkyu@test.com")
                 .quizLevel(QuizLevel.JUNIOR)
-                .solvedQuizList(Collections.emptyList())
+                .solvedQuizList(List.of())
                 .quizSize(quizSize)
                 .quizDaySet(daySet)
                 .quizCategorySet(categorySet)

@@ -55,28 +55,28 @@ public class MailController {
                 .quizLevel(QuizLevel.JUNIOR)
                 .quizDaySet(quizDaySet)
 //                .quizCategorySet(quizCategorySet)
-                .solvedQuizList(Collections.emptyList())
+                .solvedQuizList(List.of())
                 .build();
 
         final Member member2 = Member.builder()
                 .resourceId(UUID.randomUUID().toString())
                 .email("whalsrb1226@naver.com")
                 .quizLevel(QuizLevel.JUNIOR)
-                .solvedQuizList(Collections.emptyList())
+                .solvedQuizList(List.of())
                 .build();
         memberRepository.save(member1);
 //        userRepository.save(user2);
 
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.PROGRAMMING, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "DDD의 Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요.")).getResourceId());
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.SPRING, Collections.singletonList(QuizLevel.JUNIOR), "Spring Framework에서 사용되는 대표적인 디자인 패턴과 적용된 곳을 설명해주세요.")).getResourceId());
-        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "MSA의 장점과 단점에 대해 설명해주세요")).getResourceId());
-//        quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "당신은 ㅜ구인가"));
-//        quizRepository.save(quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "퇴근합시다"));
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.PROGRAMMING, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR), "DDD의 Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요.")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.SPRING, List.of(QuizLevel.JUNIOR), "Spring Framework에서 사용되는 대표적인 디자인 패턴과 적용된 곳을 설명해주세요.")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.DATABASE, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR), "MSA의 장점과 단점에 대해 설명해주세요")).getResourceId());
+//        quizRepository.save(quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR), "당신은 ㅜ구인가"));
+//        quizRepository.save(quiz(QuizCategory.DATABASE, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR), "퇴근합시다"));
     }
 
     @GetMapping("/temp2")
@@ -86,17 +86,17 @@ public class MailController {
     }
 
     private List<Quiz> quizList1() {
-        return Arrays.asList(
-                quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?"),
-                quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요."),
-                quiz(QuizCategory.SPRING, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR, QuizLevel.NEW), "Spring에서 템플릿 메소드 패턴이 사용된 곳은(디스패처 서블릿)")
+        return List.of(
+                quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?"),
+                quiz(QuizCategory.DATABASE, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR), "Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요."),
+                quiz(QuizCategory.SPRING, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR, QuizLevel.NEW), "Spring에서 템플릿 메소드 패턴이 사용된 곳은(디스패처 서블릿)")
         );
     }
 
     private List<Quiz> quizList2() {
-        return Arrays.asList(
-                quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요."),
-                quiz(QuizCategory.SPRING, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR, QuizLevel.NEW), "Spring에서 템플릿 메소드 패턴이 사용된 곳은(디스패처 서블릿)")
+        return List.of(
+                quiz(QuizCategory.DATABASE, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR), "Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요."),
+                quiz(QuizCategory.SPRING, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR, QuizLevel.NEW), "Spring에서 템플릿 메소드 패턴이 사용된 곳은(디스패처 서블릿)")
         );
     }
 

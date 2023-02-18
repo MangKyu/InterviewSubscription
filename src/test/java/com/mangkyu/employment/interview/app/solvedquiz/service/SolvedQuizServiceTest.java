@@ -46,10 +46,10 @@ class SolvedQuizServiceTest {
     }
 
     private List<Quiz> quizList() {
-        return Arrays.asList(
-                quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR)),
-                quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR)),
-                quiz(QuizCategory.SPRING, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR, QuizLevel.NEW))
+        return List.of(
+                quiz(QuizCategory.JAVA, List.of(QuizLevel.JUNIOR)),
+                quiz(QuizCategory.DATABASE, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR)),
+                quiz(QuizCategory.SPRING, List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR, QuizLevel.NEW))
         );
     }
 
