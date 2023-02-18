@@ -30,7 +30,7 @@ function editAnswer(editor) {
     }
 
     $.ajax({
-        url: '/answer',
+        url: '/answers',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -56,7 +56,7 @@ function deleteAnswer() {
     }
 
     $.ajax({
-        url: '/answer/' + answerResourceId,
+        url: '/answers/' + answerResourceId,
         type: 'DELETE',
         contentType: 'application/json',
         success: function () {

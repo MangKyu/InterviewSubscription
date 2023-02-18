@@ -35,7 +35,7 @@ class AnswerControllerTest {
     public void getAnswer() throws Exception {
         // given
         final String resourceId = UUID.randomUUID().toString();
-        final String url = "/answer/" + resourceId;
+        final String url = "/answers/" + resourceId;
         final GetAnswerResponse getAnswerResponse = GetAnswerResponse.builder()
                 .resourceId(resourceId)
                 .quizResourceId(UUID.randomUUID().toString())
@@ -61,7 +61,7 @@ class AnswerControllerTest {
     @MethodSource("provideParameters")
     public void addAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
         // given
-        final String url = "/answer";
+        final String url = "/answers";
 
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(quizResourceId)
@@ -82,7 +82,7 @@ class AnswerControllerTest {
     @Test
     public void addAnswerSuccess() throws Exception {
         // given
-        final String url = "/answer";
+        final String url = "/answers";
 
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
@@ -105,7 +105,7 @@ class AnswerControllerTest {
     @MethodSource("provideParameters")
     public void putAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
         // given
-        final String url = "/answer";
+        final String url = "/answers";
 
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(quizResourceId)
@@ -126,7 +126,7 @@ class AnswerControllerTest {
     @Test
     public void putAnswerSuccess() throws Exception {
         // given
-        final String url = "/answer";
+        final String url = "/answers";
 
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
@@ -148,7 +148,7 @@ class AnswerControllerTest {
     @Test
     public void deleteAnswerSuccess() throws Exception {
         // given
-        final String url = "/answer/" + UUID.randomUUID();
+        final String url = "/answers/" + UUID.randomUUID();
 
         // when
         final ResultActions result = mockMvc.perform(

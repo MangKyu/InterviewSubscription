@@ -16,26 +16,26 @@ public class AnswerController {
 
     private final AnswerService answerService;
 
-    @PutMapping("/answer")
+    @PutMapping("/answers")
     public ResponseEntity<Void> putAnswer(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) throws RestApiException {
         answerService.addAnswer(addAnswerRequest);
         return ResponseEntity.noContent()
                 .build();
     }
 
-    @PostMapping("/answer")
+    @PostMapping("/answers")
     public ResponseEntity<Void> postAnswer(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) throws RestApiException {
         answerService.addAnswer(addAnswerRequest);
         return ResponseEntity.noContent()
                 .build();
     }
 
-    @GetMapping("/answer/{resourceId}")
+    @GetMapping("/answers/{resourceId}")
     public ResponseEntity<GetAnswerResponse> getAnswer(@PathVariable final String resourceId) throws RestApiException {
         return ResponseEntity.ok(answerService.getAnswer(resourceId));
     }
 
-    @DeleteMapping("/answer/{resourceId}")
+    @DeleteMapping("/answers/{resourceId}")
     public ResponseEntity<Void> deleteAnswer(@PathVariable final String resourceId) throws RestApiException {
         answerService.deleteAnswer(resourceId);
 
