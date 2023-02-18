@@ -31,7 +31,7 @@ function addUser() {
     }
 
     $.ajax({
-        url: '/user',
+        url: '/members',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({

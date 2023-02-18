@@ -1,6 +1,5 @@
 package com.mangkyu.employment.interview.app.member.controller;
 
-import com.mangkyu.employment.interview.app.member.dto.AddMemberRequest;
 import com.mangkyu.employment.interview.app.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,13 +12,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-public class MemberController {
+class AddMemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/user")
-    public ResponseEntity<Void> addUser(@RequestBody @Valid final AddMemberRequest addMemberRequest) {
-        memberService.addUser(addMemberRequest);
+    @PostMapping("/members")
+    public ResponseEntity<Void> add(@RequestBody @Valid final AddMemberRequest request) {
+        memberService.addUser(request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();

@@ -27,7 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
         // /에 해당하는 url mapping을 /common/test로 forward한다.
-        registry.addViewController( "/" ).setViewName( "forward:/user/addView" );
+        registry.addViewController( "/" ).setViewName( "forward:/members/addView" );
         // 우선순위를 가장 높게 잡는다.
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }

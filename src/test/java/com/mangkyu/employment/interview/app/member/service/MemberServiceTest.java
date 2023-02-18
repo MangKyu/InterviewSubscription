@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.member.service;
 
-import com.mangkyu.employment.interview.app.member.dto.AddMemberRequest;
+import com.mangkyu.employment.interview.app.member.controller.AddMemberRequest;
 import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.member.repository.MemberRepository;
 import com.mangkyu.employment.interview.config.modelmapper.ModelMapperConfig;

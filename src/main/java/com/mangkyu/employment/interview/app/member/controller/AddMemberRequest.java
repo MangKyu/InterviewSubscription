@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.member.dto;
+package com.mangkyu.employment.interview.app.member.controller;
 
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;

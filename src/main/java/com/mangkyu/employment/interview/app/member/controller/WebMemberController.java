@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class WebMemberController {
+class WebMemberController {
 
     private final EnumMapperFactory factory;
 
-    @GetMapping("/user/addView")
+    @GetMapping("/members/addView")
     public String addUserPage(final Model model) {
         model.addAttribute("quizLevelList", factory.get(EnumMapperKey.QUIZ_LEVEL));
         model.addAttribute("quizCategoryList", factory.get(EnumMapperKey.QUIZ_CATEGORY));

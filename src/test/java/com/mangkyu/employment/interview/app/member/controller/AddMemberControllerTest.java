@@ -1,12 +1,13 @@
 package com.mangkyu.employment.interview.app.member.controller;
 
-import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.member.dto.AddMemberRequest;
-import com.mangkyu.employment.interview.app.member.service.MemberService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -15,69 +16,34 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-class MemberControllerTest {
-
-    @Autowired
-    private MemberService memberService;
+class AddMemberControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    public void addUserFail_EmailIsEmpty() throws Exception {
+    @Autowired
+    private ObjectMapper objectMapper;
+
+
+    @MethodSource("invalidAddMemberRequest")
+    @ParameterizedTest
+    void addmember_Fail_invalidBody(String email, QuizLevel quizLevel) throws Exception {
         // given
-        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
-                .email("")
-                .quizLevel(QuizLevel.JUNIOR)
+        final AddMemberRequest request = AddMemberRequest.builder()
+                .email(email)
+                .quizLevel(quizLevel)
                 .build();
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addMemberRequest))
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        // then
-        result.andExpect(status().isBadRequest());
-    }
-
-    @Test
-    public void addUserFail_NotEmailFormat() throws Exception {
-        // given
-        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
-                .email("asdas")
-                .quizLevel(QuizLevel.JUNIOR)
-                .build();
-
-        // when
-        final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addMemberRequest))
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        // then
-        result.andExpect(status().isBadRequest());
-    }
-
-    @Test
-    public void addUserFail_QuizLevelIsNull() throws Exception {
-        // given
-        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
-                .email("whalsrb1226@gmail.com")
-                .quizLevel(null)
-                .build();
-
-        // when
-        final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addMemberRequest))
+                MockMvcRequestBuilders.post("/members")
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -86,18 +52,26 @@ class MemberControllerTest {
 
     }
 
+    private static List<Arguments> invalidAddMemberRequest() {
+        return List.of(
+                Arguments.of("", QuizLevel.JUNIOR),
+                Arguments.of("asdas", QuizLevel.JUNIOR),
+                Arguments.of("whalsrb1226@gmail.com", null)
+        );
+    }
+
     @Test
-    public void addUserFail_QuizDaySetIsEmpty() throws Exception {
+    void addmember_Fail_QuizDaySetIsEmpty() throws Exception {
         // given
-        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
+        final AddMemberRequest request = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.NEW)
                 .build();
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addMemberRequest))
+                MockMvcRequestBuilders.post("/members")
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -107,14 +81,14 @@ class MemberControllerTest {
     }
 
     @Test
-    public void addUserFail_QuizCategorySetIsEmpty() throws Exception {
+    void addmember_Fail_QuizCategorySetIsEmpty() throws Exception {
         // given
         final Set<QuizDay> quizDaySet = new HashSet<>();
         quizDaySet.add(QuizDay.MONDAY);
         quizDaySet.add(QuizDay.WEDNESDAY);
         quizDaySet.add(QuizDay.FRIDAY);
 
-        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
+        final AddMemberRequest request = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .quizDaySet(quizDaySet)
@@ -122,8 +96,8 @@ class MemberControllerTest {
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addMemberRequest))
+                MockMvcRequestBuilders.post("/members")
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -132,7 +106,7 @@ class MemberControllerTest {
     }
 
     @Test
-    public void addUserSuccess() throws Exception {
+    void addmember_Success() throws Exception {
         // given
         final Set<QuizDay> quizDaySet = new HashSet<>();
         quizDaySet.add(QuizDay.MONDAY);
@@ -144,7 +118,7 @@ class MemberControllerTest {
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        final AddMemberRequest addMemberRequest = AddMemberRequest.builder()
+        final AddMemberRequest request = AddMemberRequest.builder()
                 .email("whalsrb1226@gmail.com")
                 .quizLevel(QuizLevel.JUNIOR)
                 .quizDaySet(quizDaySet)
@@ -153,13 +127,12 @@ class MemberControllerTest {
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                        .content(new Gson().toJson(addMemberRequest))
+                MockMvcRequestBuilders.post("/members")
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
         // then
         result.andExpect(status().isCreated());
     }
-
 }
