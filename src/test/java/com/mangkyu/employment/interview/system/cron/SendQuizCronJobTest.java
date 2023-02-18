@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.cron;
+package com.mangkyu.employment.interview.system.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.SendMailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
@@ -9,6 +9,7 @@ import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
+import com.mangkyu.employment.interview.system.cron.SendQuizCronJob;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

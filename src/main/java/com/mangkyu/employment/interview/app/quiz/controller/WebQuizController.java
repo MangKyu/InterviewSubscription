@@ -4,6 +4,7 @@ import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
@@ -19,13 +20,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 class WebQuizController {
 
     private final GetQuizService quizService;
-    private final EnumMapperFactory enumMapperFactory;
     private final GetAnswerService answerService;
 
     @GetMapping("/quizzes/editView/{resourceId}")
     public String addUserPage(@PathVariable final String resourceId, final Model model) {
-        com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = quizService.getQuiz(resourceId);
-        final GetQuizResponse response = QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
+        Quiz quiz = quizService.getQuiz(resourceId);
+        final GetQuizResponse response = QuizDtoConverter.convert(quiz);
         model.addAttribute("quiz", response);
 
         if (StringUtils.isNotBlank(response.getAnswerResourceId())) {

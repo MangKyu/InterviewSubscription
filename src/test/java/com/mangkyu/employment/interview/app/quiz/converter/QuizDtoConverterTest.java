@@ -4,6 +4,7 @@ import com.mangkyu.employment.interview.app.answer.controller.AddAnswerRequest;
 import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.quiz.controller.GetQuizResponse;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
@@ -23,7 +24,7 @@ class QuizDtoConverterTest {
                 .quizResourceId(UUID.randomUUID().toString())
                 .description("desc")
                 .build();
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = EntityCreationUtils.quiz();
+        final Quiz quiz = EntityCreationUtils.quiz();
 
         // when
         final Answer result = QuizDtoConverter.convert(addAnswerRequest, quiz);
@@ -36,7 +37,7 @@ class QuizDtoConverterTest {
     @Test
     public void convertAnswerToGetAnswerResponse() {
         // given
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = EntityCreationUtils.quiz();
+        final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);
 
         // when
@@ -52,12 +53,12 @@ class QuizDtoConverterTest {
     @Test
     public void convertQuizToGetQuizResponseWithCategory_AnswerExists() {
         // given
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = EntityCreationUtils.quiz();
+        final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);
         quiz.setAnswer(answer);
 
         // when
-        final GetQuizResponse result = QuizDtoConverter.convert(quiz, enumMapperValue(quiz.getQuizCategory()));
+        final GetQuizResponse result = QuizDtoConverter.convert(quiz);
 
         // then
         assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
@@ -71,10 +72,10 @@ class QuizDtoConverterTest {
     @Test
     public void convertQuizToGetQuizResponseWithCategory_NotAnswerExists() {
         // given
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = EntityCreationUtils.quiz();
+        final Quiz quiz = EntityCreationUtils.quiz();
 
         // when
-        final GetQuizResponse result = QuizDtoConverter.convert(quiz, enumMapperValue(quiz.getQuizCategory()));
+        final GetQuizResponse result = QuizDtoConverter.convert(quiz);
 
         // then
         assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
@@ -88,7 +89,7 @@ class QuizDtoConverterTest {
     @Test
     public void convertQuizToGetQuizResponse_AnswerExists() {
         // given
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = EntityCreationUtils.quiz();
+        final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);
         quiz.setAnswer(answer);
 
@@ -107,7 +108,7 @@ class QuizDtoConverterTest {
     @Test
     public void convertQuizToGetQuizResponse_AnswerNotExists() {
         // given
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = EntityCreationUtils.quiz();
+        final Quiz quiz = EntityCreationUtils.quiz();
 
         // when
         final GetQuizResponse result = QuizDtoConverter.convert(quiz);

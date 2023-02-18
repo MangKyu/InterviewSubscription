@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.cron;
+package com.mangkyu.employment.interview.system.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.SendMailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;

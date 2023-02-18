@@ -26,11 +26,7 @@ class GetQuizController {
     @GetMapping("/quizzes/{resourceId}")
     public ResponseEntity<GetQuizResponse> getQuiz(@PathVariable final String resourceId) {
         Quiz quiz = quizService.getQuiz(resourceId);
-        return ResponseEntity.ok(
-                QuizDtoConverter.convert(
-                        quiz,
-                        enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()))
-        );
+        return ResponseEntity.ok(QuizDtoConverter.convert(quiz));
     }
 
     @GetMapping("/quizzes")

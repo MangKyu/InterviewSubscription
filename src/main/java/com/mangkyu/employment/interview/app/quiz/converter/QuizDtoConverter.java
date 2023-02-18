@@ -4,6 +4,7 @@ import com.mangkyu.employment.interview.app.answer.controller.AddAnswerRequest;
 import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.quiz.controller.GetQuizResponse;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.AccessLevel;
@@ -25,19 +26,8 @@ public final class QuizDtoConverter {
                 .build();
     }
 
-    public static GetQuizResponse convert(final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz) {
-        return GetQuizResponse.builder()
-                .resourceId(quiz.getResourceId())
-                .answerResourceId(getAnswerResourceId(quiz))
-                .title(quiz.getTitle())
-                .category(quiz.getQuizCategory().getTitle())
-                .quizLevelList(convert(quiz.getQuizLevel()))
-                .createdAt(Timestamp.valueOf(quiz.getCreatedAt()).getTime())
-                .build();
-    }
-
     @Deprecated
-    public static GetQuizResponse convert(final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz, final EnumMapperValue enumMapperValue) {
+    public static GetQuizResponse convert(final Quiz quiz) {
         return GetQuizResponse.builder()
                 .resourceId(quiz.getResourceId())
                 .answerResourceId(getAnswerResourceId(quiz))
@@ -54,14 +44,14 @@ public final class QuizDtoConverter {
                 .collect(Collectors.toList());
     }
 
-    public static Answer convert(final AddAnswerRequest addAnswerRequest, final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz) {
+    public static Answer convert(final AddAnswerRequest addAnswerRequest, final Quiz quiz) {
         return Answer.builder()
                 .resourceId(addAnswerRequest.getResourceId())
                 .quiz(quiz)
                 .description(addAnswerRequest.getDescription()).build();
     }
 
-    private static String getAnswerResourceId(final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz) {
+    private static String getAnswerResourceId(final Quiz quiz) {
         return (quiz.getAnswer() == null)
                 ? null
                 : quiz.getAnswer().getResourceId();
