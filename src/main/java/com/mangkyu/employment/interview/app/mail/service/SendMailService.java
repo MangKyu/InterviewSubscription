@@ -2,12 +2,13 @@ package com.mangkyu.employment.interview.app.mail.service;
 
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.utils.DateUtils;
-import com.mangkyu.employment.interview.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
@@ -27,9 +28,9 @@ public class SendMailService {
 
     @PostConstruct
     public void init() throws IOException {
-        START_MAIL_FORMAT = FileUtils.readFileText("classpath:templates/startMailFormat.html");
-        BODY_MAIL_FORMAT = FileUtils.readFileText("classpath:templates/bodyMailFormat.html");
-        END_MAIL_FORMAT = FileUtils.readFileText("classpath:templates/endMailFormat.html");
+        START_MAIL_FORMAT = FileUtils.readFileToString(ResourceUtils.getFile("classpath:templates/startMailFormat.html"));
+        BODY_MAIL_FORMAT = FileUtils.readFileToString(ResourceUtils.getFile("classpath:templates/bodyMailFormat.html"));
+        END_MAIL_FORMAT = FileUtils.readFileToString(ResourceUtils.getFile("classpath:templates/endMailFormat.html"));
     }
 
     public void sendMail(final String userEmail, final List<Quiz> quizList, final boolean isLastMail) {
