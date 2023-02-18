@@ -2,11 +2,11 @@ package com.mangkyu.employment.interview.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.MailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
+import com.mangkyu.employment.interview.app.member.service.GetMemberService;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
-import com.mangkyu.employment.interview.app.member.service.GetMemberService;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +46,10 @@ public class SendQuizCronJob {
     }
 
     private void sendUnsolvedQuizForUser(final Member member) {
-        final Quizzes unsolvedQuizList = quizService.getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
-        final boolean isLastMail = unsolvedQuizList.isLastMail(member.getQuizSize());
+        final Quizzes quizzes = quizService.getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
+        final boolean isLastMail = quizzes.isLastMail(member.getQuizSize());
 
-        final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList.getQuizList(), member.getQuizSize());
+        final List<Quiz> randomQuizList = quizzes.getRandomQuizListUnderLimit(member.getQuizSize());
         if (isLastMail) {
             member.disableUser();
         }

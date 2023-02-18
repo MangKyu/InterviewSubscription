@@ -53,7 +53,6 @@ class QuizServiceTest {
 
     private final Long userId = -1L;
     private final QuizLevel quizLevel = QuizLevel.NEW;
-    private final int quizSize = 3;
 
     @Test
     public void searchQuizList() {
@@ -214,30 +213,6 @@ class QuizServiceTest {
 
         // then
         assertThat(result.getQuizList().size()).isEqualTo(unsolvedQuizList.size());
-    }
-
-    @Test
-    public void getRandomQuizListUnderLimitSuccess_UnderLimit() {
-        // given
-        final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
-
-        // when
-        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, quizSize);
-
-        // then
-        assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
-    }
-
-    @Test
-    public void getRandomQuizListUnderLimitSuccess_OverLimit() {
-        // given
-        final List<Quiz> unsolvedQuizList = quizList();
-
-        // when
-        final List<Quiz> result = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, quizSize);
-
-        // then
-        assertThat(result.size()).isEqualTo(quizSize);
     }
 
     @Test
