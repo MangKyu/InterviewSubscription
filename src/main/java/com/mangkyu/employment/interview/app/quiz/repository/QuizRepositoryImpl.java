@@ -35,7 +35,7 @@ public class QuizRepositoryImpl implements QuizRepositoryCustom {
                 .where(quizLevelsIn(qQuiz, condition.getLevels()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .where(qQuiz.answer.isNotNull())
+//                .where(qQuiz.answer.isNull())
                 .where(qQuiz.isEnable.isTrue())
                 .fetch();
 
@@ -43,7 +43,7 @@ public class QuizRepositoryImpl implements QuizRepositoryCustom {
                 .where(titleLike(qQuiz, condition.getQuery()))
                 .where(quizCategoriesIn(qQuiz, condition.getCategories()))
                 .where(quizLevelsIn(qQuiz, condition.getLevels()))
-                .where(qQuiz.answer.isNotNull())
+//                .where(qQuiz.answer.isNull())
                 .where(qQuiz.isEnable.isTrue())
                 .stream().count();
 

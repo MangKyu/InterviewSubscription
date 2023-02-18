@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
-import com.mangkyu.employment.interview.app.answer.dto.GetAnswerResponse;
+import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.service.AnswerService;
 import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;

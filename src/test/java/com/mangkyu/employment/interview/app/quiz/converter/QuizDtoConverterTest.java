@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.converter;
 
-import com.mangkyu.employment.interview.app.answer.dto.AddAnswerRequest;
-import com.mangkyu.employment.interview.app.answer.dto.GetAnswerResponse;
+import com.mangkyu.employment.interview.app.answer.controller.AddAnswerRequest;
+import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;

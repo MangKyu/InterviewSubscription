@@ -1,6 +1,5 @@
-package com.mangkyu.employment.interview.app.answer.dto;
+package com.mangkyu.employment.interview.app.answer.controller;
 
-import com.mangkyu.employment.interview.app.answer.constants.AnswerConstants;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ public class AddAnswerRequest {
     private final String resourceId = String.valueOf(UUID.randomUUID());
 
     @NotBlank
-    @Size(max = AnswerConstants.MAX_ANSWER_SIZE)
+    @Size(max = 5000)
     private final String description;
 
 }

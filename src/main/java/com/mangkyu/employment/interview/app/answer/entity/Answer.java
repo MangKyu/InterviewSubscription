@@ -1,6 +1,5 @@
 package com.mangkyu.employment.interview.app.answer.entity;
 
-import com.mangkyu.employment.interview.app.answer.constants.AnswerConstants;
 import com.mangkyu.employment.interview.app.common.entity.BaseEntity;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import lombok.*;
@@ -23,7 +22,7 @@ public class Answer extends BaseEntity {
 
     @Setter
     @Lob
-    @Column(length = AnswerConstants.MAX_ANSWER_SIZE)
+    @Column(length = 5000)
     private String description;
 
 }

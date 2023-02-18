@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.answer.dto;
+package com.mangkyu.employment.interview.app.answer.controller;
 
 import lombok.Builder;
 import lombok.Getter;
