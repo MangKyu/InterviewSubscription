@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+// TODO: Divide by ReadOnlyRepository and WriteOnlyRepository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     Optional<Answer> findByResourceId(final String resourceId);

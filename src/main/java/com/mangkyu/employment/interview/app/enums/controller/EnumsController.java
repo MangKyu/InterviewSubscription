@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+// TODO: Divide to separate domain controller
 @RestController
 @RequiredArgsConstructor
-public class EnumsController {
+class EnumsController {
 
     private final EnumMapperFactory enumMapperFactory;
 
