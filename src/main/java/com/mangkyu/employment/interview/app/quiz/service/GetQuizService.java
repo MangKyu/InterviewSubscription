@@ -45,8 +45,6 @@ public class GetQuizService {
         return new Quizzes(quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel));
     }
 
-    // TODO: do not use GetQuizResponseHolder in service layer
-
     public PagingQuizzes getQuizList(final GetQuizRequest request) {
         final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
         final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIsAndIsEnableTrue(request.getCategory(), pageRequest);

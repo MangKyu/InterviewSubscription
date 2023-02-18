@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.cron;
 
-import com.mangkyu.employment.interview.app.mail.service.MailService;
+import com.mangkyu.employment.interview.app.mail.service.SendMailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.member.service.GetMemberService;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
@@ -33,7 +33,7 @@ class SendQuizCronJobTest {
     @Mock
     private GetQuizService quizService;
     @Mock
-    private MailService mailService;
+    private SendMailService mailService;
     @Mock
     private SolvedQuizService solvedQuizService;
 

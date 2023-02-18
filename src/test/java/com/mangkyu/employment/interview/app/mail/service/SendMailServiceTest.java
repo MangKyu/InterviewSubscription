@@ -14,18 +14,16 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
-class MailServiceTest {
+class SendMailServiceTest {
 
     @InjectMocks
-    private MailService target;
+    private SendMailService target;
 
     @Mock
     private JavaMailSender javaMailSender;

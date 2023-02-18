@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MailService {
+public class SendMailService {
 
     private final JavaMailSender mailSender;
     private String START_MAIL_FORMAT;
@@ -72,11 +72,12 @@ public class MailService {
     private String createBodyMailText(final List<Quiz> quizList) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (Quiz quiz : quizList) {
-            final String indexReplacedText = BODY_MAIL_FORMAT.replaceAll("\\{index}", String.valueOf(quizList.indexOf(quiz) + 1));
-            final String titleReplacedText = indexReplacedText.replaceAll("\\$\\{quiz.title}", quiz.getTitle());
-            final String categoryReplacedText = titleReplacedText.replaceAll("\\$\\{quiz.category}", quiz.getQuizCategory().name());
-            final String finalText = categoryReplacedText.replaceAll("\\$\\{quiz.level}", quiz.getQuizLevel().toString());
-            stringBuilder.append(finalText);
+            String replaceBody = BODY_MAIL_FORMAT
+                    .replaceAll("\\{index}", String.valueOf(quizList.indexOf(quiz) + 1))
+                    .replaceAll("\\$\\{quiz.title}", quiz.getTitle())
+                    .replaceAll("\\$\\{quiz.category}", quiz.getQuizCategory().name())
+                    .replaceAll("\\$\\{quiz.level}", quiz.getQuizLevel().toString());
+            stringBuilder.append(replaceBody);
         }
 
         return stringBuilder.toString();

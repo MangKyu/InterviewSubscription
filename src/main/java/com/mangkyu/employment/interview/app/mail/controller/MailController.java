@@ -1,5 +1,6 @@
-package com.mangkyu.employment.interview.app.mail.service;
+package com.mangkyu.employment.interview.app.mail.controller;
 
+import com.mangkyu.employment.interview.app.mail.service.SendMailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
@@ -20,7 +21,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MailController {
 
-    private final MailService mailService;
+    private final SendMailService mailService;
     private final MemberRepository memberRepository;
     private final GetQuizService quizService;
     private final QuizRepository quizRepository;
