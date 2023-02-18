@@ -1,11 +1,14 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
+import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
+import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
+import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
+import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,7 +24,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.*;
@@ -36,7 +38,10 @@ class GetQuizControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private QuizService quizService;
+    private GetQuizService quizService;
+
+    @Autowired
+    private EnumMapperFactory enumMapperFactory;
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
@@ -50,16 +55,24 @@ class GetQuizControllerTest {
     @Test
     void getQuiz() throws Exception {
         // given
-        final String resourceId = UUID.randomUUID().toString();
-        final GetQuizResponse quizResponse = GetQuizResponse.builder()
-                .title("quiz")
-                .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
-                .build();
+        final Quiz quiz = EntityCreationUtils.quiz();
+        final String resourceId = quiz.getResourceId();
 
-        doReturn(quizResponse)
+        doReturn(quiz)
                 .when(quizService)
                 .getQuiz(resourceId);
+
+        final QuizCategory quizCategory = QuizCategory.JAVA;
+        final EnumMapperValue enumMapperValue = EnumMapperValue.builder()
+                .code(quizCategory.name())
+                .title(quizCategory.getTitle())
+                .desc(quizCategory.getDesc())
+                .expose(true)
+                .build();
+
+        doReturn(Collections.singletonList(enumMapperValue))
+                .when(enumMapperFactory)
+                .get(EnumMapperKey.QUIZ_CATEGORY);
 
         // when
         final ResultActions result = mockMvc.perform(
@@ -100,7 +113,7 @@ class GetQuizControllerTest {
                 .build();
 
         final Pageable pageable = PageRequest.of(MIN_PAGE_NUMBER, MIN_PAGE_SIZE);
-        final PageImpl<Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
+        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
 
         final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
                 .quizList(Collections.singletonList(quizResponse))
@@ -155,7 +168,7 @@ class GetQuizControllerTest {
                 .build();
 
         final Pageable pageable = PageRequest.of(MIN_PAGE_NUMBER, MIN_PAGE_SIZE);
-        final PageImpl<Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
+        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
 
         final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
                 .quizList(Collections.singletonList(quizResponse))

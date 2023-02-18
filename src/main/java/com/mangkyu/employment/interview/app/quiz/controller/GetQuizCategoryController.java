@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
+import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 class GetQuizCategoryController {
 
-    private final QuizService quizService;
+    private final GetQuizService quizService;
 
     @GetMapping("/quizzes/categories")
     public ResponseEntity<Map<String, List<QuizCategoryResponse>>> getQuizCategoryList() {

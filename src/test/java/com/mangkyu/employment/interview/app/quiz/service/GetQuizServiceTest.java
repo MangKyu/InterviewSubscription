@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.controller.*;
-import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
@@ -26,7 +25,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,10 +35,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class QuizServiceTest {
+class GetQuizServiceTest {
 
     @InjectMocks
-    private QuizService quizService;
+    private GetQuizService quizService;
 
     @Mock
     private QuizRepository quizRepository;
@@ -60,7 +58,7 @@ class QuizServiceTest {
         final int page = 0;
         final int size = 20;
 
-        final List<Quiz> quizList = quizList();
+        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizList = quizList();
         final SearchQuizListRequest request = SearchQuizListRequest.builder()
                 .query("query")
                 .categories(new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.JAVA)))
@@ -68,10 +66,11 @@ class QuizServiceTest {
                 .page(0)
                 .size(20)
                 .build();
-        final Pageable pageable = PageRequest.of(page, size);
 
-        final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
-        doReturn(quizPage).when(quizRepository).search(any(QuizSearchCondition.class), any(PageRequest.class));
+        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(quizList(), PageRequest.of(page, size), quizList.size());
+        doReturn(quizPage)
+                .when(quizRepository)
+                .search(any(QuizSearchCondition.class), any(PageRequest.class));
 
         // when
         final GetQuizResponseHolder result = quizService.searchQuizList(request);
@@ -83,12 +82,16 @@ class QuizServiceTest {
     @Test
     public void findQuizEntityFail_NotExists() {
         // given
-        final Quiz quiz = quiz(-1L);
+        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = quiz(-1L);
 
-        doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
+        doReturn(Optional.empty())
+                .when(quizRepository)
+                .findByResourceId(quiz.getResourceId());
 
         // when
-        final RestApiException result = assertThrows(RestApiException.class, () -> quizService.findQuiz(quiz.getResourceId()));
+        final RestApiException result = assertThrows(
+                RestApiException.class,
+                () -> quizService.getQuiz(quiz.getResourceId()));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -97,51 +100,19 @@ class QuizServiceTest {
     @Test
     public void findQuizEntitySuccess() {
         // given
-        final long id = -1L;
-        final Quiz quiz = quiz(id);
+        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = quiz(-1L);
 
-        doReturn(Optional.of(quiz)).when(quizRepository).findByResourceId(quiz.getResourceId());
+        doReturn(Optional.of(quiz))
+                .when(quizRepository)
+                .findByResourceId(quiz.getResourceId());
 
         // when
-        final Quiz result = quizService.findQuiz(quiz.getResourceId());
+        final com.mangkyu.employment.interview.app.quiz.entity.Quiz result = quizService.getQuiz(quiz.getResourceId());
 
         // then
         assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
         assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
         assertThat(result.getCreatedAt()).isEqualTo(quiz.getCreatedAt());
-    }
-
-    @Test
-    public void getQuizFail_NotExists() {
-        // given
-        final Quiz quiz = quiz(-1L);
-
-        doReturn(Optional.empty()).when(quizRepository).findByResourceId(quiz.getResourceId());
-
-        // when
-        final RestApiException result = assertThrows(RestApiException.class, () -> quizService.getQuiz(quiz.getResourceId()));
-
-        // then
-        assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
-    }
-
-    @Test
-    public void getQuizSuccess() {
-        // given
-        final long id = -1L;
-        final Quiz quiz = quiz(id);
-
-        doReturn(Optional.of(quiz)).when(quizRepository).findByResourceId(quiz.getResourceId());
-
-        // when
-        final GetQuizResponse result = quizService.getQuiz(quiz.getResourceId());
-
-        // then
-        assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
-        assertThat(result.getTitle()).isEqualTo(quiz.getTitle());
-        assertThat(result.getCategory()).isEqualTo(quiz.getQuizCategory().getTitle());
-        assertThat(result.getQuizLevelList().size()).isEqualTo(quiz.getQuizLevel().size());
-        assertThat(result.getCreatedAt()).isEqualTo(Timestamp.valueOf(quiz.getCreatedAt()).getTime());
     }
 
     @Test
@@ -155,11 +126,13 @@ class QuizServiceTest {
                 .page(page)
                 .size(size)
                 .build();
-        final List<Quiz> quizList = quizList();
+        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizList = quizList();
         final Pageable pageable = PageRequest.of(page, size);
 
-        final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
-        doReturn(quizPage).when(quizRepository).findByQuizCategoryIsAndIsEnableTrue(any(QuizCategory.class), any(PageRequest.class));
+        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
+        doReturn(quizPage)
+                .when(quizRepository)
+                .findByQuizCategoryIsAndIsEnableTrue(any(QuizCategory.class), any(PageRequest.class));
 
         // when
         final GetQuizResponseHolder result = quizService.getQuizList(request);
@@ -177,15 +150,20 @@ class QuizServiceTest {
         final Set<Long> solvedQuizIdList = solvedQuizList.stream()
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
-        final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
+        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
         final Set<QuizCategory> quizCategorySet = new HashSet<>();
         quizCategorySet.add(QuizCategory.CULTURE);
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByMember_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
+        doReturn(solvedQuizList)
+                .when(solvedQuizRepository)
+                .findAllByMember_Id(userId);
+
+        doReturn(unsolvedQuizList)
+                .when(quizRepository)
+                .customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
 
         // when
         final Quizzes quizzes = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
@@ -198,15 +176,20 @@ class QuizServiceTest {
     public void getUnsolvedQuizSuccess_SolvedQuizNotEmpty() {
         // given
         final List<SolvedQuiz> solvedQuizList = Collections.emptyList();
-        final List<Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
+        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
 
         final Set<QuizCategory> quizCategorySet = new HashSet<>();
         quizCategorySet.add(QuizCategory.CULTURE);
         quizCategorySet.add(QuizCategory.DATABASE);
         quizCategorySet.add(QuizCategory.EXPERIENCE);
 
-        doReturn(solvedQuizList).when(solvedQuizRepository).findAllByMember_Id(userId);
-        doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
+        doReturn(solvedQuizList)
+                .when(solvedQuizRepository)
+                .findAllByMember_Id(userId);
+
+        doReturn(unsolvedQuizList)
+                .when(quizRepository)
+                .customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
 
         // when
         final Quizzes result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
@@ -228,8 +211,12 @@ class QuizServiceTest {
                 .expose(true)
                 .build();
 
-        doReturn(Collections.singletonList(enumMapperValue)).when(enumMapperFactory).get(EnumMapperKey.QUIZ_CATEGORY);
-        doReturn(count).when(quizRepository).countByQuizCategoryAndIsEnableTrue(quizCategory);
+        doReturn(Collections.singletonList(enumMapperValue))
+                .when(enumMapperFactory)
+                .get(EnumMapperKey.QUIZ_CATEGORY);
+        doReturn(count)
+                .when(quizRepository)
+                .countByQuizCategoryAndIsEnableTrue(quizCategory);
 
         // when
         final List<QuizCategoryResponse> result = quizService.getQuizCategoryList();
@@ -239,8 +226,8 @@ class QuizServiceTest {
         assertThat(result.get(0).getCount()).isEqualTo(count);
     }
 
-    private List<Quiz> quizList() {
-        final List<Quiz> unsolvedQuizList = new ArrayList<>();
+    private List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizList() {
+        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> unsolvedQuizList = new ArrayList<>();
 
         unsolvedQuizList.add(quiz(1L));
         unsolvedQuizList.add(quiz(2L));
@@ -259,15 +246,15 @@ class QuizServiceTest {
     }
 
     private SolvedQuiz solvedQuiz(final long id) {
-        final Quiz quiz = quiz(id);
+        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = quiz(id);
 
         return SolvedQuiz.builder()
                 .quiz(quiz)
                 .build();
     }
 
-    private Quiz quiz(final long id) {
-        final Quiz quiz = Quiz.builder()
+    private com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz(final long id) {
+        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = com.mangkyu.employment.interview.app.quiz.entity.Quiz.builder()
                 .title("quiz")
                 .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .quizCategory(QuizCategory.JAVA)

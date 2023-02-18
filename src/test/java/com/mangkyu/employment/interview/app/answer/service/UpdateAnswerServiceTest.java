@@ -4,8 +4,7 @@ import com.mangkyu.employment.interview.app.answer.controller.AddAnswerRequest;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
-import com.mangkyu.employment.interview.erros.exception.RestApiException;
+import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,7 @@ class UpdateAnswerServiceTest {
     private UpdateAnswerService answerService;
 
     @Mock
-    private QuizService quizService;
+    private GetQuizService quizService;
     @Mock
     private AnswerRepository answerRepository;
 
@@ -42,7 +41,7 @@ class UpdateAnswerServiceTest {
 
         doReturn(quiz)
                 .when(quizService)
-                .findQuiz(addAnswerRequest.getQuizResourceId());
+                .getQuiz(addAnswerRequest.getQuizResourceId());
 
         // when
         answerService.add(addAnswerRequest);

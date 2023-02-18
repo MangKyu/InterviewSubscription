@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
+import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ class GetQuizCategoryControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private QuizService quizService;
+    private GetQuizService quizService;
 
     @Test
     void getCategory() throws Exception {

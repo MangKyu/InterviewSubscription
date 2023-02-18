@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

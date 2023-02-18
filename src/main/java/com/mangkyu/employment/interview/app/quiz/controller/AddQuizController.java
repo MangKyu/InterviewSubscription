@@ -2,7 +2,6 @@ package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangkyu.employment.interview.app.quiz.service.AddQuizService;
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

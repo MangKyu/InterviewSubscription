@@ -1,10 +1,9 @@
 package com.mangkyu.employment.interview.app.mail.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
+import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
 import com.mangkyu.employment.interview.app.member.repository.MemberRepository;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
@@ -12,14 +11,10 @@ import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -27,7 +22,7 @@ public class MailController {
 
     private final MailService mailService;
     private final MemberRepository memberRepository;
-    private final QuizService quizService;
+    private final GetQuizService quizService;
     private final QuizRepository quizRepository;
     private final SolvedQuizRepository solvedQuizRepository;
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;

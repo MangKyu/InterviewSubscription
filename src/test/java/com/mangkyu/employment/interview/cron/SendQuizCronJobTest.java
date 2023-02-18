@@ -5,7 +5,7 @@ import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.member.service.GetMemberService;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
+import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
@@ -31,7 +31,7 @@ class SendQuizCronJobTest {
     @Mock
     private GetMemberService memberService;
     @Mock
-    private QuizService quizService;
+    private GetQuizService quizService;
     @Mock
     private MailService mailService;
     @Mock

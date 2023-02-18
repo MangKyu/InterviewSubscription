@@ -20,30 +20,23 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class QuizService {
+public class GetQuizService {
 
     private final QuizRepository quizRepository;
     private final SolvedQuizRepository solvedQuizRepository;
     private final ModelMapper modelMapper;
     private final EnumMapperFactory enumMapperFactory;
 
-    public Quiz findQuiz(final String resourceId) {
+    public Quiz getQuiz(final String resourceId) {
         return quizRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
-    }
-
-    public GetQuizResponse getQuiz(final String resourceId) {
-        final Quiz quiz = findQuiz(resourceId);
-        return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }
 
     public GetQuizResponseHolder getQuizList(final GetQuizRequest getQuizRequest) {
