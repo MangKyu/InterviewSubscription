@@ -1,6 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mangkyu.employment.interview.app.quiz.service.AddQuizService;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 class AddQuizController {
 
-    private final QuizService quizService;
+    private final AddQuizService quizService;
     private final ObjectMapper objectMapper;
 
     @GetMapping("/quizzes/init")

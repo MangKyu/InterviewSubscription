@@ -1,8 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.controller.*;
-import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
@@ -12,6 +10,8 @@ import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
+import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
+import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -35,18 +35,12 @@ public class QuizService {
     private final ModelMapper modelMapper;
     private final EnumMapperFactory enumMapperFactory;
 
-    @Transactional
-    public void addQuiz(final AddQuizRequest addQuizRequest) {
-        final Quiz quiz = modelMapper.map(addQuizRequest, Quiz.class);
-        quizRepository.save(quiz);
-    }
-
-    public Quiz findQuiz(final String resourceId) throws RestApiException {
+    public Quiz findQuiz(final String resourceId) {
         return quizRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
 
-    public GetQuizResponse getQuiz(final String resourceId) throws RestApiException {
+    public GetQuizResponse getQuiz(final String resourceId) {
         final Quiz quiz = findQuiz(resourceId);
         return QuizDtoConverter.convert(quiz, enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, quiz.getQuizCategory()));
     }

@@ -171,24 +171,6 @@ class QuizServiceTest {
     }
 
     @Test
-    public void addQuiz_Success() {
-        // given
-        final AddQuizRequest request = AddQuizRequest.builder()
-                .title("quiz")
-                .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
-                .build();
-
-        // when
-        quizService.addQuiz(request);
-
-        // then
-
-        // verify
-        verify(quizRepository, times(1)).save(any(Quiz.class));
-    }
-
-    @Test
     public void getUnsolvedQuizSuccess_SolvedQuizEmpty() {
         // given
         final List<SolvedQuiz> solvedQuizList = solvedQuizList();
