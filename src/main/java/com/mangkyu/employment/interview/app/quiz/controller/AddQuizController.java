@@ -1,10 +1,8 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequestHolder;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,10 +28,21 @@ class AddQuizController {
         final File file = ResourceUtils.getFile("classpath:quiz/quiz.json");
         final AddQuizRequestHolder addQuizRequestHolder = objectMapper.readValue(file, AddQuizRequestHolder.class);
 
-        addQuizRequestHolder.getQuizList().forEach(quizService::addQuiz);
+        addQuizRequestHolder.getQuizList()
+                .forEach(quizService::addQuiz);
 
         return ResponseEntity.noContent()
                 .build();
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class AddQuizRequestHolder {
+
+        private List<AddQuizRequest> quizList;
+
     }
 
     @PostMapping("/quizzes")

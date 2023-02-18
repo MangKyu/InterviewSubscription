@@ -2,7 +2,7 @@ package com.mangkyu.employment.interview.app.quiz.repository;
 
 import com.mangkyu.employment.interview.JpaTestConfig;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
-import com.mangkyu.employment.interview.app.quiz.dto.QuizSearchCondition;
+import com.mangkyu.employment.interview.app.quiz.service.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;

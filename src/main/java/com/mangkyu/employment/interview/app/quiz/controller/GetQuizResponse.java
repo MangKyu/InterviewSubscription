@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.quiz.dto;
+package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;

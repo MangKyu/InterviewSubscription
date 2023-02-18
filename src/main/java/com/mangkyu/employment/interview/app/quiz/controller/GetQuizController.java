@@ -1,9 +1,5 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
-import com.mangkyu.employment.interview.app.quiz.dto.GetQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
-import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponseHolder;
-import com.mangkyu.employment.interview.app.quiz.dto.SearchQuizListRequest;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
-import com.mangkyu.employment.interview.app.quiz.dto.QuizCategoryResponse;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import org.junit.jupiter.api.Test;

@@ -1,22 +1,22 @@
-package com.mangkyu.employment.interview.app.quiz.dto;
+package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuizSearchCondition {
 
-    private final String query;
-    private final Set<QuizCategory> categories;
-    private final Set<QuizLevel> levels;
+    private String query;
+    private Set<QuizCategory> categories;
+    private Set<QuizLevel> levels;
 
 }

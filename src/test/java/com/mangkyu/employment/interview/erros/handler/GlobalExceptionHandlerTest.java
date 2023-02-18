@@ -1,36 +1,12 @@
 package com.mangkyu.employment.interview.erros.handler;
 
-import com.google.gson.Gson;
 //import com.mangkyu.employment.interview.app.quiz.controller.GetQuizController;
-import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
-import com.mangkyu.employment.interview.erros.errorcode.ErrorCode;
-import com.mangkyu.employment.interview.erros.response.ErrorResponse;
-import com.mangkyu.employment.interview.erros.exception.RestApiException;
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
-import com.mangkyu.employment.interview.enums.value.QuizLevel;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import java.util.Collections;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Disabled
 @ExtendWith(MockitoExtension.class)

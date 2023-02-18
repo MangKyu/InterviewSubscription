@@ -3,7 +3,7 @@ package com.mangkyu.employment.interview.app.quiz.converter;
 import com.mangkyu.employment.interview.app.answer.controller.AddAnswerRequest;
 import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
-import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
+import com.mangkyu.employment.interview.app.quiz.controller.GetQuizResponse;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;

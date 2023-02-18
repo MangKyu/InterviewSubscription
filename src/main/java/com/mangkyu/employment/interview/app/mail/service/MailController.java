@@ -2,7 +2,6 @@ package com.mangkyu.employment.interview.app.mail.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangkyu.employment.interview.app.member.entity.Member;
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequestHolder;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
@@ -83,16 +82,6 @@ public class MailController {
         System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "MSA의 장점과 단점에 대해 설명해주세요")).getResourceId());
 //        quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "당신은 ㅜ구인가"));
 //        quizRepository.save(quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "퇴근합시다"));
-    }
-
-    @Transactional
-    @GetMapping("/temp")
-    public ResponseEntity<AddQuizRequestHolder> sendMail1() throws IOException {
-        final File file = ResourceUtils.getFile("classpath:quiz/quiz-211220.json");
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final AddQuizRequestHolder addQuizRequestHolder = objectMapper.readValue(file, AddQuizRequestHolder.class);
-
-        return ResponseEntity.ok(addQuizRequestHolder);
     }
 
     @GetMapping("/temp2")

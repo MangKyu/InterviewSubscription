@@ -4,7 +4,6 @@ import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
-import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

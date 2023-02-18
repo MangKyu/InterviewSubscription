@@ -1,9 +1,9 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
+import com.mangkyu.employment.interview.app.quiz.controller.*;
 import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
 import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
-import com.mangkyu.employment.interview.app.quiz.dto.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;

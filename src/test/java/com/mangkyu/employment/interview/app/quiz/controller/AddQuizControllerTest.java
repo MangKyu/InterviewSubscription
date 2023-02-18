@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mangkyu.employment.interview.app.quiz.dto.AddQuizRequest;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
