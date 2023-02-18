@@ -2,6 +2,7 @@ package com.mangkyu.employment.interview.app.quiz.service;
 
 import com.mangkyu.employment.interview.app.quiz.controller.*;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
@@ -188,10 +189,10 @@ class QuizServiceTest {
         doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
 
         // when
-        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
+        final Quizzes quizzes = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
 
         // then
-        assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
+        assertThat(quizzes.getQuizList().size()).isEqualTo(unsolvedQuizList.size());
     }
 
     @Test
@@ -209,10 +210,10 @@ class QuizServiceTest {
         doReturn(unsolvedQuizList).when(quizRepository).customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
 
         // when
-        final List<Quiz> result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
+        final Quizzes result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
 
         // then
-        assertThat(result.size()).isEqualTo(unsolvedQuizList.size());
+        assertThat(result.getQuizList().size()).isEqualTo(unsolvedQuizList.size());
     }
 
     @Test

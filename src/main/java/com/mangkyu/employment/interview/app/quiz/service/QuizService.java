@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.app.quiz.service;
 import com.mangkyu.employment.interview.app.quiz.controller.*;
 import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
@@ -63,13 +64,13 @@ public class QuizService {
                 .build();
     }
 
-    public List<Quiz> getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {
+    public Quizzes getUnsolvedQuizList(final Long userId, final QuizLevel quizLevel, final Set<QuizCategory> quizCategorySet) {
         final Set<Long> solvedQuizIdList = solvedQuizRepository.findAllByMember_Id(userId)
                 .stream()
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
 
-        return quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel);
+        return new Quizzes(quizRepository.customFindByIdNotInAndQuizCategoryInAndQuizLevel(solvedQuizIdList, quizCategorySet, quizLevel));
     }
 
     public List<Quiz> getRandomQuizListUnderLimit(final List<Quiz> quizList, final Integer quizSize) {

@@ -3,6 +3,7 @@ package com.mangkyu.employment.interview.cron;
 import com.mangkyu.employment.interview.app.mail.service.MailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
 import com.mangkyu.employment.interview.app.member.service.GetMemberService;
@@ -81,7 +82,7 @@ class SendQuizCronJobTest {
         doReturn(memberList)
                 .when(memberService)
                 .getEnabledUserList(quizDay);
-        doReturn(unsolvedQuizList)
+        doReturn(new Quizzes(unsolvedQuizList))
                 .when(quizService)
                 .getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         doReturn(randomQuizList)
@@ -109,7 +110,7 @@ class SendQuizCronJobTest {
         doReturn(memberList)
                 .when(memberService)
                 .getEnabledUserList(quizDay);
-        doReturn(unsolvedQuizList)
+        doReturn(new Quizzes(unsolvedQuizList))
                 .when(quizService)
                 .getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         doReturn(randomQuizList)
