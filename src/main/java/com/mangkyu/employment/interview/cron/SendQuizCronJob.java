@@ -2,10 +2,11 @@ package com.mangkyu.employment.interview.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.MailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
+import com.mangkyu.employment.interview.app.member.service.UpdateMemberService;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
-import com.mangkyu.employment.interview.app.member.service.MemberService;
+import com.mangkyu.employment.interview.app.member.service.GetMemberService;
 import com.mangkyu.employment.interview.enums.value.QuizDay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,8 @@ import java.util.List;
 @Slf4j
 public class SendQuizCronJob {
 
-    private final MemberService memberService;
+    private final GetMemberService memberService;
+    private final UpdateMemberService updateMemberService;
     private final QuizService quizService;
     private final MailService mailService;
     private final SolvedQuizService solvedQuizService;
@@ -33,12 +35,12 @@ public class SendQuizCronJob {
      */
 
 //    @Scheduled(cron = "*/30 * * * * *") // every 30 seconds
-    @Scheduled(cron = "0 1 0 * * ?")
+    @Scheduled(cron = "0 15 0 * * ?")
     @Transactional
     public void sendQuizMail() {
-        log.info("========== sendQuizMail ============");
         final DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
         final List<Member> memberList = memberService.getEnabledUserList(QuizDay.findQuizDay(dayOfWeek));
+        log.info("========== sendQuizMail member={} ============", memberList.size());
         for (final Member member : memberList) {
             sendUnsolvedQuizForUser(member);
         }
@@ -50,7 +52,7 @@ public class SendQuizCronJob {
 
         final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
         if (isLastMail) {
-            memberService.disableUser(member);
+            updateMemberService.disableUser(member);
         }
 
         mailService.sendMail(member.getEmail(), randomQuizList, isLastMail);
