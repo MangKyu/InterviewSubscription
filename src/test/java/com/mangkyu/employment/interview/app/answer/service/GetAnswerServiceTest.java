@@ -24,55 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AnswerServiceTest {
+class GetAnswerServiceTest {
 
     @InjectMocks
-    private AnswerService answerService;
+    private GetAnswerService answerService;
 
     @Mock
     private QuizService quizService;
     @Mock
     private AnswerRepository answerRepository;
-
-    @Test
-    public void addAnswerSuccess_Modify() throws RestApiException {
-        // given
-        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
-                .quizResourceId(UUID.randomUUID().toString())
-                .description("desc")
-                .build();
-        final Quiz quiz = EntityCreationUtils.quiz();
-        final Answer answer = EntityCreationUtils.answer(quiz);
-        ReflectionTestUtils.setField(quiz, "answer", answer);
-
-        doReturn(quiz).when(quizService).findQuiz(addAnswerRequest.getQuizResourceId());
-
-        // when
-        answerService.addAnswer(addAnswerRequest);
-
-        // then
-
-        // verify
-        verify(answerRepository, times(0)).save(answer);
-    }
-
-    @Test
-    public void addAnswerSuccess_Insert() throws RestApiException {
-        // given
-        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
-                .quizResourceId(UUID.randomUUID().toString())
-                .description("desc")
-                .build();
-        final Quiz quiz = EntityCreationUtils.quiz();
-
-        doReturn(quiz).when(quizService).findQuiz(addAnswerRequest.getQuizResourceId());
-
-        // when
-        answerService.addAnswer(addAnswerRequest);
-
-        // then
-        verify(answerRepository, times(1)).save(any(Answer.class));
-    }
 
     @Test
     public void getAnswerByQuizResourceIdFail_AnswerNotExists() {

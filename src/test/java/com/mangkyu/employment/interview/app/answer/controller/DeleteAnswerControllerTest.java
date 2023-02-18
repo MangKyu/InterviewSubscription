@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
-import com.mangkyu.employment.interview.app.answer.service.AnswerService;
+import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,7 +19,7 @@ class DeleteAnswerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private AnswerService answerService;
+    private GetAnswerService answerService;
 
     @Test
     public void deleteAnswerSuccess() throws Exception {

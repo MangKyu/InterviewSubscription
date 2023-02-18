@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.quiz.controller;
 
 import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
-import com.mangkyu.employment.interview.app.answer.service.AnswerService;
+import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
 import com.mangkyu.employment.interview.app.quiz.dto.GetQuizResponse;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class WebQuizController {
 
     private final QuizService quizService;
-    private final AnswerService answerService;
+    private final GetAnswerService answerService;
 
     @GetMapping("/quiz/editView/{resourceId}")
     public String addUserPage(@PathVariable final String resourceId, final Model model) {

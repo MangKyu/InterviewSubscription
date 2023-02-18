@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
-import com.mangkyu.employment.interview.app.answer.service.AnswerService;
+import com.mangkyu.employment.interview.app.answer.service.UpdateAnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AddAnswerController {
 
-    private final AnswerService answerService;
+    private final UpdateAnswerService answerService;
 
     @PostMapping("/answers")
     public ResponseEntity<Void> postAnswer(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) {

@@ -1,7 +1,7 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
 import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.answer.service.AnswerService;
+import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,7 +25,7 @@ class AddAnswerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private AnswerService answerService;
+    private GetAnswerService answerService;
 
     @ParameterizedTest
     @MethodSource("provideParameters")
