@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
-import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,13 +24,13 @@ class UpdateAnswerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private GetAnswerService answerService;
+    private ObjectMapper objectMapper;
 
     @ParameterizedTest
     @MethodSource("provideParameters")
-    public void putAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
+    void putAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
         // given
-        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+        final AddAnswerRequest request = AddAnswerRequest.builder()
                 .quizResourceId(quizResourceId)
                 .description(desc)
                 .build();
@@ -39,7 +38,7 @@ class UpdateAnswerControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.put("/answers")
-                        .content(new Gson().toJson(addAnswerRequest))
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -48,11 +47,11 @@ class UpdateAnswerControllerTest {
     }
 
     @Test
-    public void putAnswerSuccess() throws Exception {
+    void updateAnswerSuccess() throws Exception {
         // given
         final String url = "/answers";
 
-        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+        final AddAnswerRequest request = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
                 .description("desc")
                 .build();
@@ -61,7 +60,7 @@ class UpdateAnswerControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.put(url)
-                        .content(new Gson().toJson(addAnswerRequest))
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 

@@ -5,7 +5,6 @@ import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
-import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,9 +28,9 @@ class AddAnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    void addAnswer_Success_Insert() throws RestApiException {
+    void addAnswer_Success_Insert() {
         // given
-        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+        final AddAnswerRequest request = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
                 .description("desc")
                 .build();
@@ -39,10 +38,10 @@ class AddAnswerServiceTest {
 
         doReturn(quiz)
                 .when(quizService)
-                .findQuiz(addAnswerRequest.getQuizResourceId());
+                .findQuiz(request.getQuizResourceId());
 
         // when
-        answerService.add(addAnswerRequest);
+        answerService.add(request);
 
         // then
         verify(answerRepository, times(1)).save(any(Answer.class));

@@ -25,7 +25,7 @@ class AnswerRepositoryTest {
     private EntityManager entityManager;
 
     @Test
-    public void findOptionalByQuizId() {
+    void findOptionalByQuizId() {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();
         final Quiz savedQuiz = quizRepository.save(quiz);

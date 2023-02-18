@@ -30,7 +30,7 @@ class UpdateAnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    void updateAnswer_Success() throws RestApiException {
+    void updateAnswer_Success() {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())

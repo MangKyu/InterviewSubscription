@@ -1,7 +1,6 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
-import com.google.gson.Gson;
-import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,11 +24,11 @@ class AddAnswerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private GetAnswerService answerService;
+    private ObjectMapper objectMapper;
 
     @ParameterizedTest
     @MethodSource("provideParameters")
-    public void addAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
+    void addAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
         // given
         final AddAnswerRequest request = AddAnswerRequest.builder()
                 .quizResourceId(quizResourceId)
@@ -39,7 +38,7 @@ class AddAnswerControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/answers")
-                        .content(new Gson().toJson(request))
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -48,9 +47,9 @@ class AddAnswerControllerTest {
     }
 
     @Test
-    public void addAnswerSuccess() throws Exception {
+    void addAnswerSuccess() throws Exception {
         // given
-        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+        final AddAnswerRequest request = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
                 .description("desc")
                 .build();
@@ -59,7 +58,7 @@ class AddAnswerControllerTest {
         // when
         final ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post("/answers")
-                        .content(new Gson().toJson(addAnswerRequest))
+                        .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 

@@ -1,6 +1,5 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
-import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,16 +17,13 @@ class DeleteAnswerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private GetAnswerService answerService;
-
     @Test
-    public void deleteAnswerSuccess() throws Exception {
+    void deleteAnswerSuccess() throws Exception {
         // given
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.delete("/answers/" + UUID.randomUUID())
+                MockMvcRequestBuilders.delete("/answers/{resourceId}", UUID.randomUUID())
         );
 
         // then

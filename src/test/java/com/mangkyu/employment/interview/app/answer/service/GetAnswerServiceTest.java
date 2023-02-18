@@ -32,7 +32,7 @@ class GetAnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    public void getAnswer_Fail_NotExists() {
+    void getAnswer_Fail_NotExists() {
         // given
         final String resourceId = UUID.randomUUID().toString();
 
@@ -50,7 +50,7 @@ class GetAnswerServiceTest {
     }
 
     @Test
-    public void getAnswer_Success() throws RestApiException {
+    void getAnswer_Success() {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);

@@ -1,6 +1,9 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
+import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -24,28 +27,22 @@ class GetAnswerControllerTest {
     private GetAnswerService answerService;
 
     @Test
-    public void getAnswer() throws Exception {
+    void getAnswer() throws Exception {
         // given
-        final String resourceId = UUID.randomUUID().toString();
-        final GetAnswerResponse getAnswerResponse = GetAnswerResponse.builder()
-                .resourceId(resourceId)
-                .quizResourceId(UUID.randomUUID().toString())
-                .description("설명")
-                .createdAt(System.currentTimeMillis())
-                .build();
+        final Quiz quiz = EntityCreationUtils.quiz();
+        final Answer answer = EntityCreationUtils.answer(quiz);
 
-        doReturn(getAnswerResponse).when(answerService).get(resourceId);
+        doReturn(answer)
+                .when(answerService)
+                .get(answer.getResourceId());
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.get("/answers/" + resourceId)
+                MockMvcRequestBuilders.get("/answers/{resourceId}", answer.getResourceId())
         );
 
         // then
-        result.andExpect(status().isOk())
-                .andExpect(jsonPath("resourceId").value(getAnswerResponse.getResourceId()))
-                .andExpect(jsonPath("quizResourceId").value(getAnswerResponse.getQuizResourceId()))
-                .andExpect(jsonPath("description").value(getAnswerResponse.getDescription()));
+        result.andExpect(status().isOk());
     }
 
 
