@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequiredArgsConstructor
-public class WebQuizController {
+class WebQuizController {
 
     private final GetQuizService quizService;
     private final EnumMapperFactory enumMapperFactory;

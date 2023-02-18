@@ -1,6 +1,6 @@
 package com.mangkyu.employment.interview.app.quiz.repository;
 
-import com.mangkyu.employment.interview.app.quiz.service.QuizSearchCondition;
+import com.mangkyu.employment.interview.app.quiz.entity.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.QQuiz;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;

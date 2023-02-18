@@ -5,11 +5,9 @@ import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
-import com.mangkyu.employment.interview.enums.common.EnumMapperType;
 import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
-import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,8 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -73,7 +69,7 @@ class GetQuizControllerTest {
                 .expose(true)
                 .build();
 
-        doReturn(Collections.singletonList(enumMapperValue))
+        doReturn(List.of(enumMapperValue))
                 .when(enumMapperFactory)
                 .get(EnumMapperKey.QUIZ_CATEGORY);
 
@@ -112,7 +108,7 @@ class GetQuizControllerTest {
         final Quiz quiz = EntityCreationUtils.quiz();
 
         final Pageable pageable = PageRequest.of(MIN_PAGE_NUMBER, MIN_PAGE_SIZE);
-        final PageImpl<Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
+        final PageImpl<Quiz> quizPage = new PageImpl<>(List.of(), pageable, 0);
 
         final PagingQuizzes quizzes = PagingQuizzes.builder()
                 .quizzes(new Quizzes(List.of(quiz)))
@@ -160,24 +156,20 @@ class GetQuizControllerTest {
     @Test
     void searchQuizSuccess() throws Exception {
         // given
-        final GetQuizResponse quizResponse = GetQuizResponse.builder()
-                .title("quiz")
-                .quizLevelList(Arrays.asList(QuizLevel.JUNIOR.name(), QuizLevel.SENIOR.name()))
-                .category(enumMapperValue(QuizCategory.JAVA).getTitle())
-                .build();
+        final Quiz quiz = EntityCreationUtils.quiz();
 
         final Pageable pageable = PageRequest.of(MIN_PAGE_NUMBER, MIN_PAGE_SIZE);
-        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(Collections.emptyList(), pageable, 0);
+        final PageImpl<Quiz> quizPage = new PageImpl<>(List.of(), pageable, 0);
 
-        final GetQuizResponseHolder getQuizResponseHolder = GetQuizResponseHolder.builder()
-                .quizList(Collections.singletonList(quizResponse))
+        final PagingQuizzes quizzes = PagingQuizzes.builder()
+                .quizzes(new Quizzes(List.of(quiz)))
                 .hasNext(quizPage.hasNext())
-                .page(quizPage.nextOrLastPageable().getPageNumber())
-                .size(quizPage.nextOrLastPageable().getPageSize())
+                .pageNumber(quizPage.nextOrLastPageable().getPageNumber())
+                .pageSize(quizPage.nextOrLastPageable().getPageSize())
                 .totalPages(quizPage.getTotalPages())
                 .build();
 
-        doReturn(getQuizResponseHolder)
+        doReturn(quizzes)
                 .when(quizService)
                 .searchQuizList(any(SearchQuizListRequest.class));
 
@@ -190,14 +182,6 @@ class GetQuizControllerTest {
 
         // then
         result.andExpect(status().isOk());
-    }
-
-    private EnumMapperValue enumMapperValue(final EnumMapperType enumMapperType) {
-        return EnumMapperValue.builder()
-                .code(enumMapperType.name())
-                .title(enumMapperType.getTitle())
-                .desc(enumMapperType.getDesc())
-                .build();
     }
 
 }

@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,7 +30,7 @@ class AddQuizControllerTest {
         final AddQuizRequest request = AddQuizRequest.builder()
                 .quizCategory(QuizCategory.JAVA)
                 .title("Title")
-                .quizLevel(Collections.singletonList(QuizLevel.NEW))
+                .quizLevel(List.of(QuizLevel.NEW))
                 .build();
 
         // when

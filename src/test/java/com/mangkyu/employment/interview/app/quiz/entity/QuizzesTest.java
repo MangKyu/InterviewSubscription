@@ -3,15 +3,15 @@ package com.mangkyu.employment.interview.app.quiz.entity;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class QuizzesTest {
 
@@ -68,9 +68,9 @@ class QuizzesTest {
     private Quiz quiz(final long id) {
         final Quiz quiz = Quiz.builder()
                 .title("quiz")
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .quizLevel(List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .quizLevel(List.of(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .build();
 
         ReflectionTestUtils.setField(quiz, "id", id);

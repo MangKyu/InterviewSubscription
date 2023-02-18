@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -37,7 +38,7 @@ class AddQuizServiceTest {
         final AddQuizRequest request = AddQuizRequest.builder()
                 .title("quiz")
                 .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .quizLevel(List.of(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .build();
 
         // when

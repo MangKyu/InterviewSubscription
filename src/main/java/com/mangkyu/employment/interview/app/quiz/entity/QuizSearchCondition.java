@@ -1,4 +1,4 @@
-package com.mangkyu.employment.interview.app.quiz.service;
+package com.mangkyu.employment.interview.app.quiz.entity;
 
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;

@@ -1,9 +1,10 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.quiz.controller.*;
-import com.mangkyu.employment.interview.app.quiz.converter.QuizDtoConverter;
+import com.mangkyu.employment.interview.app.quiz.controller.GetQuizRequest;
+import com.mangkyu.employment.interview.app.quiz.controller.SearchQuizListRequest;
 import com.mangkyu.employment.interview.app.quiz.entity.PagingQuizzes;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.quiz.entity.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
@@ -18,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,9 +47,9 @@ public class GetQuizService {
 
     // TODO: do not use GetQuizResponseHolder in service layer
 
-    public PagingQuizzes getQuizList(final GetQuizRequest getQuizRequest) {
-        final PageRequest pageRequest = PageRequest.of(getQuizRequest.getPage(), getQuizRequest.getSize());
-        final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIsAndIsEnableTrue(getQuizRequest.getCategory(), pageRequest);
+    public PagingQuizzes getQuizList(final GetQuizRequest request) {
+        final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
+        final Page<Quiz> quizPage = quizRepository.findByQuizCategoryIsAndIsEnableTrue(request.getCategory(), pageRequest);
 
         return PagingQuizzes.builder()
                 .quizzes(new Quizzes(quizPage.getContent()))
@@ -60,21 +60,17 @@ public class GetQuizService {
                 .build();
     }
 
-    public GetQuizResponseHolder searchQuizList(final SearchQuizListRequest searchRequest) {
-        final QuizSearchCondition condition = modelMapper.map(searchRequest, QuizSearchCondition.class);
-        final PageRequest pageRequest = PageRequest.of(searchRequest.getPage(), searchRequest.getSize());
+    public PagingQuizzes searchQuizList(final SearchQuizListRequest request) {
+        final QuizSearchCondition condition = modelMapper.map(request, QuizSearchCondition.class);
+        final PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
 
         final Page<Quiz> quizPage = quizRepository.search(condition, pageRequest);
 
-        final List<GetQuizResponse> quizResponseList = quizPage.getContent().stream()
-                .map(QuizDtoConverter::convert)
-                .collect(Collectors.toList());
-
-        return GetQuizResponseHolder.builder()
-                .quizList(quizResponseList)
+        return PagingQuizzes.builder()
+                .quizzes(new Quizzes(quizPage.getContent()))
                 .hasNext(quizPage.hasNext())
-                .page(quizPage.nextOrLastPageable().getPageNumber())
-                .size(quizPage.nextOrLastPageable().getPageSize())
+                .pageNumber(quizPage.nextOrLastPageable().getPageNumber())
+                .pageSize(quizPage.nextOrLastPageable().getPageSize())
                 .totalPages(quizPage.getTotalPages())
                 .build();
     }

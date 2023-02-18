@@ -5,8 +5,8 @@ import com.mangkyu.employment.interview.app.quiz.entity.PagingQuizzes;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.GetQuizService;
 import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
+import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
 import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
-import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,27 +34,31 @@ class GetQuizController {
     }
 
     @GetMapping("/quizzes")
-    public ResponseEntity<GetQuizResponseHolder> getQuizList(@Valid final GetQuizRequest getQuizRequest) {
-        PagingQuizzes quizzes = quizService.getQuizList(getQuizRequest);
-        final GetQuizResponseHolder response = toResponse(quizzes, getQuizRequest.getCategory());
-        return ResponseEntity.ok(response);
+    public ResponseEntity<GetPagingQuizResponse> getQuizList(@Valid final GetQuizRequest getQuizRequest) {
+        final PagingQuizzes quizzes = quizService.getQuizList(getQuizRequest);
+        return ResponseEntity.ok(
+                toPageQuizResponse(
+                        quizzes,
+                        enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, getQuizRequest.getCategory())
+                )
+        );
     }
 
-    private GetQuizResponseHolder toResponse(PagingQuizzes quizzes, QuizCategory category) {
-        return GetQuizResponseHolder.builder()
+    @GetMapping("/quizzes/search")
+    public ResponseEntity<GetPagingQuizResponse> searchQuizList(@Valid final SearchQuizListRequest request) {
+        final PagingQuizzes quizzes = quizService.searchQuizList(request);
+        return ResponseEntity.ok(toPageQuizResponse(quizzes, null));
+    }
+
+    private GetPagingQuizResponse toPageQuizResponse(final PagingQuizzes quizzes, final EnumMapperValue category) {
+        return GetPagingQuizResponse.builder()
                 .quizList(quizzes.getQuizzes().getQuizList().stream().map(QuizDtoConverter::convert).collect(Collectors.toList()))
-                .category(enumMapperFactory.getElement(EnumMapperKey.QUIZ_CATEGORY, category))
+                .category(category)
                 .hasNext(quizzes.isHasNext())
                 .page(quizzes.getPageNumber())
                 .size(quizzes.getPageSize())
                 .totalPages(quizzes.getTotalPages())
                 .build();
-    }
-
-    @GetMapping("/quizzes/search")
-    public ResponseEntity<GetQuizResponseHolder> searchQuizList(@Valid final SearchQuizListRequest request) {
-        final GetQuizResponseHolder response = quizService.searchQuizList(request);
-        return ResponseEntity.ok(response);
     }
 
 }

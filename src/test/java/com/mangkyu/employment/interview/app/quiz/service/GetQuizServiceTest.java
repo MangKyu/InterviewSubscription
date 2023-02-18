@@ -1,15 +1,15 @@
 package com.mangkyu.employment.interview.app.quiz.service;
 
-import com.mangkyu.employment.interview.app.quiz.controller.*;
+import com.mangkyu.employment.interview.app.quiz.controller.GetQuizRequest;
+import com.mangkyu.employment.interview.app.quiz.controller.SearchQuizListRequest;
 import com.mangkyu.employment.interview.app.quiz.entity.PagingQuizzes;
+import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
+import com.mangkyu.employment.interview.app.quiz.entity.QuizSearchCondition;
 import com.mangkyu.employment.interview.app.quiz.entity.Quizzes;
 import com.mangkyu.employment.interview.app.quiz.repository.QuizRepository;
 import com.mangkyu.employment.interview.app.solvedquiz.entity.SolvedQuiz;
 import com.mangkyu.employment.interview.app.solvedquiz.repository.SolvedQuizRepository;
 import com.mangkyu.employment.interview.config.modelmapper.ModelMapperConfig;
-import com.mangkyu.employment.interview.enums.common.EnumMapperKey;
-import com.mangkyu.employment.interview.enums.common.EnumMapperValue;
-import com.mangkyu.employment.interview.enums.factory.EnumMapperFactory;
 import com.mangkyu.employment.interview.enums.value.QuizCategory;
 import com.mangkyu.employment.interview.enums.value.QuizLevel;
 import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class GetQuizServiceTest {
@@ -45,8 +45,6 @@ class GetQuizServiceTest {
     private QuizRepository quizRepository;
     @Mock
     private SolvedQuizRepository solvedQuizRepository;
-    @Mock
-    private EnumMapperFactory enumMapperFactory;
     @Spy
     private ModelMapper modelMapper = new ModelMapperConfig().modelMapper();
 
@@ -59,31 +57,31 @@ class GetQuizServiceTest {
         final int page = 0;
         final int size = 20;
 
-        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizList = quizList();
+        final List<Quiz> quizList = quizList();
         final SearchQuizListRequest request = SearchQuizListRequest.builder()
                 .query("query")
-                .categories(new HashSet<>(Arrays.asList(QuizCategory.CULTURE, QuizCategory.JAVA)))
-                .levels(new HashSet<>(Arrays.asList(QuizLevel.NEW, QuizLevel.SENIOR)))
+                .categories(new HashSet<>(List.of(QuizCategory.CULTURE, QuizCategory.JAVA)))
+                .levels(new HashSet<>(List.of(QuizLevel.NEW, QuizLevel.SENIOR)))
                 .page(0)
                 .size(20)
                 .build();
 
-        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(quizList(), PageRequest.of(page, size), quizList.size());
+        final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), PageRequest.of(page, size), quizList.size());
         doReturn(quizPage)
                 .when(quizRepository)
                 .search(any(QuizSearchCondition.class), any(PageRequest.class));
 
         // when
-        final GetQuizResponseHolder result = quizService.searchQuizList(request);
+        final PagingQuizzes result = quizService.searchQuizList(request);
 
         // then
-        assertThat(result.getQuizList().size()).isEqualTo(quizList.size());
+        assertThat(result.getQuizzes().getQuizList().size()).isEqualTo(quizList.size());
     }
 
     @Test
     public void findQuizEntityFail_NotExists() {
         // given
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = quiz(-1L);
+        final Quiz quiz = quiz(-1L);
 
         doReturn(Optional.empty())
                 .when(quizRepository)
@@ -101,14 +99,14 @@ class GetQuizServiceTest {
     @Test
     public void findQuizEntitySuccess() {
         // given
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = quiz(-1L);
+        final Quiz quiz = quiz(-1L);
 
         doReturn(Optional.of(quiz))
                 .when(quizRepository)
                 .findByResourceId(quiz.getResourceId());
 
         // when
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz result = quizService.getQuiz(quiz.getResourceId());
+        final Quiz result = quizService.getQuiz(quiz.getResourceId());
 
         // then
         assertThat(result.getResourceId()).isEqualTo(quiz.getResourceId());
@@ -127,10 +125,10 @@ class GetQuizServiceTest {
                 .page(page)
                 .size(size)
                 .build();
-        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizList = quizList();
+        final List<Quiz> quizList = quizList();
         final Pageable pageable = PageRequest.of(page, size);
 
-        final PageImpl<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
+        final PageImpl<Quiz> quizPage = new PageImpl<>(quizList(), pageable, quizList.size());
         doReturn(quizPage)
                 .when(quizRepository)
                 .findByQuizCategoryIsAndIsEnableTrue(any(QuizCategory.class), any(PageRequest.class));
@@ -151,7 +149,7 @@ class GetQuizServiceTest {
         final Set<Long> solvedQuizIdList = solvedQuizList.stream()
                 .map(v -> v.getQuiz().getId())
                 .collect(Collectors.toSet());
-        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
+        final List<Quiz> unsolvedQuizList = List.of(quiz(4L));
 
         final Set<QuizCategory> quizCategorySet = new HashSet<>();
         quizCategorySet.add(QuizCategory.CULTURE);
@@ -176,8 +174,8 @@ class GetQuizServiceTest {
     @Test
     public void getUnsolvedQuizSuccess_SolvedQuizNotEmpty() {
         // given
-        final List<SolvedQuiz> solvedQuizList = Collections.emptyList();
-        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> unsolvedQuizList = Collections.singletonList(quiz(4L));
+        final List<SolvedQuiz> solvedQuizList = List.of();
+        final List<Quiz> unsolvedQuizList = List.of(quiz(4L));
 
         final Set<QuizCategory> quizCategorySet = new HashSet<>();
         quizCategorySet.add(QuizCategory.CULTURE);
@@ -190,7 +188,7 @@ class GetQuizServiceTest {
 
         doReturn(unsolvedQuizList)
                 .when(quizRepository)
-                .customFindByIdNotInAndQuizCategoryInAndQuizLevel(Collections.emptySet(), quizCategorySet, quizLevel);
+                .customFindByIdNotInAndQuizCategoryInAndQuizLevel(Set.of(), quizCategorySet, quizLevel);
 
         // when
         final Quizzes result = quizService.getUnsolvedQuizList(userId, quizLevel, quizCategorySet);
@@ -200,8 +198,8 @@ class GetQuizServiceTest {
     }
 
 
-    private List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> quizList() {
-        final List<com.mangkyu.employment.interview.app.quiz.entity.Quiz> unsolvedQuizList = new ArrayList<>();
+    private List<Quiz> quizList() {
+        final List<Quiz> unsolvedQuizList = new ArrayList<>();
 
         unsolvedQuizList.add(quiz(1L));
         unsolvedQuizList.add(quiz(2L));
@@ -212,7 +210,7 @@ class GetQuizServiceTest {
     }
 
     private List<SolvedQuiz> solvedQuizList() {
-        return Arrays.asList(
+        return List.of(
                 solvedQuiz(1L),
                 solvedQuiz(2L),
                 solvedQuiz(3L)
@@ -220,19 +218,19 @@ class GetQuizServiceTest {
     }
 
     private SolvedQuiz solvedQuiz(final long id) {
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = quiz(id);
+        final Quiz quiz = quiz(id);
 
         return SolvedQuiz.builder()
                 .quiz(quiz)
                 .build();
     }
 
-    private com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz(final long id) {
-        final com.mangkyu.employment.interview.app.quiz.entity.Quiz quiz = com.mangkyu.employment.interview.app.quiz.entity.Quiz.builder()
+    private Quiz quiz(final long id) {
+        final Quiz quiz = Quiz.builder()
                 .title("quiz")
-                .quizLevel(Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .quizLevel(List.of(QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .quizCategory(QuizCategory.JAVA)
-                .quizLevel(Arrays.asList(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
+                .quizLevel(List.of(QuizLevel.NEW, QuizLevel.JUNIOR, QuizLevel.SENIOR))
                 .build();
 
         ReflectionTestUtils.setField(quiz, "id", id);
