@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class DeleteAnswerController {
+class DeleteAnswerController {
 
     private final DeleteAnswerService answerService;
 
     @DeleteMapping("/answers/{resourceId}")
-    public ResponseEntity<Void> deleteAnswer(@PathVariable final String resourceId) {
-        answerService.deleteAnswer(resourceId);
+    public ResponseEntity<Void> delete(@PathVariable final String resourceId) {
+        answerService.delete(resourceId);
 
         return ResponseEntity.noContent().build();
     }

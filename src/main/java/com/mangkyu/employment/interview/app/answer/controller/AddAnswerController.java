@@ -11,13 +11,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-public class AddAnswerController {
+class AddAnswerController {
 
     private final UpdateAnswerService answerService;
 
     @PostMapping("/answers")
-    public ResponseEntity<Void> postAnswer(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) {
-        answerService.addAnswer(addAnswerRequest);
+    public ResponseEntity<Void> add(@RequestBody @Valid final AddAnswerRequest request) {
+        answerService.add(request);
         return ResponseEntity.noContent()
                 .build();
     }

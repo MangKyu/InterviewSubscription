@@ -1,11 +1,8 @@
 package com.mangkyu.employment.interview.app.answer.service;
 
-import com.mangkyu.employment.interview.app.answer.controller.AddAnswerRequest;
-import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
-import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.erros.errorcode.CommonErrorCode;
 import com.mangkyu.employment.interview.erros.exception.RestApiException;
 import com.mangkyu.employment.interview.testutils.EntityCreationUtils;
@@ -14,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -32,27 +28,35 @@ class DeleteAnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    public void deleteAnswerByQuizResourceIdFail_AnswerNotExists() {
+    void deleteAnswerByQuizResourceIdFail_AnswerNotExists() {
         // given
         final String resourceId = UUID.randomUUID().toString();
-        doReturn(Optional.empty()).when(answerRepository).findByResourceId(resourceId);
+
+        doReturn(Optional.empty())
+                .when(answerRepository)
+                .findByResourceId(resourceId);
 
         // when
-        final RestApiException result = assertThrows(RestApiException.class, () -> answerService.deleteAnswer(resourceId));
+        final RestApiException result = assertThrows(
+                RestApiException.class,
+                () -> answerService.delete(resourceId));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
     }
 
     @Test
-    public void deleteAnswerByQuizResourceIdSuccess() throws RestApiException {
+    void deleteAnswerByQuizResourceIdSuccess() throws RestApiException {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);
-        doReturn(Optional.of(answer)).when(answerRepository).findByResourceId(answer.getResourceId());
+
+        doReturn(Optional.of(answer))
+                .when(answerRepository)
+                .findByResourceId(answer.getResourceId());
 
         // when
-        answerService.deleteAnswer(answer.getResourceId());
+        answerService.delete(answer.getResourceId());
 
         // then
 

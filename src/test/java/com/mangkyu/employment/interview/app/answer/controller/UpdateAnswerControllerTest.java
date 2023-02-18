@@ -31,8 +31,6 @@ class UpdateAnswerControllerTest {
     @MethodSource("provideParameters")
     public void putAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
         // given
-        final String url = "/answers";
-
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(quizResourceId)
                 .description(desc)
@@ -40,7 +38,7 @@ class UpdateAnswerControllerTest {
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.put(url)
+                MockMvcRequestBuilders.put("/answers")
                         .content(new Gson().toJson(addAnswerRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );

@@ -1,6 +1,5 @@
 package com.mangkyu.employment.interview.app.answer.service;
 
-import com.mangkyu.employment.interview.app.answer.controller.AddAnswerRequest;
 import com.mangkyu.employment.interview.app.answer.controller.GetAnswerResponse;
 import com.mangkyu.employment.interview.app.answer.entity.Answer;
 import com.mangkyu.employment.interview.app.answer.repository.AnswerRepository;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -38,10 +36,15 @@ class GetAnswerServiceTest {
     public void getAnswerByQuizResourceIdFail_AnswerNotExists() {
         // given
         final String resourceId = UUID.randomUUID().toString();
-        doReturn(Optional.empty()).when(answerRepository).findByResourceId(resourceId);
+
+        doReturn(Optional.empty())
+                .when(answerRepository)
+                .findByResourceId(resourceId);
 
         // when
-        final RestApiException result = assertThrows(RestApiException.class, () -> answerService.getAnswer(resourceId));
+        final RestApiException result = assertThrows(
+                RestApiException.class,
+                () -> answerService.get(resourceId));
 
         // then
         assertThat(result.getErrorCode()).isEqualTo(CommonErrorCode.RESOURCE_NOT_FOUND);
@@ -52,10 +55,13 @@ class GetAnswerServiceTest {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();
         final Answer answer = EntityCreationUtils.answer(quiz);
-        doReturn(Optional.of(answer)).when(answerRepository).findByResourceId(answer.getResourceId());
+
+        doReturn(Optional.of(answer))
+                .when(answerRepository)
+                .findByResourceId(answer.getResourceId());
 
         // when
-        final GetAnswerResponse result = answerService.getAnswer(answer.getResourceId());
+        final GetAnswerResponse result = answerService.get(answer.getResourceId());
 
         // then
         assertThat(result.getDescription()).isEqualTo(answer.getDescription());

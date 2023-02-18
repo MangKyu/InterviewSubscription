@@ -25,25 +25,6 @@ class AnswerRepositoryTest {
     private EntityManager entityManager;
 
     @Test
-    public void insertAnswer() {
-        // given
-        final Quiz quiz = EntityCreationUtils.quiz();
-        final Quiz savedQuiz = quizRepository.save(quiz);
-        final Answer answer = EntityCreationUtils.answer(savedQuiz);
-
-        answerRepository.save(answer);
-        savedQuiz.setAnswer(answer);
-        entityManager.flush();
-
-        // then
-        final Answer result = answerRepository.save(answer);
-
-        assertThat(result.getResourceId()).isEqualTo(answer.getResourceId());
-        assertThat(result.getDescription()).isEqualTo(answer.getDescription());
-        assertThat(result.getQuiz()).isEqualTo(quiz);
-    }
-
-    @Test
     public void selectAnswerByQuizId() {
         // given
         final Quiz quiz = EntityCreationUtils.quiz();

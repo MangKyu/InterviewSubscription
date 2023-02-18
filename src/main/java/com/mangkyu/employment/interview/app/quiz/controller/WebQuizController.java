@@ -24,7 +24,7 @@ public class WebQuizController {
         model.addAttribute("quiz", quiz);
 
         if (StringUtils.isNotBlank(quiz.getAnswerResourceId())) {
-            final GetAnswerResponse answer = answerService.getAnswer(quiz.getAnswerResourceId());
+            final GetAnswerResponse answer = answerService.get(quiz.getAnswerResourceId());
             model.addAttribute("answer", answer);
         } else {
             model.addAttribute("answer", GetAnswerResponse.builder().build());

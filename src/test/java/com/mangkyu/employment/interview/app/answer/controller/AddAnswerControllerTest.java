@@ -31,17 +31,15 @@ class AddAnswerControllerTest {
     @MethodSource("provideParameters")
     public void addAnswerFail_InvalidParameter(final String quizResourceId, final String desc) throws Exception {
         // given
-        final String url = "/answers";
-
-        final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
+        final AddAnswerRequest request = AddAnswerRequest.builder()
                 .quizResourceId(quizResourceId)
                 .description(desc)
                 .build();
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
-                        .content(new Gson().toJson(addAnswerRequest))
+                MockMvcRequestBuilders.post("/answers")
+                        .content(new Gson().toJson(request))
                         .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -52,8 +50,6 @@ class AddAnswerControllerTest {
     @Test
     public void addAnswerSuccess() throws Exception {
         // given
-        final String url = "/answers";
-
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
                 .description("desc")
@@ -62,7 +58,7 @@ class AddAnswerControllerTest {
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
+                MockMvcRequestBuilders.post("/answers")
                         .content(new Gson().toJson(addAnswerRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         );

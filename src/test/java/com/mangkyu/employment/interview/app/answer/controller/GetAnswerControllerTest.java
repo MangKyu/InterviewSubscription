@@ -27,7 +27,6 @@ class GetAnswerControllerTest {
     public void getAnswer() throws Exception {
         // given
         final String resourceId = UUID.randomUUID().toString();
-        final String url = "/answers/" + resourceId;
         final GetAnswerResponse getAnswerResponse = GetAnswerResponse.builder()
                 .resourceId(resourceId)
                 .quizResourceId(UUID.randomUUID().toString())
@@ -35,11 +34,11 @@ class GetAnswerControllerTest {
                 .createdAt(System.currentTimeMillis())
                 .build();
 
-        doReturn(getAnswerResponse).when(answerService).getAnswer(resourceId);
+        doReturn(getAnswerResponse).when(answerService).get(resourceId);
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.get(url)
+                MockMvcRequestBuilders.get("/answers/" + resourceId)
         );
 
         // then

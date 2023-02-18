@@ -12,22 +12,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class UpdateAnswerService {
 
     private final QuizService quizService;
     private final AnswerRepository answerRepository;
 
-    @Transactional
-    public void addAnswer(final AddAnswerRequest addAnswerRequest) {
-        final Quiz quiz = quizService.findQuiz(addAnswerRequest.getQuizResourceId());
+    public void add(final AddAnswerRequest request) {
+        final Quiz quiz = quizService.findQuiz(request.getQuizResourceId());
         final Answer quizAnswer = quiz.getAnswer();
         if (quizAnswer == null) {
-            final Answer answer = QuizDtoConverter.convert(addAnswerRequest, quiz);
+            final Answer answer = QuizDtoConverter.convert(request, quiz);
             answerRepository.save(answer);
             quiz.setAnswer(answer);
         } else {
-            quizAnswer.setDescription(addAnswerRequest.getDescription());
+            quizAnswer.setDescription(request.getDescription());
         }
     }
 

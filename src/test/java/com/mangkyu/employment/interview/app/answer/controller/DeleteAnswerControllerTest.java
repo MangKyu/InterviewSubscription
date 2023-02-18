@@ -24,11 +24,10 @@ class DeleteAnswerControllerTest {
     @Test
     public void deleteAnswerSuccess() throws Exception {
         // given
-        final String url = "/answers/" + UUID.randomUUID();
 
         // when
         final ResultActions result = mockMvc.perform(
-                MockMvcRequestBuilders.delete(url)
+                MockMvcRequestBuilders.delete("/answers/" + UUID.randomUUID())
         );
 
         // then

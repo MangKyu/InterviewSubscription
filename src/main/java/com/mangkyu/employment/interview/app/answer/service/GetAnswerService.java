@@ -17,7 +17,7 @@ public class GetAnswerService {
 
     private final AnswerRepository answerRepository;
 
-    public GetAnswerResponse getAnswer(final String resourceId) throws RestApiException {
+    public GetAnswerResponse get(final String resourceId) {
         final Answer answer = answerRepository.findByResourceId(resourceId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 

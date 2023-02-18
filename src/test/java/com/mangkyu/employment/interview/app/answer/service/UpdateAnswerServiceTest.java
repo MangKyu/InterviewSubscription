@@ -40,10 +40,12 @@ class UpdateAnswerServiceTest {
         final Answer answer = EntityCreationUtils.answer(quiz);
         ReflectionTestUtils.setField(quiz, "answer", answer);
 
-        doReturn(quiz).when(quizService).findQuiz(addAnswerRequest.getQuizResourceId());
+        doReturn(quiz)
+                .when(quizService)
+                .findQuiz(addAnswerRequest.getQuizResourceId());
 
         // when
-        answerService.addAnswer(addAnswerRequest);
+        answerService.add(addAnswerRequest);
 
         // then
 
@@ -60,10 +62,12 @@ class UpdateAnswerServiceTest {
                 .build();
         final Quiz quiz = EntityCreationUtils.quiz();
 
-        doReturn(quiz).when(quizService).findQuiz(addAnswerRequest.getQuizResourceId());
+        doReturn(quiz)
+                .when(quizService)
+                .findQuiz(addAnswerRequest.getQuizResourceId());
 
         // when
-        answerService.addAnswer(addAnswerRequest);
+        answerService.add(addAnswerRequest);
 
         // then
         verify(answerRepository, times(1)).save(any(Answer.class));

@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class GetAnswerController {
+class GetAnswerController {
 
     private final GetAnswerService answerService;
 
     @GetMapping("/answers/{resourceId}")
-    public ResponseEntity<GetAnswerResponse> getAnswer(@PathVariable final String resourceId) {
-        return ResponseEntity.ok(answerService.getAnswer(resourceId));
+    public ResponseEntity<GetAnswerResponse> get(@PathVariable final String resourceId) {
+        return ResponseEntity.ok(answerService.get(resourceId));
     }
 
 }

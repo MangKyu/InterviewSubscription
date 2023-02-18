@@ -1,6 +1,5 @@
 package com.mangkyu.employment.interview.app.answer.controller;
 
-import com.mangkyu.employment.interview.app.answer.service.GetAnswerService;
 import com.mangkyu.employment.interview.app.answer.service.UpdateAnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +11,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-public class UpdateAnswerController {
+class UpdateAnswerController {
 
     private final UpdateAnswerService answerService;
 
     @PutMapping("/answers")
-    public ResponseEntity<Void> putAnswer(@RequestBody @Valid final AddAnswerRequest addAnswerRequest) {
-        answerService.addAnswer(addAnswerRequest);
+    public ResponseEntity<Void> update(@RequestBody @Valid final AddAnswerRequest request) {
+        answerService.add(request);
         return ResponseEntity.noContent()
                 .build();
     }
