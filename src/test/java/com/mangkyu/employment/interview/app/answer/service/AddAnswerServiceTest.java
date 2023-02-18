@@ -12,17 +12,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UpdateAnswerServiceTest {
+class AddAnswerServiceTest {
 
     @InjectMocks
-    private UpdateAnswerService answerService;
+    private AddAnswerService answerService;
 
     @Mock
     private QuizService quizService;
@@ -30,15 +29,13 @@ class UpdateAnswerServiceTest {
     private AnswerRepository answerRepository;
 
     @Test
-    void updateAnswer_Success() throws RestApiException {
+    void addAnswer_Success_Insert() throws RestApiException {
         // given
         final AddAnswerRequest addAnswerRequest = AddAnswerRequest.builder()
                 .quizResourceId(UUID.randomUUID().toString())
                 .description("desc")
                 .build();
         final Quiz quiz = EntityCreationUtils.quiz();
-        final Answer answer = EntityCreationUtils.answer(quiz);
-        ReflectionTestUtils.setField(quiz, "answer", answer);
 
         doReturn(quiz)
                 .when(quizService)
@@ -48,9 +45,7 @@ class UpdateAnswerServiceTest {
         answerService.add(addAnswerRequest);
 
         // then
-
-        // verify
-        verify(answerRepository, times(0)).save(answer);
+        verify(answerRepository, times(1)).save(any(Answer.class));
     }
 
 }
