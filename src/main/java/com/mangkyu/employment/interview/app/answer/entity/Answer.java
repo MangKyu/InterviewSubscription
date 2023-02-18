@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "answer")
 @Getter
 @Builder
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
 public class Answer extends BaseEntity {
 
@@ -24,5 +24,9 @@ public class Answer extends BaseEntity {
     @Lob
     @Column(length = 5000)
     private String description;
+
+    public void clearAnswer() {
+        quiz.setAnswer(null);
+    }
 
 }

@@ -2,7 +2,6 @@ package com.mangkyu.employment.interview.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.MailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
-import com.mangkyu.employment.interview.app.member.service.UpdateMemberService;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
@@ -24,7 +23,6 @@ import java.util.List;
 public class SendQuizCronJob {
 
     private final GetMemberService memberService;
-    private final UpdateMemberService updateMemberService;
     private final QuizService quizService;
     private final MailService mailService;
     private final SolvedQuizService solvedQuizService;
@@ -52,7 +50,7 @@ public class SendQuizCronJob {
 
         final List<Quiz> randomQuizList = quizService.getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
         if (isLastMail) {
-            updateMemberService.disableUser(member);
+            member.disableUser();
         }
 
         mailService.sendMail(member.getEmail(), randomQuizList, isLastMail);

@@ -21,7 +21,7 @@ import static com.mangkyu.employment.interview.app.quiz.constants.QuizConstants.
 @Table(name = "member")
 @Getter
 @Builder
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
 public class Member extends BaseEntity {
 
@@ -51,4 +51,7 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private List<SolvedQuiz> solvedQuizList = new ArrayList<>();
 
+    public void disableUser() {
+        setIsEnable(false);
+    }
 }

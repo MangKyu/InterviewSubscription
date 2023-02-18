@@ -18,7 +18,7 @@ public class DeleteAnswerService {
 
     public void delete(final String resourceId) {
         final Answer answer = getAnswerService.get(resourceId);
-        answer.getQuiz().setAnswer(null);
+        answer.clearAnswer();
         answerRepository.delete(answer);
     }
 }

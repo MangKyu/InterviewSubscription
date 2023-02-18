@@ -2,7 +2,6 @@ package com.mangkyu.employment.interview.cron;
 
 import com.mangkyu.employment.interview.app.mail.service.MailService;
 import com.mangkyu.employment.interview.app.member.entity.Member;
-import com.mangkyu.employment.interview.app.member.service.UpdateMemberService;
 import com.mangkyu.employment.interview.app.quiz.entity.Quiz;
 import com.mangkyu.employment.interview.app.quiz.service.QuizService;
 import com.mangkyu.employment.interview.app.solvedquiz.service.SolvedQuizService;
@@ -31,9 +30,6 @@ class SendQuizCronJobTest {
 
     @Mock
     private GetMemberService memberService;
-
-    @Mock
-    private UpdateMemberService updateMemberService;
     @Mock
     private QuizService quizService;
     @Mock
@@ -72,7 +68,6 @@ class SendQuizCronJobTest {
         // verify
         verify(quizService, times(0)).getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         verify(quizService, times(0)).getRandomQuizListUnderLimit(anyList(), anyInt());
-        verify(updateMemberService, times(0)).disableUser(member);
         verify(mailService, times(0)).sendMail(anyString(), anyList(), anyBoolean());
         verify(solvedQuizService, times(0)).addSolvedQuizList(any(Member.class), anyList());
     }
@@ -101,7 +96,6 @@ class SendQuizCronJobTest {
         // verify
         verify(quizService, times(1)).getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
-        verify(updateMemberService, times(0)).disableUser(member);
         verify(mailService, times(1)).sendMail(member.getEmail(), randomQuizList, false);
         verify(solvedQuizService, times(1)).addSolvedQuizList(member, randomQuizList);
     }
@@ -130,7 +124,6 @@ class SendQuizCronJobTest {
         // verify
         verify(quizService, times(1)).getUnsolvedQuizList(member.getId(), member.getQuizLevel(), member.getQuizCategorySet());
         verify(quizService, times(1)).getRandomQuizListUnderLimit(unsolvedQuizList, member.getQuizSize());
-        verify(updateMemberService, times(1)).disableUser(member);
         verify(mailService, times(1)).sendMail(member.getEmail(), randomQuizList, true);
         verify(solvedQuizService, times(1)).addSolvedQuizList(member, randomQuizList);
     }
