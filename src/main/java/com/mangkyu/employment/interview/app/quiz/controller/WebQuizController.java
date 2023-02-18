@@ -20,7 +20,7 @@ public class WebQuizController {
     private final QuizService quizService;
     private final GetAnswerService answerService;
 
-    @GetMapping("/quiz/editView/{resourceId}")
+    @GetMapping("/quizzes/editView/{resourceId}")
     public String addUserPage(@PathVariable final String resourceId, final Model model) {
         final GetQuizResponse quiz = quizService.getQuiz(resourceId);
         model.addAttribute("quiz", quiz);

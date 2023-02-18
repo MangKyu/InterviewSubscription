@@ -95,7 +95,7 @@ class QuizServiceTest {
     }
 
     @Test
-    public void findQuizEntitySuccess() throws RestApiException {
+    public void findQuizEntitySuccess() {
         // given
         final long id = -1L;
         final Quiz quiz = quiz(id);
@@ -126,7 +126,7 @@ class QuizServiceTest {
     }
 
     @Test
-    public void getQuizSuccess() throws RestApiException {
+    public void getQuizSuccess() {
         // given
         final long id = -1L;
         final Quiz quiz = quiz(id);

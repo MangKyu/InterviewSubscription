@@ -73,14 +73,14 @@ public class MailController {
         memberRepository.save(member1);
 //        userRepository.save(user2);
 
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.PROGRAMMING, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "DDD의 Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요.")).getResourceId());
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.SPRING, Collections.singletonList(QuizLevel.JUNIOR), "Spring Framework에서 사용되는 대표적인 디자인 패턴과 적용된 곳을 설명해주세요.")).getResourceId());
-        System.out.println("http://localhost:8080/quiz/editView/" + quizRepository.save(quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "MSA의 장점과 단점에 대해 설명해주세요")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "Junit4 vs Junit5 차이는 무엇인가?")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.PROGRAMMING, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "DDD의 Layered Architecture에서 Presentation, Application, Domain, InfraStructure layer의 역할에 대해 설명해 주세요.")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.SPRING, Collections.singletonList(QuizLevel.JUNIOR), "Spring Framework에서 사용되는 대표적인 디자인 패턴과 적용된 곳을 설명해주세요.")).getResourceId());
+        System.out.println("http://localhost:8080/quizzes/editView/" + quizRepository.save(quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "MSA의 장점과 단점에 대해 설명해주세요")).getResourceId());
 //        quizRepository.save(quiz(QuizCategory.JAVA, Collections.singletonList(QuizLevel.JUNIOR), "당신은 ㅜ구인가"));
 //        quizRepository.save(quiz(QuizCategory.DATABASE, Arrays.asList(QuizLevel.JUNIOR, QuizLevel.SENIOR), "퇴근합시다"));
     }
